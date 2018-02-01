@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Latitude</th>
+        <th>Lon</th>
+          <th>Timestamp</th>
+          <th>username</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for row in data %}
+        <tr>
+        <td>{{ row['id'] }}</td>
+        <td>{{ row['lat'] }}</td>
+        <td>{{ row['lan'] }}</td>
+        <td>{{ row['timestamp'] }}</td>
+        <td>{{ row['username'] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

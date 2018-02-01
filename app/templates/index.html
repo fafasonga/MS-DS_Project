@@ -3,45 +3,41 @@
 {% block content %}
 
 <div id="map" class="map map-home" style="height: 600px; margin-top: 50px"></div>
-<input type="button" value="all" onclick="get_data('all');"><br>
+<input type="submit" value="all"><br>
 {% for user in users %}
-    <input type="button" value="{{ user.username }}" onclick="get_data('{{ user.username }}');"><br>
+    <input type="submit" value="{{ user.username }}"><br>
 {% endfor %}
+
+
+<form method="post" id="fetch_data">
+    <input type="hidden" id="username" name="username">
+</form>
+
 <script>
 var mymap;
 var markersLayer;
-// var sliderControl;
 
-    function get_data(username) {
-        $.ajax({
-          type: "POST",
-          contentType: "application/json; charset=utf-8",
-          url: "/fetch_data",
-          data: JSON.stringify({"username": username}),
-          success: function (data) {
-            markersLayer.clearLayers();
-            mymap.removeLayer(markersLayer);
-            mymap.removeControl(sliderControl);
+$(document).on("click", ":submit", function(e){
+    var name = $(this).val();
+    $('#username').val(name);
+  $( "#fetch_data" ).submit();
+});
+
+    $( document ).ready(function() {
+        //Creating a map with coordinates of Beinjing
+        mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
+
+        {% if data %}
+            var data = JSON.parse({{ data|tojson|safe }});
             markersLayer = new L.LayerGroup();
-            markersLayer.addTo(mymap);
+           // markersLayer.addTo(mymap);
             for (let i = 0; i < data.length; i++) {
                 L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
             }
             var sliderControl = L.control.sliderControl({layer:markersLayer, follow: 6});
             mymap.addControl(sliderControl);
             sliderControl.startSlider();
-          },
-          dataType: "json"
-        });
-    };
-
-    $( document ).ready(function() {
-        //Creating a map with coordinates of Beinjing
-        mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
-
-        markersLayer = new L.LayerGroup();
-        var sliderControl = L.control.sliderControl();
-            mymap.addControl(sliderControl);
+        {% endif %}
 
         //adding tile layers to our map
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -53,6 +49,9 @@ var markersLayer;
         }).addTo(mymap);
 
         console.log( "ready!" );
+
+        $('#leaflet-slider').slider({autoplay: true});
+
     });
 
 </script>
