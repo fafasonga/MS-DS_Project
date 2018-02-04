@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" action="/remove_location">
+    {% for location in locations %}
+        <input type="checkbox" name="location[]" value="{{ location.id }}">{{ location }}<br>
+    {% endfor %}
+    <input type="submit" value="Remove">
+</form>
+
+{% endblock %}

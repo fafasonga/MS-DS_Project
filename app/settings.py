@@ -1,2 +1,2 @@
 DATABASE = "sqlite:///test.db"
-DEBUG = False
+DEBUG = True

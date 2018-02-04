@@ -36,6 +36,9 @@ class User(Base):
     def __init__(self, username):
         self.username = username
 
+    def __repr__(self):
+        return self.username
+
 
 class Location(Base):
     __tablename__ = "location"
@@ -53,4 +56,4 @@ class Location(Base):
         self.user_id = user_id
 
     def __repr__(self):
-        return self.user_id
+        return "ID: {}. lat: {}. lan: {}. Timestamp: {}".format(self.id, self.lat, self.lan, self.timestamp)

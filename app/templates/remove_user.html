@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" action="/remove_user">
+    {% for user in users %}
+        <input type="checkbox" name="user[]" value="{{ user.id }}">{{ user }}<br>
+    {% endfor %}
+    <input type="submit" value="Remove">
+</form>
+
+{% endblock %}
