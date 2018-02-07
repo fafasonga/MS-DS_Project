@@ -3,10 +3,20 @@
 {% block content %}
 
 <div id="map" class="map map-home" style="height: 600px; margin-top: 50px"></div>
-<input type="submit" value="all"><br>
-{% for user in users %}
-    <input type="submit" value="{{ user.username }}"><br>
-{% endfor %}
+
+<select onchange="fetch_data(this);">
+    <option disabled selected value> -- select an option -- </option>
+    {% if users %}
+      <option value="all">All Users</option>
+        {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+<!--<input type="submit" value="all" class="btn btn-primary">-->
+<!--{% for user in users %}-->
+    <!--<input type="submit" value="{{ user.username }}" class="btn btn-primary">-->
+<!--{% endfor %}-->
 
 
 <form method="post" id="fetch_data">
@@ -17,11 +27,11 @@
 var mymap;
 var markersLayer;
 
-$(document).on("click", ":submit", function(e){
-    var name = $(this).val();
+function fetch_data(e){
+    var name = $(e).val();
     $('#username').val(name);
-  $( "#fetch_data" ).submit();
-});
+    $( "#fetch_data" ).submit();
+};
 
     $( document ).ready(function() {
         //Creating a map with coordinates of Beinjing
