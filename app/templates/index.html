@@ -44,8 +44,11 @@ function fetch_data(e){
             for (let i = 0; i < data.length; i++) {
                 L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
             }
+
             var sliderControl = L.control.sliderControl({layer:markersLayer, follow: 6});
+            //Adding Slider to the map
             mymap.addControl(sliderControl);
+            //And initialize the slider
             sliderControl.startSlider();
         {% endif %}
 

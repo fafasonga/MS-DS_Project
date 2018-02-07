@@ -8,18 +8,28 @@
           <li class="nav-item active">
             <a class="nav-link" href="/table">Database <span class="sr-only">(current)</span></a>
           </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="/add_user">Insert User <span class="sr-only">(current)</span></a>
-          </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="/remove_user">Delete User <span class="sr-only">(current)</span></a>
-          </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="/add_location">Insert Data <span class="sr-only">(current)</span></a>
-          </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="/remove_location">Delete Data <span class="sr-only">(current)</span></a>
-          </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Data Insertion
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/add_user">Insert User <span class="sr-only">(current)</span></a>
+                <div class="dropdown-divider">
+                </div>
+                    <a class="dropdown-item" href="/add_location">Insert Data <span class="sr-only">(current)</span></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Data Deletion
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/remove_location">Delete Data <span class="sr-only">(current)</span></a>
+                <div class="dropdown-divider">
+                </div>
+                    <a class="dropdown-item" href="/remove_user">Delete User <span class="sr-only">(current)</span></a>
+                </div>
+            </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
         </form>

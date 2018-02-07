@@ -60,13 +60,20 @@ code {
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            {% block content %}{% endblock %}
+            {% block content %}
+            {% endblock %}
         </div>
     </div>
 </div>
-<footer class="footer">
+    <!-- Footer -->
+    <footer class="footer">
       <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+        <!--<span class="text-muted">Place sticky footer content here.</span>-->
+        <div id="footer">
+            {% block footer %}
+            &copy; Positioning System
+            {% endblock %}
+        </div>
       </div>
     </footer>
 </body>
