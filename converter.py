@@ -5,8 +5,9 @@ from app.models import Location, User
 
 ctr = 0
 
-users = {"name":0}
+users = {"name": 0}
 original_file = ""
+
 try:
     original_file = argv[1]
 except IndexError:
