@@ -1,13 +1,19 @@
 from datetime import datetime
-
+from sys import argv, exit
 from app import session
 from app.models import Location, User
 
 ctr = 0
 
 users = {"name":0}
+original_file = ""
+try:
+    original_file = argv[1]
+except IndexError:
+    print("Please, provide correct CSV file!")
+    print("Example: 'python converter.py /path/to/file.csv'")
+    exit(-1)
 
-original_file = "/Users/admin/myapp/users.csv"
 with open(original_file) as f:
     lines = f.readlines()
     for line in lines:

@@ -9,6 +9,7 @@ import json
 
 @app.route("/", methods=["GET", "POST"])
 def hello():
+    count = 0
     if request.method == 'POST':
         print("Got new request")
         username = request.form["username"]
@@ -26,12 +27,15 @@ def hello():
             locations = locations.all()
         else:
             locations = locations.filter_by(user_id=user.id).all()
+        print("Data length is: {}".format(len(locations)))
+        count = len(locations)
+
         locations = json.dumps(locations, cls=AlchemyEncoder)
     else:
         locations = ""
     users = session.query(User).all()
 
-    return render_template("index.html", data=locations, users=users)
+    return render_template("index.html", data=locations, users=users, count=count)
 
 
 @app.route("/table")
@@ -83,6 +87,7 @@ def add_user():
         return redirect("/")
     else:
         return render_template("add_user.html")
+
 
 @app.route("/remove_user", methods=["POST", "GET"])
 def remove_user():
