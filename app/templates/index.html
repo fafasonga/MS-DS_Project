@@ -31,7 +31,9 @@
 <div class="btn-group" role="group" aria-label="...">
     <button type="button" class="btn btn-default" onclick="singleSPeed()">1X</button>
     <button type="button" class="btn btn-default" onclick="doubleSPeed()">2X</button>
-    <button type="button" class="btn btn-default " onclick="qtrSPeed()">4X</button>
+    <button type="button" class="btn btn-default" onclick="qtrSPeed()">4X</button>
+    <button type="button" class="btn btn-default" onclick="start()">Start</button>
+    <button type="button" class="btn btn-default" onclick="stop()">Stop</button>
 </div>
 
 
@@ -49,14 +51,56 @@
     <input type="hidden" id="username" name="username">
 </form>
 
+
 <script>
 var mymap;
-var markersLayer = new L.LayerGroup();;
+var markersLayer = new L.LayerGroup();
+var counter = 0;
+var speed = 1000;
+
+var timer;
+var mySlider;
+
+function loop() { mySlider.slider('setValue', ++counter); if(counter == {{ count }} - 1) counter = 0; };
+
+
+function start()
+{
+    timer = setInterval(loop, speed);
+};
+
+function stop()
+{
+    clearInterval(timer);
+};
+
+function singleSPeed()
+{
+    speed = 1000;
+    stop();
+    start();
+};
+
+function doubleSPeed()
+{
+    speed = 500;
+    stop();
+    start();
+
+};
+
+function qtrSPeed()
+{
+    speed = 250;
+    stop();
+    start();
+};
+
 
 function fetch_data(e){
     var name = $(e).val();
     $('#username').val(name);
-    $( "#fetch_data" ).submit();
+    $( "#fetch_data").submit();
 };
 
     $( document ).ready(function() {
@@ -137,7 +181,7 @@ function fetch_data(e){
             }
 
             // With JQuery
-            $('#ex1').slider({
+            mySlider = $('#ex1').slider({
                 formatter: function(value) {
 
                     mymap.removeLayer(markersLayer);
@@ -170,4 +214,5 @@ function fetch_data(e){
     });
 
 </script>
+
 {% endblock %}
