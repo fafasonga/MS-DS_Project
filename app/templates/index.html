@@ -23,7 +23,7 @@
         <p id="data-holder"></p>
 
     </div>
-    <!--<span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span>-->
+    <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span>
     <br>
 </div>
 
@@ -190,6 +190,7 @@ function fetch_data(e){
                     var user_icon = getColor(data[value]['user_id']);
                     L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);
                     markersLayer.addTo(mymap);
+                    $("#ex1SliderVal").text(data[value]['timestamp']);
                     return 'Current value: ' + data[value]['timestamp'];
                 }
             });
@@ -208,9 +209,6 @@ function fetch_data(e){
         }).addTo(mymap);
 
         console.log( "ready!" );
-
-        $('#leaflet-slider').slider({autoplay: true});
-
     });
 
 </script>
