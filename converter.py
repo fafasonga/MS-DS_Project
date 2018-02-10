@@ -3,6 +3,8 @@ from sys import argv, exit
 from app import session
 from app.models import Location, User
 
+# Loading dataset to the Database from an external source
+
 ctr = 0
 
 users = {"name": 0}

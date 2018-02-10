@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div id="map" class="map map-home" style="height: 600px; margin-top: 50px"></div>
+<div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"></div>
 <title>Positioning System</title>
 
 <div>
@@ -61,43 +61,42 @@ var speed = 1000;
 var timer;
 var mySlider;
 
-function loop() { mySlider.slider('setValue', ++counter); if(counter == {{ count }} - 1) counter = 0; };
+function loop() {
+    mySlider.slider('setValue', ++counter);
+    if(counter == {{ count }} - 1)
+        counter = 0;
+        };
 
 
-function start()
-{
+function start() {
     timer = setInterval(loop, speed);
 };
 
-function stop()
-{
+function stop() {
     clearInterval(timer);
 };
 
-function singleSPeed()
-{
+function singleSPeed() {
     speed = 1000;
     stop();
     start();
 };
 
-function doubleSPeed()
-{
+function doubleSPeed() {
     speed = 500;
     stop();
     start();
 
 };
 
-function qtrSPeed()
-{
+function qtrSPeed() {
     speed = 250;
     stop();
     start();
 };
 
 
-function fetch_data(e){
+function fetch_data(e) {
     var name = $(e).val();
     $('#username').val(name);
     $( "#fetch_data").submit();

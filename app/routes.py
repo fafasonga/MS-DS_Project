@@ -6,7 +6,10 @@ from app import app, session
 from app.models import Location, Base, AlchemyEncoder, User
 import json
 
+# This block is used to bind the Url to a specific request or action and allow the comminication
+# between the server and the web application
 
+# Routing for the main home page
 @app.route("/", methods=["GET", "POST"])
 def hello():
     count = 0
@@ -38,6 +41,7 @@ def hello():
     return render_template("index.html", data=locations, users=users, count=count)
 
 
+# Routing for accessing the Database page
 @app.route("/table")
 def fill_table():
     locations = session.query(Location, User).join(User).add_columns(User.username, Location.id, Location.lat,
@@ -45,6 +49,7 @@ def fill_table():
     return render_template('tables.html', data=locations)
 
 
+# Routing for the page to add new data to the Database
 @app.route("/add_location", methods=['POST', 'GET'])
 def fill_db():
     if request.method == 'POST':
@@ -63,6 +68,7 @@ def fill_db():
         return render_template('add_location.html', users=users)
 
 
+# Routing for the page to delete data from the Database
 @app.route("/remove_location", methods=["POST", "GET"])
 def remove_location():
     if request.method == 'POST':
@@ -77,6 +83,7 @@ def remove_location():
         return render_template("remove_location.html", locations=locations)
 
 
+# Routing for the page to add new users to the Database
 @app.route("/add_user", methods=['GET', 'POST'])
 def add_user():
     if request.method == 'POST':
@@ -89,6 +96,7 @@ def add_user():
         return render_template("add_user.html")
 
 
+# Routing for the page to delete users to the Database
 @app.route("/remove_user", methods=["POST", "GET"])
 def remove_user():
     if request.method == 'POST':

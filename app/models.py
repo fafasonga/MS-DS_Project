@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
 
 Base = declarative_base()
 
+# creating the template for our Database
 
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
