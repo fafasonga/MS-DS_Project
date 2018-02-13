@@ -11,4 +11,4 @@ There is a facility to add new Users and new data points to the database and del
 At the loading of the home page, you need to select which user to be visualized on the map either indivually or select to visualize all the users together.
 
 You then have to click the start botton to start the visualization and then you can speed up the visualization and stop.
-Once the visualization have started, in case a stop botton were not pressed, the visualization will run in infinite loop.
+Once the visualization have started, in case a stop botton were not pressed, the visualization will run in infinite loops.
