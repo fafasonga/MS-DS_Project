@@ -1,8 +1,9 @@
 from datetime import datetime
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify, request, flash, url_for
 from werkzeug.utils import redirect
 
-from app import app, session
+from app import app, session, settings
+from app.forms import LocationForm
 from app.models import Location, Base, AlchemyEncoder, User
 import json
 
@@ -10,6 +11,9 @@ import json
 # between the server and the web application
 
 # Routing for the main home page
+from app.utils import upload_csv
+
+
 @app.route("/", methods=["GET", "POST"])
 def hello():
     count = 0
@@ -52,20 +56,28 @@ def fill_table():
 # Routing for the page to add new data to the Database
 @app.route("/add_location", methods=['POST', 'GET'])
 def fill_db():
-    if request.method == 'POST':
-        lat = request.form['lat']
-        lan = request.form['lan']
-        timestamp = request.form['timestamp']
-        user_id = request.form['user_id']
-        print(timestamp)
-        ts = datetime.strptime(timestamp, "%Y-%m-%d")
-        location = Location(lat, lan, ts, user_id)
+    form = LocationForm()
+    print(form.user_id.data)
+
+    if form.validate_on_submit():
+        location = Location(lat=form.lat.data, lan=form.lan.data, timestamp=form.timestamp.data, user_id=form.user_id.data)
         session.add(location)
         session.flush()
         return redirect("/")
+    # if request.method == 'POST':
+    #     lat = request.form['lat']
+    #     lan = request.form['lan']
+    #     timestamp = request.form['timestamp']
+    #     user_id = request.form['user_id']
+    #     print(timestamp)
+    #     ts = datetime.strptime(timestamp, "%Y-%m-%d")
+    #     location = Location(lat, lan, ts, user_id)
+    #     session.add(location)
+    #     session.flush()
+    #     return redirect("/")
     else:
         users = session.query(User).all()
-        return render_template('add_location.html', users=users)
+        return render_template('add_location.html', users=users, form=form)
 
 
 # Routing for the page to delete data from the Database
@@ -109,3 +121,16 @@ def remove_user():
     else:
         users = session.query(User).all()
         return render_template("remove_user.html", users=users)
+
+
+@app.route('/upload_csv', methods=['POST', 'GET'])
+def upload_data():
+    if request.method == 'POST':
+        file = request.files['file']
+        result = upload_csv(file)
+        if result != "OK":
+            flash(result)
+        else:
+            flash("Your file successfully uploaded!")
+            return redirect(url_for('hello'))
+    return render_template('upload_csv.html')

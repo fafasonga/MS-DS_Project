@@ -50,10 +50,10 @@ class Location(Base):
     timestamp = Column(DateTime)
     user_id = Column(Integer, ForeignKey('user.id'))
 
-    def __init__(self, lat, lan, timestap, user_id):
+    def __init__(self, lat, lan, timestamp, user_id):
         self.lan = lan
         self.lat = lat
-        self.timestamp = timestap
+        self.timestamp = timestamp
         self.user_id = user_id
 
     def __repr__(self):

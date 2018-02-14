@@ -21,5 +21,6 @@ template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),  'templa
 static_foler = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_foler)
+app.config['SECRET_KEY'] = settings.SECRET_KEY
 
 from app import routes, models
