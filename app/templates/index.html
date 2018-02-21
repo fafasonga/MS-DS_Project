@@ -5,7 +5,35 @@
 <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"></div>
 <title>Positioning System</title>
 
-<div>
+
+<div class="row">
+    <div class="col-md-4">
+        <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span><br>
+        <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" onclick="singleSPeed()">1X</button>
+    <button type="button" class="btn btn-default" onclick="doubleSPeed()">2X</button>
+    <button type="button" class="btn btn-default" onclick="qtrSPeed()">4X</button>
+    <button type="button" class="btn btn-default" onclick="start()">Start</button>
+    <button type="button" class="btn btn-default" onclick="stop()">Stop</button>
+</div>
+
+
+        <select onchange="fetch_data(this);">
+            <option disabled selected value> -- select an option --</option>
+            {% if users %}
+            <option value="all">All Users</option>
+            {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+
+        <form method="post" id="fetch_data">
+            <input type="hidden" id="username" name="username">
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div>
     <br>
     <div align="center">
         {% if data %}
@@ -23,33 +51,14 @@
         <p id="data-holder"></p>
 
     </div>
-    <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span>
-    <br>
 </div>
+    </div>
+    <div class="col-md-4">
+            <!--<img src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/img/sprite-skin-flat.png">-->
 
-
-<div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default" onclick="singleSPeed()">1X</button>
-    <button type="button" class="btn btn-default" onclick="doubleSPeed()">2X</button>
-    <button type="button" class="btn btn-default" onclick="qtrSPeed()">4X</button>
-    <button type="button" class="btn btn-default" onclick="start()">Start</button>
-    <button type="button" class="btn btn-default" onclick="stop()">Stop</button>
+        <input type="text" id="range" name="example_name" value="" />
+    </div>
 </div>
-
-
-<select onchange="fetch_data(this);">
-    <option disabled selected value> -- select an option --</option>
-    {% if users %}
-    <option value="all">All Users</option>
-    {% for user in users %}
-    <option value="{{ user.username }}">{{ user.username }}</option>
-    {% endfor %}
-    {% endif %}
-</select>
-
-<form method="post" id="fetch_data">
-    <input type="hidden" id="username" name="username">
-</form>
 
 
 <script>
@@ -64,9 +73,15 @@ var mySlider;
 function loop() {
     mymap.removeLayer(markersLayer);
     mySlider.slider('setValue', ++counter);
-    if(counter == {{ count }} - 1)
+    if(counter == {{ count }} - 1) {
+        mymap.removeLayer(markersLayer);
+        markersLayer = new L.LayerGroup();
+        markersLayer.addTo(mymap);
         counter = 0;
-        };
+    }
+};
+
+
 
 
 function start() {
@@ -211,6 +226,16 @@ function fetch_data(e) {
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
             id: 'mapbox.streets'
         }).addTo(mymap);
+
+
+        $("#range").ionRangeSlider({
+    type: "double",
+    grid: true,
+    from: 1,
+    to: 5,
+    values: [0, 10, 100, 1000, 10000, 100000, 1000000]
+});
+
 
         console.log( "ready!" );
     });

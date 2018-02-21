@@ -137,15 +137,10 @@ def upload_data():
 
 
 # Deleting Existing Elements in the Database
-@app.route('/upload_csv', methods=['POST', 'GET'])
-def database_del():
-    if request.method == 'POST':
-        user = request.form.getlist('user[]')
-        print(user)
-
-        session.query(User).filter(User.id.in_(user)).delete(synchronize_session='fetch')
-
-        return redirect("/")
-    else:
-        users = session.query(User).all()
-        return render_template("upload_csv.html", users=users)
+@app.route('/delete_database', methods=['POST'])
+def delete_database():
+    session.begin()
+    session.query(Location).delete()
+    session.query(User).delete()
+    session.commit()
+    return redirect(url_for('home'))
