@@ -12,3 +12,12 @@ At the loading of the home page, you need to select which user to be visualized 
 
 You then have to click the start botton to start the visualization and then you can speed up the visualization and stop.
 Once the visualization have started, in case a stop botton were not pressed, the visualization will run in infinite loops.
+
+
+Getting started:
+
+Install the libraries.
+
+Open Terminal and run:
+
+pip install -r requirements.txt
