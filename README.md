@@ -20,4 +20,4 @@ Once the visualization have started, in case a stop botton were not pressed, the
 
 Open Terminal and run:
 
-pip install -r requirements.txt
+## pip install -r requirements.txt
