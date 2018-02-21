@@ -15,7 +15,7 @@ from app.utils import upload_csv
 
 
 @app.route("/", methods=["GET", "POST"])
-def hello():
+def home():
     count = 0
     if request.method == 'POST':
         print("Got new request")
@@ -132,5 +132,5 @@ def upload_data():
             flash(result)
         else:
             flash("Your file successfully uploaded!")
-            return redirect(url_for('hello'))
+            return redirect("/")
     return render_template('upload_csv.html')

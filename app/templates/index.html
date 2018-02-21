@@ -62,6 +62,7 @@ var timer;
 var mySlider;
 
 function loop() {
+    mymap.removeLayer(markersLayer);
     mySlider.slider('setValue', ++counter);
     if(counter == {{ count }} - 1)
         counter = 0;
@@ -69,6 +70,7 @@ function loop() {
 
 
 function start() {
+    clearInterval(timer);
     timer = setInterval(loop, speed);
 };
 
@@ -77,12 +79,14 @@ function stop() {
 };
 
 function singleSPeed() {
+    clearInterval(timer)
     speed = 1000;
     stop();
     start();
 };
 
 function doubleSPeed() {
+    clearInterval(timer);
     speed = 500;
     stop();
     start();
@@ -90,6 +94,7 @@ function doubleSPeed() {
 };
 
 function qtrSPeed() {
+    clearInterval(timer);
     speed = 250;
     stop();
     start();
@@ -185,7 +190,7 @@ function fetch_data(e) {
 
                     mymap.removeLayer(markersLayer);
 
-                    markersLayer = new L.LayerGroup();
+                    <!--markersLayer = new L.LayerGroup();-->
                     var user_icon = getColor(data[value]['user_id']);
                     L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);
                     markersLayer.addTo(mymap);
