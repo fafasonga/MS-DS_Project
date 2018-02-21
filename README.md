@@ -14,9 +14,9 @@ You then have to click the start botton to start the visualization and then you 
 Once the visualization have started, in case a stop botton were not pressed, the visualization will run in infinite loops.
 
 
-Getting started:
+# Getting started:
 
-Install the libraries.
+# Install the libraries.
 
 Open Terminal and run:
 
