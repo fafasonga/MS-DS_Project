@@ -38,6 +38,7 @@ def home():
         count = len(locations)
 
         locations = json.dumps(locations, cls=AlchemyEncoder)
+
     else:
         locations = ""
     users = session.query(User).all()

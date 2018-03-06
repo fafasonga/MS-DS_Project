@@ -39,14 +39,14 @@
         {% if data %}
         <p>Data length is: {{ count }}</p>
         <input
-                id="ex1"
+                id = "ex1"
                 data-slider-id='ex1Slider'
                 type="text"
-                data-slider-min="0"
-                data-slider-max="{{ count }}"
-                data-slider-step="1"
-                data-slider-value="0"
-                data-provide="slider">
+                data-slider-min = "0"
+                data-slider-max = "{{ count }}"
+                data-slider-step = "1"
+                data-slider-value = "0"
+                data-provide = "slider">
         {% endif %}
         <p id="data-holder"></p>
     </div>
@@ -70,7 +70,7 @@ var speed = 1000;
 
 var timer;
 var mySlider;
-var sliderControl = null;
+var sliderControl;
 
 function loop() {
     mymap.removeLayer(markersLayer);
@@ -82,8 +82,6 @@ function loop() {
         counter = 0;
     }
 };
-
-
 
 
 function start() {
@@ -160,8 +158,6 @@ function fetch_data(e) {
             data.sort(GetSortOrder('timestamp'));
 
             function getColor(id) {
-            console.log(id);
-
                 var u = "";
 
                 switch (id) {
@@ -204,7 +200,6 @@ function fetch_data(e) {
             // With JQuery
             mySlider = $('#ex1').slider({
                 formatter: function(value) {
-
                     mymap.removeLayer(markersLayer);
 
                     <!--markersLayer = new L.LayerGroup();-->
@@ -216,13 +211,34 @@ function fetch_data(e) {
                 }
             });
 
-           // $("#data-holder").text(JSON.stringify(data));
+           <!--$("#data-holder").text(JSON.stringify(data));-->
+
+
+            $( document ).ready(function() {
+               <!--markersLayer.clearLayers();-->
+               mymap.removeLayer(markersLayer);
+               <!--mymap.removeControl(sliderControl)-->
+               markersLayer = new L.LayerGroup();
+               markersLayer.addTo(mymap);
+
+               for (let i = 0; i < data.length; i++) {
+                    L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
+                    markersLayer.addTo(mymap);
+               }
+
+                sliderControl = L.control.sliderControl({layer:markersLayer, follow: 6});
+                              //To add the slider to the map ;
+                mymap.addControl(sliderControl);
+                             //And initialize the slider
+                sliderControl.startSlider();
+            });
+
 
         {% endif %}
 
         //adding tile layers to our map
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 20,
+            maxZoom: 22,
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -237,35 +253,6 @@ function fetch_data(e) {
             e.preventDefault();
           });
         });
-
-
-         function get_data(username) {
-         $.ajax({
-               type: "POST",
-               contentType: "application/json; charset=utf-8",
-               url: "/add_user",
-               data: JSON.stringify({"username": username}),
-               success: function (data) {
-                 markersLayer.clearLayers();
-                 mymap.removeLayer(markersLayer);
-                 mymap.removeControl(sliderControl);
-                 markersLayer = new L.LayerGroup();
-                 markersLayer.addTo(mymap);
-                 for (let i = 0; i < data.length; i++) {
-                     L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
-                 }
-                 var sliderControl = L.control.sliderControl({layer:markersLayer, follow: 6});
-                 mymap.addControl(sliderControl);
-                 sliderControl.startSlider();
-               },
-               dataType: "json"
-             });
-         };
-
-        markersLayer = new L.LayerGroup();
-        var sliderControl = L.control.sliderControl();
-        mymap.addControl(sliderControl);
-
 
         console.log( "ready!" );
     });

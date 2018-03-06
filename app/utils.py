@@ -39,6 +39,7 @@ def upload_csv(f):
             session.add(user)
         try:
             ts = datetime.strptime(data[3] + " " + data[4], "%d/%m/%Y %H:%M:%S")
+            print("Timestamp is :", ts)
         except ValueError:
             continue
         user_id = users[data[0]]
