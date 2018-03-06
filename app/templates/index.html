@@ -49,14 +49,17 @@
     </div>
     </div>
 
-    <!--<div class="col-md-4"><br><br>-->
-        <!--<div align="center">-->
+    <div class="col-md-4"><br><br>
+        <div align="center">
              <!--<input type="button" value="all" onclick="get_data('all');"><br>-->
-                <!--{% for user in users %}-->
+                {% for user in users %}
                 <!--<input type="button" value="{{ user.username }}" onclick="get_data('{{ user.username }}');"><br>-->
-                <!--{% endfor %}-->
-        <!--</div>-->
-    <!--</div>-->
+
+                <!--Add the User data that was selected from &#45;&#45; select an option &#45;&#45;-->
+
+                {% endfor %}
+        </div>
+    </div>
 </div>
 
 <script>
@@ -205,19 +208,19 @@ function fetch_data(e) {
                     markersLayer.addTo(mymap);
 
 
-                    var path = L.polyline(markersLayer, {snakingPause: 200});
-                    path.addTo(mymap).snakeIn();
+                    <!--var path = L.polyline(markersLayer, {snakingPause: 200});-->
+                    <!--path.addTo(mymap).snakeIn();-->
 
-                    mymap.addLayer(path);
-                    mymap.fitBounds(L.latLngBounds(latlngs))
+                    <!--mymap.addLayer(path);-->
+                    <!--mymap.fitBounds(L.latLngBounds(latlngs))-->
 
-                    function snake() {
-                        path.snakeIn();
-                    }
+                    <!--function snake() {-->
+                        <!--path.snakeIn();-->
+                    <!--}-->
 
-                    path.on('snakestart snake snakeend', function(ev){
-                        console.log(ev.type);
-                    });
+                    <!--path.on('snakestart snake snakeend', function(ev){-->
+                        <!--console.log(ev.type);-->
+                    <!--});-->
 
 
                     $("#ex1SliderVal").text(data[value]['timestamp']);
