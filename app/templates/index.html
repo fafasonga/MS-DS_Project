@@ -8,13 +8,10 @@
 
 <div class="row">
     <div class="col-md-4">
+        <br>
+        <br>
         <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span><br>
         <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default" onclick="singleSPeed()">1X</button>
-    <button type="button" class="btn btn-default" onclick="doubleSPeed()">2X</button>
-    <button type="button" class="btn btn-default" onclick="qtrSPeed()">4X</button>
-    <button type="button" class="btn btn-default" onclick="start()">Start</button>
-    <button type="button" class="btn btn-default" onclick="stop()">Stop</button>
 </div>
 
 
@@ -32,9 +29,9 @@
             <input type="hidden" id="username" name="username">
         </form>
     </div>
+
     <div class="col-md-4">
         <br>
-    <br>
     <div align="center">
         {% if data %}
         <p>Data length is: {{ count }}</p>
@@ -52,14 +49,14 @@
     </div>
     </div>
 
-    <div class="col-md-4"><br><br>
+    <!--<div class="col-md-4"><br><br>-->
         <!--<div align="center">-->
              <!--<input type="button" value="all" onclick="get_data('all');"><br>-->
                 <!--{% for user in users %}-->
                 <!--<input type="button" value="{{ user.username }}" onclick="get_data('{{ user.username }}');"><br>-->
                 <!--{% endfor %}-->
         <!--</div>-->
-    </div>
+    <!--</div>-->
 </div>
 
 <script>
@@ -206,6 +203,23 @@ function fetch_data(e) {
                     var user_icon = getColor(data[value]['user_id']);
                     L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);
                     markersLayer.addTo(mymap);
+
+
+                    var path = L.polyline(markersLayer, {snakingPause: 200});
+                    path.addTo(mymap).snakeIn();
+
+                    mymap.addLayer(path);
+                    mymap.fitBounds(L.latLngBounds(latlngs))
+
+                    function snake() {
+                        path.snakeIn();
+                    }
+
+                    path.on('snakestart snake snakeend', function(ev){
+                        console.log(ev.type);
+                    });
+
+
                     $("#ex1SliderVal").text(data[value]['timestamp']);
                     return 'Current value: ' + data[value]['timestamp'];
                 }
@@ -215,7 +229,7 @@ function fetch_data(e) {
 
 
             $( document ).ready(function() {
-               <!--markersLayer.clearLayers();-->
+               markersLayer.clearLayers();
                mymap.removeLayer(markersLayer);
                <!--mymap.removeControl(sliderControl)-->
                markersLayer = new L.LayerGroup();
@@ -231,6 +245,7 @@ function fetch_data(e) {
                 mymap.addControl(sliderControl);
                              //And initialize the slider
                 sliderControl.startSlider();
+
             });
 
 

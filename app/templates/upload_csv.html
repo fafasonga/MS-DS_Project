@@ -4,7 +4,7 @@
 
 <form method="post" action="{{ url_for('delete_database') }}">
     <input hidden name="command" value="delete_database">
-    <input type="submit" value="Delete Database">
+    <input type="submit" value="Delete Current Document">
 </form>
 
 
@@ -13,11 +13,11 @@
 
 <form method="post" enctype="multipart/form-data">
     <div>
-        <label for = "file"> Choose the file to upload </label>
+        <label for = "file"> Select CSV file from your Computer </label>
         <input type="file" id="file" name="file" accept="text/csv" required>
     </div>
     <div>
-        <input type="submit" value="Upload data">
+        <input type="submit" value="Upload file">
     </div>
 </form>
 {% endblock %}
