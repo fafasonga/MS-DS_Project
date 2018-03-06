@@ -129,6 +129,7 @@ function fetch_data(e) {
 
         {% if data %}
             var data = JSON.parse({{ data|tojson|safe }});
+            console.log(data)
 
             function n(n){
                 return n > 9 ? "" + n: "0" + n;
@@ -145,17 +146,25 @@ function fetch_data(e) {
                 }
             }
 
-            function replaceByValue( obj, field ) {
+            function extractPts(obj) {
+                var pts = [];
+                for (var i = 0; i < obj.length; i++) {
+                    pts.push(new L.LatLng(obj[i]['lat'], obj[i]['lan']));
+                }
+                return pts;
+            }
+
+            function replaceByValue( obj, old_field, new_field ) {
                 for( var k = 0; k < obj.length; ++k ) {
-                    var d = new Date(obj[k][field])
+                    var d = new Date(obj[k][old_field])
                     var s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
-                    obj[k][field] = s;
+                    obj[k][new_field] = s;
                 }
                 return obj;
             }
 
-            data = replaceByValue(data, 'timestamp');
-            data.sort(GetSortOrder('timestamp'));
+            data = replaceByValue(data, 'timestamp', 'dt');
+            data.sort(GetSortOrder('dt'));
 
             function getColor(id) {
                 var u = "";
@@ -208,15 +217,15 @@ function fetch_data(e) {
                     markersLayer.addTo(mymap);
 
 
-                    <!--var path = L.polyline(markersLayer, {snakingPause: 200});-->
+                    var path = L.polyline(extractPts(data));
                     <!--path.addTo(mymap).snakeIn();-->
 
-                    <!--mymap.addLayer(path);-->
+                    mymap.addLayer(path);
                     <!--mymap.fitBounds(L.latLngBounds(latlngs))-->
+                    <!--mymap.addLayer(L.marker(data[0]));-->
+		            <!--mymap.addLayer(L.marker(data[data.length - 1]));-->
 
-                    <!--function snake() {-->
-                        <!--path.snakeIn();-->
-                    <!--}-->
+                        path.snakeIn();
 
                     <!--path.on('snakestart snake snakeend', function(ev){-->
                         <!--console.log(ev.type);-->
@@ -238,12 +247,12 @@ function fetch_data(e) {
                markersLayer = new L.LayerGroup();
                markersLayer.addTo(mymap);
 
-               for (let i = 0; i < data.length; i++) {
-                    L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
-                    markersLayer.addTo(mymap);
-               }
+               <!--for (let i = 0; i < data.length; i++) {-->
+                    <!--L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);-->
+                    <!--markersLayer.addTo(mymap);-->
+               <!--}-->
 
-                sliderControl = L.control.sliderControl({layer:markersLayer, follow: 6});
+                sliderControl = L.control.sliderControl({position: "bottomright", layer:markersLayer, follow: 6});
                               //To add the slider to the map ;
                 mymap.addControl(sliderControl);
                              //And initialize the slider
