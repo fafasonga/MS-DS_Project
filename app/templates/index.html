@@ -51,13 +51,7 @@
 
     <div class="col-md-4"><br><br>
         <div align="center">
-             <!--<input type="button" value="all" onclick="get_data('all');"><br>-->
-                {% for user in users %}
-                <!--<input type="button" value="{{ user.username }}" onclick="get_data('{{ user.username }}');"><br>-->
-
-                <!--Add the User data that was selected from &#45;&#45; select an option &#45;&#45;-->
-
-                {% endfor %}
+            <!--add button to add the marker to the lines or removing the markers-->
         </div>
     </div>
 </div>
@@ -129,7 +123,6 @@ function fetch_data(e) {
 
         {% if data %}
             var data = JSON.parse({{ data|tojson|safe }});
-            console.log(data)
 
             function n(n){
                 return n > 9 ? "" + n: "0" + n;
@@ -213,24 +206,24 @@ function fetch_data(e) {
 
                     <!--markersLayer = new L.LayerGroup();-->
                     var user_icon = getColor(data[value]['user_id']);
-                    L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);
+                    <!--L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);-->
+                    L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon});
                     markersLayer.addTo(mymap);
 
+                    sliderControl = L.control.sliderControl({position: "bottomright", layer:markersLayer, follow: 6});
+                              //To add the slider to the map ;
+                    mymap.addControl(sliderControl);
+                                 //And initialize the slider
+                    sliderControl.startSlider();
 
-                    var path = L.polyline(extractPts(data));
-                    <!--path.addTo(mymap).snakeIn();-->
+                    var path = L.polyline(extractPts(data), {snakingSpeed: 05});
+                    <!--mymap.removeLayer(path);-->
 
                     mymap.addLayer(path);
-                    <!--mymap.fitBounds(L.latLngBounds(latlngs))-->
-                    <!--mymap.addLayer(L.marker(data[0]));-->
-		            <!--mymap.addLayer(L.marker(data[data.length - 1]));-->
+                    mymap.addLayer(L.marker(extractPts(data)[0]));
+		            mymap.addLayer(L.marker(extractPts(data)[data.length - 1]));
 
-                        path.snakeIn();
-
-                    <!--path.on('snakestart snake snakeend', function(ev){-->
-                        <!--console.log(ev.type);-->
-                    <!--});-->
-
+                    path.snakeIn();
 
                     $("#ex1SliderVal").text(data[value]['timestamp']);
                     return 'Current value: ' + data[value]['timestamp'];
@@ -241,16 +234,11 @@ function fetch_data(e) {
 
 
             $( document ).ready(function() {
-               markersLayer.clearLayers();
-               mymap.removeLayer(markersLayer);
-               <!--mymap.removeControl(sliderControl)-->
-               markersLayer = new L.LayerGroup();
-               markersLayer.addTo(mymap);
 
-               <!--for (let i = 0; i < data.length; i++) {-->
-                    <!--L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);-->
-                    <!--markersLayer.addTo(mymap);-->
-               <!--}-->
+               for (let i = 0; i < data.length; i++) {
+                    L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
+                    markersLayer.addTo(mymap);
+               }
 
                 sliderControl = L.control.sliderControl({position: "bottomright", layer:markersLayer, follow: 6});
                               //To add the slider to the map ;
