@@ -103,7 +103,6 @@ var speed = 1000;
 var timer;
 var mySlider;
 var sliderControl;
-var layerGroup;
 
 function loop() {
     mymap.removeLayer(markersLayer);
@@ -114,24 +113,24 @@ function loop() {
         markersLayer.addTo(mymap);
         counter = 0;
     }
-};
+}
 
 
 function start() {
     clearInterval(timer);
     timer = setInterval(loop, speed);
-};
+}
 
 function stop() {
     clearInterval(timer);
-};
+}
 
 function singleSPeed() {
-    clearInterval(timer)
+    clearInterval(timer);
     speed = 1000;
     stop();
     start();
-};
+}
 
 function doubleSPeed() {
     clearInterval(timer);
@@ -139,21 +138,20 @@ function doubleSPeed() {
     stop();
     start();
 
-};
+}
 
 function qtrSPeed() {
     clearInterval(timer);
     speed = 250;
     stop();
     start();
-};
-
+}
 
 function fetch_data(e) {
     var name = $(e).val();
     $('#username').val(name);
     $( "#fetch_data").submit();
-};
+}
 
     $( document ).ready(function() {
         //Creating a map with coordinates of Beinjing
@@ -188,7 +186,7 @@ function fetch_data(e) {
 
             function replaceByValue( obj, old_field, new_field ) {
                 for( var k = 0; k < obj.length; ++k ) {
-                    var d = new Date(obj[k][old_field])
+                    var d = new Date(obj[k][old_field]);
                     var s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
                     obj[k][new_field] = s;
                 }
@@ -273,14 +271,20 @@ function fetch_data(e) {
 
            // $("#data-holder").text(JSON.stringify(data));
 
-               for (let i = 0; i < data.length; i++) {
+                for ( var i = 0; i < data.length; i++) {
                     L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
-               }
+                }
 
-                sliderControl = L.control.sliderControl({position: "bottomright", layer:markersLayer, follow: 3});
-                              //To add the slider to the map ;
+                sliderControl = L.control.sliderControl({
+                    position: "bottomright",
+                    layer:markersLayer,
+                    follow: 3
+                });
+
+                //To add the slider to the map ;
                 mymap.addControl(sliderControl);
-                             //And initialize the slider
+
+                //And initialize the slider
                 sliderControl.startSlider();
 
         {% endif %}

@@ -1,5 +1,53 @@
+# .coveragerc to control coverage.py
 [run]
-omit =
-    # omit anything in a .local directory anywhere
-    */venv/* 
+branch = True
 
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    pragma: no cover
+
+    def __repr__
+    if self\.debug
+    if isinstance()
+    if not isinstance()
+    lines = f.readlines()
+    data = line.split()
+    line = line.strip()
+
+    fields[field]
+    result = check_csv()
+    l.decode()
+
+    @app.route()
+    if result != "OK"
+    def check_csv(file)
+    self.username = username
+
+	self.lan = lan 
+	self.lat = lat 
+	self.timestamp = timestamp 
+	self.user_id = user_id 
+
+    return "OK"
+    return json.JSONEncoder.default() 
+    return fields
+
+    raise AssertionError
+    raise NotImplementedError
+	except ValueError
+	print()
+	f.close()
+	ctr = 0
+	if line
+	for line
+
+	try:
+
+    if 0:
+    if __name__ == .__main__.:
+
+	ignore_errors = True
+
+[html]
+directory = coverage_html_report

@@ -51,7 +51,7 @@ def home():
 def fill_table():
     locations = session.query(Location, User).join(User).add_columns(User.username, Location.id, Location.lat,
                                                                      Location.lan, Location.timestamp).all()
-    return render_template('tables.html', data=locations)
+    return render_template("tables.html", data=locations)
 
 
 # Routing for the page to add new data to the Database
@@ -65,20 +65,9 @@ def fill_db():
         session.add(location)
         session.flush()
         return redirect("/")
-    # if request.method == 'POST':
-    #     lat = request.form['lat']
-    #     lan = request.form['lan']
-    #     timestamp = request.form['timestamp']
-    #     user_id = request.form['user_id']
-    #     print(timestamp)
-    #     ts = datetime.strptime(timestamp, "%Y-%m-%d")
-    #     location = Location(lat, lan, ts, user_id)
-    #     session.add(location)
-    #     session.flush()
-    #     return redirect("/")
     else:
         users = session.query(User).all()
-        return render_template('add_location.html', users=users, form=form)
+        return render_template("add_location.html", users=users, form=form)
 
 
 # Routing for the page to delete data from the Database
@@ -134,10 +123,7 @@ def upload_data():
         else:
             flash("Your file successfully uploaded!")
             return redirect("/")
-    else:
-        return redirect("/")
     return render_template("upload_csv.html")
-
 
 # Deleting Existing Elements in the Database
 @app.route("/delete_database", methods=["POST"])
