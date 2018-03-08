@@ -124,7 +124,7 @@ def remove_user():
         return render_template("remove_user.html", users=users)
 
 # Uploading New CSV files from Computer directories
-@app.route('/upload_csv', methods=['POST', 'GET'])
+@app.route("/upload_csv", methods=["POST", "GET"])
 def upload_data():
     if request.method == 'POST':
         file = request.files['file']
@@ -134,14 +134,17 @@ def upload_data():
         else:
             flash("Your file successfully uploaded!")
             return redirect("/")
-    return render_template('upload_csv.html')
+    else:
+        return redirect("/")
+    return render_template("upload_csv.html")
 
 
 # Deleting Existing Elements in the Database
-@app.route('/delete_database', methods=['POST'])
+@app.route("/delete_database", methods=["POST"])
 def delete_database():
     session.begin()
     session.query(Location).delete()
     session.query(User).delete()
     session.commit()
     return redirect(url_for('home'))
+
