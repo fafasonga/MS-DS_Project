@@ -39,6 +39,7 @@
                 </li>
             </ul>
 
+                                        {% if data %}
             <div>
                 <div class="col-md-4">
                     <div class="btn-group" role="group" aria-label="...">
@@ -59,33 +60,17 @@
             </div>
 
             <div class="col-md-4">
-                {% if data %}
                 <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" id="show1" class="btn btn-default" onclick="start()">Show Markers</button>
-                    <button type="button" id="hide1" class="btn btn-default" onclick="stop()">Hide Markers</button>
-                    <div id="mapp">
-                        Put the Marker...
-                    </div>
+                    <button type="button" id="show1" class="btn btn-default">Show All Markers</button>
++                   <button type="button" id="hide1" class="btn btn-default">Hide All Markers</button>
                 </div>
 
                 <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" id="show2" class="btn btn-default" onclick="start()">Show Slider</button>
-                    <button type="button" id="hide2" class="btn btn-default" onclick="start()">Hide Slider</button>
-                    <div id="slid">
-                        data is true...
-                    </div>
+                    <button type="button" id="show2" class="btn btn-default">Show Lines</button>
++                   <button type="button" id="hide2" class="btn btn-default">Hide Lines</button>
                 </div>
-
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" id="show3" class="btn btn-default" onclick="start()">Show Lines</button>
-                    <button type="button" id="hide3" class="btn btn-default" onclick="start()">Hide Lines</button>
-                    <div id="lin">
-                        data is true...
-                    </div>
-                </div>
-
-                {% endif %}
             </div>
+                            {% endif %}
 
         </div>
     </nav>

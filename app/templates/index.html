@@ -2,311 +2,437 @@
 
 {% block content %}
 
-<div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"></div>
-<title>Positioning System</title>
+    <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"></div>
+    <title>Positioning System</title>
 
 
-<div class="row">
-    <div class="col-md-4">
-        <br>
-        <br>
-        <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span><br>
-        <div class="btn-group" role="group" aria-label="...">
-</div>
+    <div class="row">
+        <div class="col-md-4">
+            <br>
+            <br>
+            <span id="ex1CurrentSliderValLabel">Current time: <span id="ex1SliderVal"></span></span><br>
+            <div class="btn-group" role="group" aria-label="...">
+            </div>
 
 
-        <select onchange="fetch_data(this);">
-            <option disabled selected value> -- select an option --</option>
-            {% if users %}
-            <option value="all">All Users</option>
-            {% for user in users %}
-            <option value="{{ user.username }}">{{ user.username }}</option>
-            {% endfor %}
-            {% endif %}
-        </select>
+            <select onchange="fetch_data(this);">
+                <option disabled selected value> -- select an option --</option>
+                {% if users %}
+                    <option value="all">All Users</option>
+                    {% for user in users %}
+                        <option value="{{ user.username }}">{{ user.username }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
 
-        <form method="post" id="fetch_data">
-            <input type="hidden" id="username" name="username">
-        </form>
-    </div>
+            <form method="post" id="fetch_data">
+                <input type="hidden" id="username" name="username">
+            </form>
+        </div>
 
-    <div class="col-md-4">
-        <br>
-    <div align="center">
-        {% if data %}
-        <p>Data length is: {{ count }}</p>
-        <input
-                id = "ex1"
-                data-slider-id='ex1Slider'
-                type="text"
-                data-slider-min = "0"
-                data-slider-max = "{{ count }}"
-                data-slider-step = "1"
-                data-slider-value = "0"
-                data-provide = "slider">
-        {% endif %}
-        <p id="data-holder"></p>
-    </div>
-    </div>
+        <div class="col-md-4">
+            <br>
+            <div align="center">
+                {% if data %}
+                    <p>Data length is: {{ count }}</p>
+                    <input
+                            id="ex1"
+                            data-slider-id='ex1Slider'
+                            type="text"
+                            data-slider-min="0"
+                            data-slider-max="{{ count }}"
+                            data-slider-step="1"
+                            data-slider-value="0"
+                            data-provide="slider">
+                {% endif %}
+                <p id="data-holder"></p>
+            </div>
+        </div>
 
-    <div class="col-md-4"><br><br>
-        <div align="center">
-            <script>
-
-                $('#show1').click(function () {
-                    $('#show1').css('display', 'none');
-                    $('#mapp').show();
-                    $('#hide1').show();
-                });
-
-                $('#hide1').click(function () {
-                    $('#hide1').css('display', 'none');
-                    $('#mapp').hide();
-                    $('#show1').show();
-                });
-
-                $('#show2').click(function () {
-                    $('#show2').css('display', 'none');
-                    $('#slid').show();
-                    $('#hide2').show();
-                });
-
-                $('#hide2').click(function () {
-                    $('#hide2').css('display', 'none');
-                    $('#slid').hide();
-                    $('#show2').show();
-                });
-
-                $('#show3').click(function () {
-                    $('#show3').css('display', 'none');
-                    $('#lin').show();
-                    $('#hide3').show();
-                });
-
-                $('#hide3').click(function () {
-                    $('#hide3').css('display', 'none');
-                    $('#lin').hide();
-                    $('#show3').show();
-                });
-
-            </script>
+        <div class="col-md-4"><br><br>
+            <div align="center">
+                <p>Number of shown markers:</p>
+                <input type="number" value="1" id="limit">
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-var mymap;
-var markersLayer = new L.LayerGroup();
-var counter = 0;
-var speed = 1000;
+    <script>
 
-var timer;
-var mySlider;
-var sliderControl;
+        /**
+         * begin of block code for the Show and hide of the Marker and Polyline buttons JQUERY
+         */
 
-function loop() {
-    mymap.removeLayer(markersLayer);
-    mySlider.slider('setValue', ++counter);
-    if(counter == {{ count }} - 1) {
-        mymap.removeLayer(markersLayer);
-        markersLayer = new L.LayerGroup();
-        markersLayer.addTo(mymap);
-        counter = 0;
-    }
-}
+        $('#show1').click(function () {
+            $('#show1').css('display', 'none');
+            $('#hide1').show();
+        });
+
+        $('#hide1').click(function () {
+            $('#hide1').css('display', 'none');
+            $('#show1').show();
+        });
+
+        $('#show2').click(function () {
+            $('#show2').css('display', 'none');
+            $('#hide2').show();
+        });
+
+        $('#hide2').click(function () {
+            $('#hide2').css('display', 'none');
+            $('#show2').show();
+        });
 
 
-function start() {
-    clearInterval(timer);
-    timer = setInterval(loop, speed);
-}
+        /** end of block code for the Show and hide of the Marker and Polyline buttons JQUERY */
 
-function stop() {
-    clearInterval(timer);
-}
+        var mymap;
+        var markersLayer = new L.LayerGroup();
+        var pathLayer = new L.LayerGroup();
+        var counter = 0;
+        var counter2 = 0;
+        var speed = 1000;
+        var allMarkers = new L.LayerGroup();
+        var newMarkers = new L.LayerGroup();
 
-function singleSPeed() {
-    clearInterval(timer);
-    speed = 1000;
-    stop();
-    start();
-}
+        var timer;
+        var mySlider;
 
-function doubleSPeed() {
-    clearInterval(timer);
-    speed = 500;
-    stop();
-    start();
+        var isAddingLayerAllowed = true;
 
-}
 
-function qtrSPeed() {
-    clearInterval(timer);
-    speed = 250;
-    stop();
-    start();
-}
+        function loop() {
+            mymap.removeLayer(markersLayer);
+            mySlider.slider('setValue', ++counter);
 
-function fetch_data(e) {
-    var name = $(e).val();
-    $('#username').val(name);
-    $( "#fetch_data").submit();
-}
+            if (counter === {{ count }} - 1) {
+                newMarkers.clearLayers();
+                counter = 0;
+            }
+        }
 
-    $( document ).ready(function() {
-        //Creating a map with coordinates of Beinjing
-        mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
-        markersLayer.addTo(mymap);
 
-        {% if data %}
-            var data = JSON.parse({{ data|tojson|safe }});
+        /**
+         * start class for limiting the number of markers on the Map
+         */
 
-            function n(n){
-                return n > 9 ? "" + n: "0" + n;
+        class ArrayHolder {
+            constructor() {
+                this.markers = [];
+                this.limit = 1;
+                this.nums = [];
             }
 
-            function GetSortOrder(prop) {
-                return function(a, b) {
-                    if (a[prop] > b[prop]) {
-                        return 1;
-                    } else if (a[prop] < b[prop]) {
-                        return -1;
-                    }
-                    return 0;
-                }
+            getMarkers() {
+                return this.markers;
             }
 
-            function extractPts(obj) {
-                var pts = [];
-                for (var i = 0; i < obj.length; i++) {
-                    pts.push(new L.LatLng(obj[i]['lat'], obj[i]['lan']));
-                }
-                return pts;
-            }
+            addMarker(value) {
 
-            function replaceByValue( obj, old_field, new_field ) {
-                for( var k = 0; k < obj.length; ++k ) {
-                    var d = new Date(obj[k][old_field]);
-                    var s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
-                    obj[k][new_field] = s;
-                }
-                return obj;
-            }
-
-            data = replaceByValue(data, 'timestamp', 'dt');
-            data.sort(GetSortOrder('dt'));
-
-            function getColor(id) {
-                var u = "";
-
-                switch (id) {
-                    case 1:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-black.png';
-                        break;
-                    case 2:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png';
-                        break;
-                    case 3:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
-                        break;
-                    case 4:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png';
-                        break;
-                    case 5:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png';
-                        break;
-                    case 6:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
-                        break;
-                    case 7:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png';
-                        break;
-                    default:
-                        u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
-                        break;
+                if (this.markers.length >= this.limit) {
+                    var removedElem = this.markers.shift();
+                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
                 }
 
-                return icon = new L.Icon({
-                  iconUrl: u,
-                  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                  iconSize: [20, 35],
-                  iconAnchor: [12, 41],
-                  popupAnchor: [1, -24],
-                  shadowSize: [21, 21]
-                });
+                this.markers.push(value);
+                console.log("This.markers is : ", this.markers);
+                return this.markers;
             }
 
-            // With JQuery
+            addNums(value) {
 
+                if (this.nums.length >= this.limit) {
+                    let removedElem = this.nums.shift();
+                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
+                }
 
-            mySlider = $('#ex1').slider({
-                formatter: function(value) {
+                this.nums.push(value);
+                console.log("This.markers is : ", this.nums);
+                {#return this.markers;#}
+            }
+
+            changeLimit(value) {
+                console.log("Changing limitation to " + value);
+                this.limit = value;
+            }
+        }
+
+        /**
+         * start defining functions for the slider
+         */
+
+        function start() {
+            clearInterval(timer);
+            timer = setInterval(loop, speed);
+        }
+
+        function stop() {
+            clearInterval(timer);
+        }
+
+        function singleSPeed() {
+            clearInterval(timer);
+            speed = 1000;
+            stop();
+            start();
+        }
+
+        function doubleSPeed() {
+            clearInterval(timer);
+            speed = 500;
+            stop();
+            start();
+
+        }
+
+        function qtrSPeed() {
+            clearInterval(timer);
+            speed = 250;
+            stop();
+            start();
+        }
+
+        /** end of functions for the slider */
+
+        function fetch_data(e) {
+            var name = $(e).val();
+            $('#username').val(name);
+            $("#fetch_data").submit();
+        }
+
+        /**
+         * start Assigning different colors to the icons of the markers
+         */
+
+        function getColor(id) {
+            var u = "";
+
+            switch (id) {
+                case 1:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-black.png';
+                    break;
+                case 2:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png';
+                    break;
+                case 3:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
+                    break;
+                case 4:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png';
+                    break;
+                case 5:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png';
+                    break;
+                case 6:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
+                    break;
+                case 7:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png';
+                    break;
+                default:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
+                    break;
+            }
+
+            return icon = new L.Icon({
+                iconUrl: u,
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [20, 35],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -24],
+                shadowSize: [21, 21]
+            });
+        }
+
+        /**
+         *
+         */
+
+        function transformFromJsonToMarker(obj) {
+            var markers = [];
+            for (var k = 0; k < obj.length; ++k) {
+                markers.push(
+                    L.marker([obj[k]['lat'], obj[k]['lan']], {
+                        time: obj[k]['timestamp'],
+                        icon: getColor(obj[k]['user_id'])
+                    })
+                );
+
+            }
+            return markers;
+        }
+
+        function n(n) {
+            return n > 9 ? "" + n : "0" + n;
+        }
+
+        function GetSortOrder(prop) {
+            return function (a, b) {
+                if (a[prop] > b[prop]) {
+                    return 1;
+                } else if (a[prop] < b[prop]) {
+                    return -1;
+                }
+                return 0;
+            }
+        }
+
+        function extractPts(obj) {
+            var pts = [];
+            for (var i = 0; i < obj.length; i++) {
+                pts.push(new L.LatLng(obj[i]['lat'], obj[i]['lan']));
+            }
+            return pts;
+        }
+
+        function replaceByValue(obj, old_field, new_field) {
+            for (var k = 0; k < obj.length; ++k) {
+                var d = new Date(obj[k][old_field]);
+                var s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
+                obj[k][new_field] = s;
+            }
+            return obj;
+        }
+
+        function addLayerToMap(layer) {
+            if (isAddingLayerAllowed) {
+                layer.addTo(mymap);
+            }
+        }
+
+        /**
+         * This block of code executing right after page has been loaded
+         */
+
+        $(document).ready(function () {
+
+            var markersHolder = new ArrayHolder();
+
+            $("#limit").on("change paste keyup", function () {
+                markersHolder.changeLimit($(this).val());
+            });
+
+            /**
+             * Creating a map with the coordinate of Beinjing
+            */
+
+            //Creating a map with coordinates of Beinjing
+            mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
+            addLayerToMap(markersLayer);
+            addLayerToMap(newMarkers);
+
+            /**
+            * Adding the Tile Layer to the Map
+            */
+
+            //Adding Tile Layers to the Map
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                maxZoom: 22,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                id: 'mapbox.streets'
+            }).addTo(mymap);
+
+            $('.dropdown-submenu a.nav-link').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+
+            {% if data %}
+                var data = JSON.parse({{ data|tojson|safe }});
+                data = replaceByValue(data, 'timestamp', 'dt');
+                data.sort(GetSortOrder('dt'));
+
+                $("#show1").click(function () {
+                    console.log("button that shows all markers if pressed");
+                    allMarkers = new L.LayerGroup();
+                    L.layerGroup(transformFromJsonToMarker(data)).addTo(allMarkers);
                     mymap.removeLayer(markersLayer);
+                    mymap.removeLayer(pathLayer);
+                    isAddingLayerAllowed = false;
+                    allMarkers.addTo(mymap);
+                });
 
-                        <!--markersLayer = new L.LayerGroup();-->
-                        var user_icon = getColor(data[value]['user_id']);
-                        L.marker([data[value]['lat'], data[value]['lan']], {time: data[value]['timestamp'], icon: user_icon}).addTo(markersLayer);
-                        markersLayer.addTo(mymap);
+                $("#hide1").click(function () {
+                    console.log("button that hides all markers if pressed");
+                    mymap.removeLayer(allMarkers);
+                    isAddingLayerAllowed = true;
+                    addLayerToMap(markersLayer);
+                    addLayerToMap(pathLayer);
+                });
 
+                mySlider = $('#ex1').slider({
+                    formatter: function (value) {
+                        mymap.removeLayer(markersLayer);
+
+                        newMarkers.clearLayers();
+
+                        if(counter2 >= data.length)
+                        {
+                            counter2 = 0;
+                            return;
+                        }
+
+                        //markersLayer = new L.LayerGroup();
+                        let user_icon = getColor(data[counter2]['user_id']);
+                            markersHolder.addMarker(L.marker([data[counter2]['lat'], data[counter2]['lan']], {
+                                time: data[counter2]['timestamp'],
+                                icon: user_icon
+                            })
+                        );
+
+                        markersHolder.addNums(counter2++);
+
+                        let tmp = markersHolder.getMarkers();
+
+                        L.layerGroup(tmp).addTo(newMarkers);
+                        {#L.layerGroup([#}
+                        {#    L.marker([data[value]['lat'], data[value]['lan']], {#}
+                        {#        time: data[value]['timestamp'],#}
+                        {#        icon: user_icon#}
+                        {#    }),#}
+                        {#    L.marker([data[value+1]['lat'], data[value+1]['lan']], {#}
+                        {#        time: data[value+1]['timestamp'],#}
+                        {#        icon: user_icon#}
+                        {#    })#}
+                        {#]).addTo(newMarkers);#}
+
+                        {#addLayerToMap(newMarkers);#}
 
                         $("#ex1SliderVal").text(data[value]['timestamp']);
                         return 'Current value: ' + data[value]['timestamp'];
-                        }
-                    });
-
-                var path = L.polyline(extractPts(data), {
-                    snakingSpeed: 50,
-                    color: 'red',
-                    weight: 4,
-                    opacity: 2,
-                    smoothFactor: 1
+                    }
                 });
 
-                markersLayer.addLayer((path).addTo(markersLayer));
-                markersLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
-		        markersLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
+                 $("#show2").click(function () {
+                     var path = L.polyline(extractPts(data), {
+                         snakingSpeed: 25,
+                         color: 'red',
+                         weight: 3,
+                         opacity: 1,
+                         smoothFactor: 1
+                     });
 
-                path.snakeIn();
+                     pathLayer.addLayer((path).addTo(markersLayer));
+                     pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
+                     pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
+                     path.snakeIn();
+                 });
 
-           // $("#data-holder").text(JSON.stringify(data));
+                 $("#hide2").click(function () {
+                     mymap.removeLayer(markersLayer);
+                 });
 
-                for ( var i = 0; i < data.length; i++) {
-                    L.marker([data[i]['lat'], data[i]['lan']], {time: data[i]['timestamp']}).addTo(markersLayer);
-                }
+                // $("#data-holder").text(JSON.stringify(data));
 
-                sliderControl = L.control.sliderControl({
-                    position: "bottomright",
-                    layer:markersLayer,
-                    follow: 3
-                });
+            {% endif %}
 
-                //To add the slider to the map ;
-                mymap.addControl(sliderControl);
+            console.log("ready!");
+        });
 
-                //And initialize the slider
-                sliderControl.startSlider();
-
-        {% endif %}
-
-        //Adding Tile Layers to the Map
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 22,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            id: 'mapbox.streets'
-        }).addTo(mymap);
-
-          $('.dropdown-submenu a.nav-link').on("click", function(e){
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-          });
-
-        console.log( "ready!" );
-    });
-
-</script>
+    </script>
 
 {% endblock %}
