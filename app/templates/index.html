@@ -86,6 +86,10 @@
 
         /** end of block code for the Show and hide of the Marker and Polyline buttons JQUERY */
 
+        /**
+         * Global declaration of the Variables
+         */
+
         var mymap;
         var markersLayer = new L.LayerGroup();
         var pathLayer = new L.LayerGroup();
@@ -100,6 +104,10 @@
 
         var isAddingLayerAllowed = true;
 
+
+        /**
+         *
+         */
 
         function loop() {
             mymap.removeLayer(markersLayer);
@@ -194,6 +202,10 @@
 
         /** end of functions for the slider */
 
+        /**
+         * Fetching the User Names to be selected from the Slider.
+         */
+
         function fetch_data(e) {
             var name = $(e).val();
             $('#username').val(name);
@@ -277,6 +289,10 @@
             }
         }
 
+        /**
+         *
+         */
+
         function extractPts(obj) {
             var pts = [];
             for (var i = 0; i < obj.length; i++) {
@@ -284,6 +300,10 @@
             }
             return pts;
         }
+
+        /**
+         *
+         */
 
         function replaceByValue(obj, old_field, new_field) {
             for (var k = 0; k < obj.length; ++k) {
@@ -293,6 +313,10 @@
             }
             return obj;
         }
+
+        /**
+         *
+         */
 
         function addLayerToMap(layer) {
             if (isAddingLayerAllowed) {
@@ -334,13 +358,22 @@
                 id: 'mapbox.streets'
             }).addTo(mymap);
 
+            /**
+             * JQUERY declaration to display the dropdown list for File
+             */
+
             $('.dropdown-submenu a.nav-link').on("click", function (e) {
                 $(this).next('ul').toggle();
                 e.stopPropagation();
                 e.preventDefault();
             });
 
+            /**
+             *
+             */
+
             {% if data %}
+
                 var data = JSON.parse({{ data|tojson|safe }});
                 data = replaceByValue(data, 'timestamp', 'dt');
                 data.sort(GetSortOrder('dt'));
