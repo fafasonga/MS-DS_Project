@@ -34,4 +34,15 @@ pip install -r requirements.txt
 
 ```
 
+OUTPUT Animation for the Application
+------------------------------------
+
+![Screencapture GIF](directories.gif)
+
 ![Screencapture GIF](markers.gif)
+
+![Screencapture GIF](visualization.gif)
+
+![Screencapture GIF](sample.gif)
+
+
