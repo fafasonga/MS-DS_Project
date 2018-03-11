@@ -32,4 +32,13 @@ pip install -r requirements.txt
 
 ```
 
+Samples of OUTPUT of the Application 
+====================================
+
+![Screencapture GIF](directories1.gif)
+
+![Screencapture GIF](visualization1.gif)
+
+![Screencapture GIF](Marker_Sample.gif)
+
 ![Screencapture GIF](line_path.gif)
