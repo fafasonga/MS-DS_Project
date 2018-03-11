@@ -32,8 +32,8 @@ pip install -r requirements.txt
 
 ```
 
-Samples of DEMO of the Application 
-====================================
+DEMO of the Application 
+=======================
 
 - Moving through the Directories on the Application
 
