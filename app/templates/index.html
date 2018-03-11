@@ -396,6 +396,10 @@
                     addLayerToMap(pathLayer);
                 });
 
+                /**
+                 * Block for the Slider display on the map
+                 */
+
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
                         mymap.removeLayer(markersLayer);
@@ -415,29 +419,22 @@
                                 icon: user_icon
                             })
                         );
+                        console.log(user_icon);
 
                         markersHolder.addNums(counter2++);
 
                         let tmp = markersHolder.getMarkers();
 
                         L.layerGroup(tmp).addTo(newMarkers);
-                        {#L.layerGroup([#}
-                        {#    L.marker([data[value]['lat'], data[value]['lan']], {#}
-                        {#        time: data[value]['timestamp'],#}
-                        {#        icon: user_icon#}
-                        {#    }),#}
-                        {#    L.marker([data[value+1]['lat'], data[value+1]['lan']], {#}
-                        {#        time: data[value+1]['timestamp'],#}
-                        {#        icon: user_icon#}
-                        {#    })#}
-                        {#]).addTo(newMarkers);#}
-
-                        {#addLayerToMap(newMarkers);#}
 
                         $("#ex1SliderVal").text(data[value]['timestamp']);
                         return 'Current value: ' + data[value]['timestamp'];
                     }
                 });
+
+                /**
+                 * Block call for the Polyline display
+                 */
 
                  $("#show2").click(function () {
                      var path = L.polyline(extractPts(data), {
