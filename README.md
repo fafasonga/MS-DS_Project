@@ -31,3 +31,5 @@ Open Terminal and go through the directories you cloned and run:
 pip install -r requirements.txt
 
 ```
+
+![Screencapture GIF](line_path.gif)
