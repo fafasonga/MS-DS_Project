@@ -36,13 +36,17 @@ Samples of DEMO of the Application
 ====================================
 
 - Moving through the Directories on the Application
+
 ![Screencapture GIF](directories1.gif)
 
 - Choosing the Users to be displayed on the Map and showing Different Options to Visualize the data point
+
 ![Screencapture GIF](visualization1.gif)
 
 - Visualizing the taken Path of the User in time with the ability to speed up, increase/decrease the number of Makers shown
+
 ![Screencapture GIF](Marker_Sample.gif)
 
-- Visualizing the Path taken using continuous line dots, with the starting and end Marker  
+- Visualizing the Path taken using continuous line dots, with the starting and end Marker 
+
 ![Screencapture GIF](line_path.gif)
