@@ -1,19 +1,17 @@
 from datetime import datetime
 from flask import render_template, jsonify, request, flash, url_for
 from werkzeug.utils import redirect
-
 from app import app, session, settings
 from app.forms import LocationForm
 from app.models import Location, Base, AlchemyEncoder, User
+from app.utils import upload_csv
 import json
 
-# This block is used to bind the Url to a specific request or action and allow the comminication
+# This block is used to bind the Url to a specific request or action and allow the communication
 # between the server and the web application
 
+
 # Routing for the main home page
-from app.utils import upload_csv
-
-
 @app.route("/", methods=["GET", "POST"])
 def home():
     count = 0

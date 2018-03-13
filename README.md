@@ -13,7 +13,8 @@ There are options on the application to upload a new CSV file to the database an
  - Adding new Users and new data points to the database.
  - Deletion the Users or data points from the database.
 
-At the Home page. y
+At the Home page.
+
 You need to select which user have to be visualized on the map either each user individually or selecting to visualize all the users together.
 
 You then have to click the Start botton to start the visualization and then you can speed up the visualization and stop according to your preferences.
