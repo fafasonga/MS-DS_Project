@@ -23,29 +23,28 @@
         }
         body {
           /* Margin bottom by footer height */
-          margin-bottom: 60px;
+          margin-bottom: 100px;
         }
         .footer {
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          /* Set the fixed height of the footer here */
-          height: 15px;
-          line-height: 15px; /* Vertically center the text there */
-          background-color: #676161;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            height: 47px;
+            width: 100%;
+            color: white;
+            font-size: medium;
+            display: inherit;
+            line-height: 30px;
+            background-color: #2E2E2E;
         }
 
-        /* Custom page CSS
-        -------------------------------------------------- */
-        /* Not required for template or sticky footer method. */
-
         body > .container {
-          padding: 60px 15px 0;
+          padding: 65px 15px 0;
         }
 
         .footer > .container {
-          padding-right: 15px;
-          padding-left: 15px;
+            padding-right: 35px;
+            padding-left: 35px;
         }
 
         code {
@@ -127,6 +126,8 @@
             <div id="footer">
                 {% block footer %}
                 <p class="navbar-text navbar-right"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>Positioning System</p>
+                    <br>
+                    <br>
                 {% endblock %}
             </div>
         </div>
