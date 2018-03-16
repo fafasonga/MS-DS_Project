@@ -40,7 +40,7 @@
                             data-slider-id='ex1Slider'
                             type="text"
                             data-slider-min="0"
-                            data-slider-max="{{ count }}"
+                            data-slider-max="1440"
                             data-slider-step="1"
                             data-slider-value="0"
                             data-provide="slider">
@@ -48,13 +48,13 @@
                 <p id="data-holder"></p>
             </div>
         </div>
-
-        <div class="col-md-4"><br><br>
-            <div align="center">
-                <p>Number of shown markers:</p>
-                <input type="number" value="1" id="limit">
-            </div>
-        </div>
+{##}
+{#        <div class="col-md-4"><br><br>#}
+{#            <div align="center">#}
+{#                <p>Number of shown markers:</p>#}
+{#                <input type="number" value="1" id="limit">#}
+{#            </div>#}
+{#        </div>#}
     </div>
 
     <script>
@@ -94,7 +94,6 @@
         var markersLayer = new L.LayerGroup();
         var pathLayer = new L.LayerGroup();
         var counter = 0;
-        var counter2 = 0;
         var speed = 1000;
         var allMarkers = new L.LayerGroup();
         var newMarkers = new L.LayerGroup();
@@ -113,7 +112,7 @@
             mymap.removeLayer(markersLayer);
             mySlider.slider('setValue', ++counter);
 
-            if (counter === {{ count }} - 1) {
+            if (counter === 1439) {
                 newMarkers.clearLayers();
                 counter = 0;
             }
@@ -128,7 +127,6 @@
             constructor() {
                 this.markers = [];
                 this.limit = 1;
-                this.nums = [];
             }
 
             getMarkers() {
@@ -147,20 +145,19 @@
                 return this.markers;
             }
 
-            addNums(value) {
-
-                if (this.nums.length >= this.limit) {
-                    let removedElem = this.nums.shift();
-                    return removedElem;
-                }
-
-                this.nums.push(value);
-                return this.markers;
-            }
-
             changeLimit(value) {
                 this.limit = value;
             }
+        }
+
+        /**
+         * Function to convert integer values into Hours and Minutes
+         */
+
+        function time_convert(num) {
+            var hours = Math.floor(num / 60);
+            var minutes = num % 60;
+            return hours + ":" + minutes;
         }
 
         /**
@@ -174,13 +171,6 @@
 
         function stop() {
             clearInterval(timer);
-        }
-
-        function singleSPeed() {
-            clearInterval(timer);
-            speed = 1000;
-            stop();
-            start();
         }
 
         function doubleSPeed() {
@@ -198,12 +188,19 @@
             start();
         }
 
+        function singleSPeed() {
+            clearInterval(timer);
+            speed = 50;
+            stop();
+            start();
+        }
+
         /**
          * Fetching the User Names to be selected from the Slider.
          */
 
         function fetch_data(e) {
-            var name = $(e).val();
+            let name = $(e).val();
             $('#username').val(name);
             $("#fetch_data").submit();
         }
@@ -257,7 +254,7 @@
          */
 
         function transformFromJsonToMarker(obj) {
-            var markers = [];
+            let markers = [];
             for (var k = 0; k < obj.length; ++k) {
                 markers.push(
                     L.marker([obj[k]['lat'], obj[k]['lan']], {
@@ -271,8 +268,8 @@
         }
 
         /**
-         * Function to sort our data set
-        */
+         * Function to sort the data set
+         */
 
         function n(n) {
             return n > 9 ? "" + n : "0" + n;
@@ -338,15 +335,15 @@
 
             /**
              * Creating a map with the coordinate of Beinjing
-            */
+             */
 
             mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
             /**
-            * Adding the Tile Layer to the Map
-            */
+             * Adding the Tile Layer to the Map
+             */
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 22,
@@ -395,72 +392,93 @@
                     addLayerToMap(pathLayer);
                 });
 
+
                 /**
-                 * Block for the Slider display and markers on the Map
+                 * Block for the Slider display and markers on the Map with 1 minute delay
                  */
 
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
-                        mymap.removeLayer(markersLayer);
 
-                        newMarkers.clearLayers();
+                        {#newMarkers.clearLayers();#}
 
-                        if(counter2 >= data.length)
-                        {
-                            counter2 = 0;
-                            return;
+                        for (var itm in data) {
+                            var date = new Date(data[itm]['timestamp']);
+                            var timestmp = (date.getHours() * 60) + date.getMinutes();
+
+                            if (timestmp === value) {
+                                let user_icon = getColor(data[itm]['user_id']);
+                                markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
+                                    time: data[itm]['timestamp'],
+                                    icon: user_icon
+                                }));
+                                $("#ex1SliderVal").text(data[itm]['timestamp']);
+                            }
+
                         }
-
-                        //markersLayer = new L.LayerGroup();
-                        let user_icon = getColor(data[counter2]['user_id']);
-                            markersHolder.addMarker(L.marker([data[counter2]['lat'], data[counter2]['lan']], {
-                                time: data[counter2]['timestamp'],
-                                icon: user_icon
-                            })
-                        );
-
-                        markersHolder.addNums(counter2++);
 
                         let tmp = markersHolder.getMarkers();
 
                         L.layerGroup(tmp).addTo(newMarkers);
 
-                        $("#ex1SliderVal").text(data[value]['timestamp']);
-                        return 'Current value: ' + data[value]['timestamp'];
+                        return 'Current value: ' + time_convert(value);
                     }
                 });
+
+
+
+                mySlider.on("slideStop", function(slideEvt) {
+                    $("#ex1SliderVal").text(value[slideEvt.value]);
+                    tmp = slideEvt.value;
+
+                    interval = setInterval(loop, 1000);
+                });
+
+                mySlider.on("slideStart", function(slideEvt) {
+                    clearInterval(interval);
+
+                    markersLayer.clearLayers();
+                    mymap.removeLayer(markersLayer);
+                    markersLayer.addTo(mymap);
+                });
+
+
 
                 /**
                  * Block call for the Polyline display
                  */
 
-                 $("#show2").click(function () {
-                     console.log("button that shows Polyline is pressed");
-                     var path = L.polyline(extractPts(data), {
-                         snakingSpeed: 25,
-                         color: 'red',
-                         weight: 3,
-                         opacity: 1,
-                         smoothFactor: 1
-                     });
+                $("#show2").click(function () {
+                    console.log("button that shows Polyline is pressed");
+                    var path = L.polyline(extractPts(data), {
+                        snakingSpeed: 25,
+                        color: 'red',
+                        weight: 3,
+                        opacity: 1,
+                        smoothFactor: 1
+                    });
 
-                     pathLayer.addLayer((path).addTo(markersLayer));
-                     pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
-                     pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
+                    pathLayer.addLayer((path).addTo(markersLayer));
+                    pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
+                    pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
-                     path.snakeIn();
-                 });
+                    path.snakeIn();
+                });
 
-                 $("#hide2").click(function () {
-                     console.log("button that hide Polyline is pressed");
-                     mymap.removeLayer(markersLayer);
-                 });
+                $("#hide2").click(function () {
+                    console.log("button that hide Polyline is pressed");
+                    mymap.removeLayer(markersLayer);
+                });
 
                 // $("#data-holder").text(JSON.stringify(data));
 
             {% endif %}
 
             console.log("ready!");
+        });
+
+        $("#check-all-users").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
         });
 
     </script>

@@ -1,11 +1,13 @@
-from datetime import datetime
-from flask import render_template, jsonify, request, flash, url_for
-from werkzeug.utils import redirect
-from app import app, session, settings
-from app.forms import LocationForm
-from app.models import Location, Base, AlchemyEncoder, User
-from app.utils import upload_csv
 import json
+
+from flask import render_template, request, flash, url_for
+from werkzeug.utils import redirect
+
+from app import app, session
+from app.forms import LocationForm
+from app.models import Location, AlchemyEncoder, User
+from app.utils import upload_csv
+
 
 # This block is used to bind the Url to a specific request or action and allow the communication
 # between the server and the web application
@@ -17,10 +19,10 @@ def home():
     count = 0
     if request.method == 'POST':
         print("Got new request")
-        username = request.form["username"]
+        username = request.form.getlist('username')
         print("username is: ", username)
 
-        user = session.query(User).filter_by(username=username).first()
+        user = session.query(User).filter(User.username.in_(username)).all()
         print("User is: ", user)
 
         if user is None:
@@ -31,7 +33,7 @@ def home():
         if username == "all":
             locations = locations.all()
         else:
-            locations = locations.filter_by(user_id=user.id).all()
+            locations = locations.filter(Location.user_id.in_([u.id for u in user])).all()
         print("Data length is: {}".format(len(locations)))
         count = len(locations)
 
