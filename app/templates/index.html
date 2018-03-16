@@ -15,15 +15,15 @@
             </div>
 
 
-            <select onchange="fetch_data(this);">
-                <option disabled selected value> -- select an option --</option>
-                {% if users %}
-                    <option value="all">All Users</option>
-                    {% for user in users %}
-                        <option value="{{ user.username }}">{{ user.username }}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
+{#            <select onchange="fetch_data(this);">#}
+{#                <option disabled selected value> -- select an option --</option>#}
+{#                {% if users %}#}
+{#                    <option value="all">All Users</option>#}
+{#                    {% for user in users %}#}
+{#                        <option value="{{ user.username }}">{{ user.username }}</option>#}
+{#                    {% endfor %}#}
+{#                {% endif %}#}
+{#            </select>#}
 
             <form method="post" id="fetch_data">
                 <input type="hidden" id="username" name="username">
@@ -43,6 +43,8 @@
                             data-slider-max="1440"
                             data-slider-step="1"
                             data-slider-value="0"
+{#                          data-slider-ticks="[1, 2, 3]"#}
+{#	                        data-slider-ticks-labels='["short", "medium", "long"]'#}
                             data-provide="slider">
                 {% endif %}
                 <p id="data-holder"></p>
