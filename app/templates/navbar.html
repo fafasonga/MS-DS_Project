@@ -58,16 +58,23 @@
                     <div class="btn-group" role="group" aria-label="...">
                         <button class="btn btn-default" type="button" data-toggle="dropdown">Animation</button>
                         <ul class="dropdown-menu">
-                            {% if users %}
-                                <form method="post">
-                                <input type="checkbox" id="check-all-users"> All users <br>
-                                    {% for user in users %}
-                                        <input type="checkbox" name="username" value="{{ user.username }}">
-                                         {{ user.username }}<br>
-                                    {% endfor %}
-                                    <input type="submit" value="Get data" class="btn btn-success">
-                                </form>
-                            {% endif %}
+                            <li class="dropdown-submenu">
+                                <button class="btn btn-default" type="button" data-toggle="dropdown">Select User</button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        {% if users %}
+                                            <form method="post">
+                                            <input type="checkbox" id="check-all-users"> All users <br>
+                                                {% for user in users %}
+                                                    <input type="checkbox" name="username" value="{{ user.username }}">
+                                                     {{ user.username }}<br>
+                                                {% endfor %}
+                                                <input type="submit" value="Get data" class="btn btn-success">
+                                            </form>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
