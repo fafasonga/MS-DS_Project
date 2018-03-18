@@ -21,11 +21,17 @@
             position: relative;
             min-height: 100%;
         }
+
         body {
           /* Margin bottom by footer height */
             margin-bottom: 100px;
             height: auto;
         }
+
+        body > .container {
+            padding: 65px 15px 0;
+        }
+
         .footer {
             position: fixed;
             left: 0;
@@ -40,10 +46,6 @@
             background-color: #2E2E2E;
         }
 
-        .footer a:hover {
-            color: white;
-        }
-
         .footer a:first-child {
             border-left: 1px solid #70726F;
         }
@@ -56,8 +58,27 @@
             transition: all .5s ease;
         }
 
-        body > .container {
-            padding: 65px 15px 0;
+        #footer a:hover {
+            text-decoration: greenyellow;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            border-left: red 7px solid;
+            border-right: #f43d2b 7px solid;
+        }
+
+        .footer > .container {
+            padding-right: 35px;
+            padding-left: 80px;
+        }
+
+        .footer a {
+            padding-left:20px;
+            padding-right:20px;
+        }
+
+        .footer a {
+            margin-left:20px;
+            margin-right:20px;
         }
 
         nav {
@@ -66,30 +87,36 @@
                 border-radius: 10px;
                 -moz-border-radius: 10px;
             }
+
         #navbarNavDropdown li a:hover {
             text-decoration: whitesmoke;
             color: #fff;
-            border-radius: 15px;
-            -moz-border-radius: 15px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
             border-left: red 2px solid;
-     }
+        }
 
         .nav a{
             color: white;
             font-size: large;
         }
 
-        .footer > .container {
-            padding-right: 35px;
-            padding-left: 80px;
+        .navbar-nav > li{
+            padding-left:20px;
+            padding-right:20px;
+        }
+
+        .navbar-nav > li{
+            margin-left:20px;
+            margin-right:20px;
         }
 
         code {
             font-size: 80%;
         }
 
-    .left {
+        .left {
             width: 50px;
             height: 100%;
             background: #2f2f2f;
@@ -97,62 +124,62 @@
             transition: width 0.5s ;
             position: center;
             z-index: 9999;
-    }
-	.left ul{
-		    padding: 0;
+        }
+        .left ul{
+            padding: 0;
             list-style-type: none;
             text-align: left;
-	}
-	.left li {
-		    width: 100%;
+        }
+        .left li {
+            width: 100%;
             height: 60px;
             line-height: 50px;
             padding-left: 18px;
-	}
-	.left li:hover {
-		    background: #2E2E2E;
-	}
+        }
+        .left li:hover {
+            background: #2E2E2E;
+        }
 
-	.left:hover {
+        .left:hover {
             width: 100%;
-    }
+        }
 
-    .left .item-menu {
+        .left .item-menu {
             height:50px;
             overflow:hidden;
             color:#fff;
-    }
-	.left a{
+        }
+        .left a{
             color: white;
             text-decoration: cornflowerblue;
             font-weight: bold;
-	}
-	span.menu{
-		    padding-left: 100%;
-	}
+        }
+        span.menu{
+            padding-left: 100%;
+        }
 
 
-     /* Toggle Styles */
+         /* Toggle Styles */
 
-     .nav-pills>li>a {
-            border-radius: 25px;
-     }
+         .nav-pills>li>a {
+             border-radius: 25px;
+         }
 
-     #wrapper {
+         #wrapper {
             padding-left: 0;
             -webkit-transition: all 0.5s ease;
             -moz-transition: all 0.5s ease;
             -o-transition: all 0.5s ease;
             transition: all 0.5s ease;
             overflow: hidden;
-     }
+         }
 
-     #wrapper.toggled {
+         #wrapper.toggled {
             padding-left: 250px;
             overflow: hidden;
-     }
+         }
 
-     #sidebar-wrapper {
+         #sidebar-wrapper {
             z-index: 1000;
             position: absolute;
             left: 250px;
@@ -165,35 +192,35 @@
             -moz-transition: all 0.5s ease;
             -o-transition: all 0.5s ease;
             transition: all 0.5s ease;
-     }
+         }
 
-     #wrapper.toggled #sidebar-wrapper {
-            width: 250px;
-     }
+         #wrapper.toggled #sidebar-wrapper {
+             width: 250px;
+         }
 
-     #page-content-wrapper {
+         #page-content-wrapper {
             position: absolute;
             padding: 15px;
             width: 100%;
             overflow-x: hidden;
-     }
+         }
 
-     .xyz {
-            min-width: 400px;
-     }
+         .xyz {
+             min-width: 400px;
+         }
 
-     #wrapper.toggled #page-content-wrapper {
+         #wrapper.toggled #page-content-wrapper {
             position: absolute;
             margin-right: 0px;
-     }
+         }
 
-     .fixed-brand {
-            width: 100%;
-     }
+         .fixed-brand {
+             width: 100%;
+         }
 
-     /* Sidebar Styles */
+         /* Sidebar Styles */
 
-     .sidebar-nav {
+         .sidebar-nav {
             position: absolute;
             top: 70px;
             width: 130px;
@@ -201,51 +228,51 @@
             padding: 0;
             list-style: inherit;
             margin-top: 2px;
-     }
+         }
 
-     .sidebar-nav li {
+         .sidebar-nav li {
             text-indent: 25px;
             line-height: 40px;
-     }
+         }
 
-     .sidebar-nav li a {
+         .sidebar-nav li a {
             display: block;
             text-decoration: none;
             color: #999999;
-     }
+         }
 
-     .sidebar-nav li a:hover {
+         .sidebar-nav li a:hover {
             text-decoration: whitesmoke;
             color: #fff;
             background: rgba(255, 255, 255, 0.2);
             border-left: red 2px solid;
-     }
+         }
 
-     .sidebar-nav li a:active,
-     .sidebar-nav li a:focus {
-            text-decoration: none;
-     }
+         .sidebar-nav li a:active,
+         .sidebar-nav li a:focus {
+             text-decoration: none;
+         }
 
-     .sidebar-nav > .sidebar-brand {
+         .sidebar-nav > .sidebar-brand {
             height: 75px;
             font-size: 30px;
             line-height: 60px;
-     }
+         }
 
-     .sidebar-nav > .sidebar-brand a {
+         .sidebar-nav > .sidebar-brand a {
             color: #999999;
-     }
+         }
 
-     .sidebar-nav > .sidebar-brand a:hover {
+         .sidebar-nav > .sidebar-brand a:hover {
             color: #fff;
             background: none;
-     }
+         }
 
-     .no-margin {
+         .no-margin {
             margin: auto;
-     }
+         }
 
-     @media(min-width:768px) {
+         @media(min-width:768px) {
             #wrapper {
                 padding-left: 250px;
             }
@@ -291,50 +318,50 @@
                 transition: all 0.5s ease;
                 width: auto;
             }
-     }
+         }
 
-        #ex1Slider .slider-selection {
+            #ex1Slider .slider-selection {
                 background: #f43d2b;
-        }
+            }
 
-        .slider.slider-horizontal {
+            .slider.slider-horizontal {
                 height: 30px;
                 width: 800px;
                 margin-top: -5px;
                 top: 80%;
                 {#right: 0;#}
                 {#left: 0;#}
-        }
+            }
 
-        .dropdown-submenu {
-            position: relative;
-        }
+            .dropdown-submenu {
+                position: relative;
+            }
 
-        .dropdown-submenu .dropdown-menu {
-            top: 0;
-            left: 100%;
-            margin-top: -1px;
-        }
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
 
-        #hide1
-        {
-            display: none;
-        }
+            #hide1
+            {
+                display: none;
+            }
 
-        #hide2
-        {
-            display: none;
-        }
+            #hide2
+            {
+                display: none;
+            }
 
-        #show1
-        {
-            display: inline-block;
-        }
+            #show1
+            {
+                display: inline-block;
+            }
 
-        #show2
-        {
-            display: inline-block;
-        }
+            #show2
+            {
+                display: inline-block;
+            }
 
     </style>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -369,8 +396,7 @@
              <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span>Positioning System</a>
          </li>
 
-
-            <li>
+             <li>
                <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> File</a>
                <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                   <li><a href="/table">View file</a></li>
@@ -390,32 +416,30 @@
                </ul>
             </li>
 
-            {% if data %}
             <li>
-               <a style="color:whitesmoke" id="show1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show All Markers</a>
-                <a style="color:whitesmoke" id="hide1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide All Markers</a>
+                            {% if data %}
+                <a style="color:antiquewhite" id="show1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show All Markers</a>
+                <a style="color:antiquewhite" id="hide1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide All Markers</a>
             </li>
             <li>
-                <a style="color:whitesmoke" id="show2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show Lines</a>
-                <a style="color:whitesmoke" id="hide2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide Lines</a>
+                <a style="color:antiquewhite" id="show2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show Lines</a>
+                <a style="color:antiquewhite" id="hide2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide Lines</a>
+                             {% endif %}
             </li>
-
-             {% endif %}
-
          </ul>
       </div>
 
-    <div id="page-content-wrapper">
-         <div class="container-fluid xyz">
-            <div class="row">
-               <div class="col-lg-12">
-                   {% block content %}
-                   {% endblock %}
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+        <div id="page-content-wrapper">
+             <div class="container-fluid xyz">
+                <div class="row">
+                   <div class="col-lg-12">
+                       {% block content %}
+                       {% endblock %}
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -425,21 +449,12 @@
 
                 {% block footer %}
                     {% if data %}
-
-                        <a></a>
-                        <a></a>
-                        <a></a>
-                        <a></a>
                         <a><small style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2X</small></a>
                         <a><small style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4X</small></a>
                         <a><small style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20X</small></a>
 
-                        <a></a>
-                        <a></a>
-                        <a></a>
 
                         <a><small style="color:whitesmoke" class="nav-link" onclick="start()">Start</small></a>
-                        <a></a>
                         <a><small style="color:whitesmoke" class="nav-link" onclick="stop()">Stop</small></a>
 
                     {% endif %}
