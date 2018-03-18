@@ -18,260 +18,292 @@
     <style>
 
         html {
-          position: relative;
-          min-height: 100%;
+            position: relative;
+            min-height: 100%;
         }
         body {
           /* Margin bottom by footer height */
-          margin-bottom: 100px;
+            margin-bottom: 100px;
+            height: auto;
         }
         .footer {
             position: fixed;
             left: 0;
             bottom: 0;
-            height: 47px;
+            height: 37px;
             width: 100%;
+            text-align: center;
             color: white;
-            font-size: medium;
+            font-size: large;
             display: inherit;
-            line-height: 30px;
+            line-height: 20px;
             background-color: #2E2E2E;
         }
 
+        .footer a:hover {
+            color: white;
+        }
+
+        .footer a:first-child {
+            border-left: 1px solid #70726F;
+        }
+
+        .footer a {
+            color: #70726F;
+            font-size: 20px;
+            padding: 5px;
+            border-right: 1px solid #70726F;
+            transition: all .5s ease;
+        }
+
         body > .container {
-          padding: 65px 15px 0;
+            padding: 65px 15px 0;
+        }
+
+        nav {
+                width: 100%;
+                height: 20px;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+            }
+        #navbarNavDropdown li a:hover {
+            text-decoration: whitesmoke;
+            color: #fff;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-left: red 2px solid;
+     }
+
+        .nav a{
+            color: white;
+            font-size: large;
         }
 
         .footer > .container {
             padding-right: 35px;
-            padding-left: 35px;
-        }
-        code {
-          font-size: 80%;
+            padding-left: 80px;
         }
 
-    .left{
-        width: 50px;
-        height: 100%;
-        background: #2f2f2f;
-        white-space: nowrap;
-        transition: width 0.5s ;
-        position: center;
-        z-index: 9999;
+        code {
+            font-size: 80%;
+        }
+
+    .left {
+            width: 50px;
+            height: 100%;
+            background: #2f2f2f;
+            white-space: nowrap;
+            transition: width 0.5s ;
+            position: center;
+            z-index: 9999;
     }
 	.left ul{
-		padding: 0;
-		list-style-type: none;
-		text-align: left;
+		    padding: 0;
+            list-style-type: none;
+            text-align: left;
 	}
 	.left li {
-		width: 100%;
-		height: 60px;
-		line-height: 50px;
-		padding-left: 18px;
+		    width: 100%;
+            height: 60px;
+            line-height: 50px;
+            padding-left: 18px;
 	}
 	.left li:hover {
-		background: #2E2E2E;
+		    background: #2E2E2E;
 	}
 
 	.left:hover {
-        width: 100%;
+            width: 100%;
     }
 
     .left .item-menu {
-        height:50px;
-        overflow:hidden;
-        color:#fff;
+            height:50px;
+            overflow:hidden;
+            color:#fff;
     }
 	.left a{
-		color: white;
-	    text-decoration: none;
-	    font-weight: bold;
+            color: white;
+            text-decoration: cornflowerblue;
+            font-weight: bold;
 	}
 	span.menu{
-		padding-left: 100%;
+		    padding-left: 100%;
 	}
 
 
      /* Toggle Styles */
 
- .nav-pills>li>a {
-    border-radius: 25px;
- }
+     .nav-pills>li>a {
+            border-radius: 25px;
+     }
 
- #wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    overflow: hidden;
- }
+     #wrapper {
+            padding-left: 0;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            overflow: hidden;
+     }
 
- #wrapper.toggled {
-    padding-left: 250px;
-    overflow: hidden;
- }
+     #wrapper.toggled {
+            padding-left: 250px;
+            overflow: hidden;
+     }
 
- #sidebar-wrapper {
-    z-index: 1000;
-    position: absolute;
-    left: 250px;
-    width: auto;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #2E2E2E;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
- }
+     #sidebar-wrapper {
+            z-index: 1000;
+            position: absolute;
+            left: 250px;
+            width: auto;
+            height: 100%;
+            margin-left: -250px;
+            overflow-y: auto;
+            background: #2E2E2E;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+     }
 
- #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
- }
+     #wrapper.toggled #sidebar-wrapper {
+            width: 250px;
+     }
 
- #page-content-wrapper {
-    position: absolute;
-    padding: 15px;
-    width: 100%;
-    overflow-x: hidden;
- }
+     #page-content-wrapper {
+            position: absolute;
+            padding: 15px;
+            width: 100%;
+            overflow-x: hidden;
+     }
 
- .xyz {
-    min-width: 400px;
- }
+     .xyz {
+            min-width: 400px;
+     }
 
- #wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: 0px;
- }
+     #wrapper.toggled #page-content-wrapper {
+            position: absolute;
+            margin-right: 0px;
+     }
 
- .fixed-brand {
-    width: 100%;
- }
+     .fixed-brand {
+            width: 100%;
+     }
 
- /* Sidebar Styles */
+     /* Sidebar Styles */
 
- .sidebar-nav {
-    position: absolute;
-    top: 70px;
-    width: 130px;
-    margin: 0;
-    padding: 0;
-    list-style: inherit;
-    margin-top: 2px;
- }
+     .sidebar-nav {
+            position: absolute;
+            top: 70px;
+            width: 130px;
+            margin: 0;
+            padding: 0;
+            list-style: inherit;
+            margin-top: 2px;
+     }
 
- .sidebar-nav li {
-    text-indent: 25px;
-    line-height: 40px;
- }
+     .sidebar-nav li {
+            text-indent: 25px;
+            line-height: 40px;
+     }
 
- .sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
- }
+     .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+     }
 
- .sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-    border-left: red 2px solid;
- }
+     .sidebar-nav li a:hover {
+            text-decoration: whitesmoke;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            border-left: red 2px solid;
+     }
 
- .sidebar-nav li a:active,
- .sidebar-nav li a:focus {
-    text-decoration: none;
- }
+     .sidebar-nav li a:active,
+     .sidebar-nav li a:focus {
+            text-decoration: none;
+     }
 
- .sidebar-nav > .sidebar-brand {
-    height: 75px;
-    font-size: 30px;
-    line-height: 60px;
- }
+     .sidebar-nav > .sidebar-brand {
+            height: 75px;
+            font-size: 30px;
+            line-height: 60px;
+     }
 
- .sidebar-nav > .sidebar-brand a {
-    color: #999999;
- }
+     .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+     }
 
- .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
- }
+     .sidebar-nav > .sidebar-brand a:hover {
+            color: #fff;
+            background: none;
+     }
 
- .no-margin {
-    margin: auto;
- }
+     .no-margin {
+            margin: auto;
+     }
 
- @media(min-width:768px) {
-    #wrapper {
-       padding-left: 250px;
-    }
-    .fixed-brand {
-       width: 250px;
-    }
-    #wrapper.toggled {
-       padding-left: 0;
-    }
-    #sidebar-wrapper {
-       width: 250px;
-    }
-    #wrapper.toggled #sidebar-wrapper {
-       width: 250px;
-    }
-    #wrapper.toggled-2 #sidebar-wrapper {
-       width: 50px;
-    }
-    #wrapper.toggled-2 #sidebar-wrapper:hover {
-       width: 250px;
-    }
-    #page-content-wrapper {
-        top: 40px;
-       padding: 20px;
-       position: absolute;
-       -webkit-transition: all 0.5s ease;
-       -moz-transition: all 0.5s ease;
-       -o-transition: all 0.5s ease;
-       transition: all 0.5s ease;
-    }
-    #wrapper.toggled #page-content-wrapper {
-       position: relative;
-       margin-right: 0;
-       padding-left: 250px;
-    }
-    #wrapper.toggled-2 #page-content-wrapper {
-       position: relative;
-       margin-right: 0;
-       margin-left: -200px;
-       -webkit-transition: all 0.5s ease;
-       -moz-transition: all 0.5s ease;
-       -o-transition: all 0.5s ease;
-       transition: all 0.5s ease;
-       width: auto;
-    }
- }
-
-
-        {#.border {#}
-        {#    border: 2px solid #ff0000;#}
-        {#    z-index: 1020;#}
-        {#    height: 50px;#}
-        {#    margin-bottom: 30px;#}
+     @media(min-width:768px) {
+            #wrapper {
+                padding-left: 250px;
+            }
+            .fixed-brand {
+                width: 250px;
+            }
+            #wrapper.toggled {
+                padding-left: 0;
+            }
+            #sidebar-wrapper {
+                width: 250px;
+            }
+            #wrapper.toggled #sidebar-wrapper {
+                width: 250px;
+            }
+            #wrapper.toggled-2 #sidebar-wrapper {
+                width: 50px;
+            }
+            #wrapper.toggled-2 #sidebar-wrapper:hover {
+                width: 140px;
+            }
+            #page-content-wrapper {
+                top: 40px;
+                padding: 20px;
+                position: absolute;
+                -webkit-transition: all 0.5s ease;
+                -moz-transition: all 0.5s ease;
+                -o-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+            }
+            #wrapper.toggled #page-content-wrapper {
+                position: relative;
+                margin-right: 0;
+                padding-left: 250px;
+            }
+            #wrapper.toggled-2 #page-content-wrapper {
+                position: relative;
+                margin-right: 0;
+                margin-left: -200px;
+                -webkit-transition: all 0.5s ease;
+                -moz-transition: all 0.5s ease;
+                -o-transition: all 0.5s ease;
+                transition: all 0.5s ease;
+                width: auto;
+            }
+     }
 
         #ex1Slider .slider-selection {
-            background: #f43d2b;
+                background: #f43d2b;
         }
 
         .slider.slider-horizontal {
-            height: 25px;
-            width: 700px;
-            margin-top: -5px;
-            top: 50%;
-            right: 0;
-            left: 0;
+                height: 30px;
+                width: 800px;
+                margin-top: -5px;
+                top: 80%;
+                {#right: 0;#}
+                {#left: 0;#}
         }
 
         .dropdown-submenu {
@@ -333,35 +365,43 @@
       <!-- Sidebar -->
       <div id="sidebar-wrapper">
          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <li class="active">
-               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Dashboard</a>
+         <li class="active">
+             <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span>Positioning System</a>
+         </li>
+
+
+            <li>
+               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> File</a>
                <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                  <li><a href="#">link1</a></li>
-                  <li><a href="#">link2</a></li>
+                  <li><a href="/table">View file</a></li>
+                  <li><a href="{{ url_for('upload_data') }}">Open...</a>
+                    <form class="form-inline mt-2 mt-md-0"></form></li>
                </ul>
             </li>
+
             <li>
-               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Shortcut</a>
+               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Edit</a>
                <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                  <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                  <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
+                  <li><a href="/add_user">Insert User</a></li>
+                  <li><a href="/add_location">Insert Data </a></li>
+                   <li class="divider"></li>
+                   <li><a href="/remove_user">Delete User</a></li>
+                  <li><a href="/remove_location">Delete Data </a></li>
                </ul>
             </li>
+
+            {% if data %}
             <li>
-               <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview</a>
+               <a style="color:whitesmoke" id="show1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show All Markers</a>
+                <a style="color:whitesmoke" id="hide1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide All Markers</a>
             </li>
             <li>
-               <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
+                <a style="color:whitesmoke" id="show2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show Lines</a>
+                <a style="color:whitesmoke" id="hide2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide Lines</a>
             </li>
-            <li>
-               <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
-            </li>
-            <li>
-               <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
-            </li>
-            <li>
-               <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
-            </li>
+
+             {% endif %}
+
          </ul>
       </div>
 
@@ -379,12 +419,30 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
+        <div class="container text-right">
             <div id="footer">
+                <div class="row">
+
                 {% block footer %}
-                <p class="navbar-text navbar-right"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>Positioning System</p>
-                    <br>
-                    <br>
+                    {% if data %}
+
+                        <a></a>
+                        <a></a>
+                        <a></a>
+                        <a></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2X</small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4X</small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20X</small></a>
+
+                        <a></a>
+                        <a></a>
+                        <a></a>
+
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="start()">Start</small></a>
+                        <a></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="stop()">Stop</small></a>
+
+                    {% endif %}
                 {% endblock %}
             </div>
         </div>
