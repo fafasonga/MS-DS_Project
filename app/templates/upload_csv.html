@@ -4,7 +4,10 @@
 
 <form method="post" action="{{ url_for('delete_database') }}">
     <input hidden name="command" value="delete_database">
-    <input type="submit" class="btn btn-danger navbar-btn" value="Click to Delete Stored File">
+{#    <input type="submit" class="btn btn-danger navbar-btn" value="Click to Delete Stored File">#}
+    <button type="submit" class="btn btn-danger navbar-btn">
+        <span class="glyphicon glyphicon-trash"></span> Delete File
+    </button>
 </form>
 
 

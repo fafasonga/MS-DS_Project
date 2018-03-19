@@ -6,7 +6,9 @@
     {% for location in locations %}
         <input type="checkbox" name="location[]" value="{{ location.id }}">{{ location }}<br>
     {% endfor %}
-    <input type="submit" value="Remove">
+    <button type="submit" class="btn btn-danger navbar-btn">
+        <span class="glyphicon glyphicon-trash"></span> remove
+    </button>
 </form>
 
 {% endblock %}

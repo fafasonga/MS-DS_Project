@@ -6,7 +6,9 @@
     {% for user in users %}
         <input type="checkbox" name="user[]" value="{{ user.id }}">{{ user }}<br>
     {% endfor %}
-    <input type="submit" value="Remove">
+    <button type="submit" class="btn btn-danger navbar-btn">
+        <span class="glyphicon glyphicon-trash"></span> remove
+    </button>
 </form>
 
 {% endblock %}

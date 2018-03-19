@@ -2,10 +2,10 @@
 <!-- navbar-header-->
 
     <div>
-      <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <li class="collapse navbar-collapse active" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav">
             <li>
-               <a style="color:cornflowerblue"  class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="false"></span></a>
+               <a style="color:cornflowerblue"  class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
             </li>
          </ul>
       </li>
@@ -14,7 +14,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown" role="navigation">
     <ul class="navbar-nav mr-auto">
         <li class="nav nav-item dropdown">
-            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-screenshot" aria-hidden="false"></span>Positioning System</a>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-screenshot" aria-hidden="false"></span> Positioning System</a>
         </li>
 
       <li class="nav nav-item dropdown active">
@@ -57,7 +57,7 @@
 
 
         <li class="nav nav-item dropdown active">
-            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Animation</a>
+            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
             <ul class="dropdown-menu">
                 {% if users %}
                     <form method="post">
@@ -71,6 +71,12 @@
                 {% endif %}
             </ul>
         </li>
+
+{#    <li>#}
+{#        <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>#}
+{#        <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>#}
+{#    </li>#}
+
     </ul>
   </div>
 </nav>

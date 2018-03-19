@@ -66,6 +66,20 @@
         });
 
 
+
+
+
+        $('#start').click(function () {
+            $('#start').css('display', 'none');
+            $('#stop').show();
+        });
+
+        $('#stop').click(function () {
+            $('#stop').css('display', 'none');
+            $('#start').show();
+        });
+
+
         /** End of block code for the Show and hide of the Marker and Polyline buttons JQUERY */
 
         /**
@@ -139,7 +153,7 @@
         function time_convert(num) {
             var hours = Math.floor(num / 60);
             var minutes = num % 60;
-            return hours + ":" + minutes;
+            return "\t" + hours + "\th" + ":" + "\t" + minutes + "\tmin";
         }
 
         /**
@@ -151,9 +165,11 @@
             timer = setInterval(loop, speed);
         }
 
+
         function stop() {
             clearInterval(timer);
         }
+
 
         function doubleSPeed() {
             clearInterval(timer);
@@ -428,7 +444,7 @@
                                     time: data[itm]['timestamp'],
                                     icon: user_icon
                                 }));
-                                $("#ex1SliderVal").text(data[itm]['timestamp']);
+                                {#$("#ex1SliderVal").text(data[itm]['timestamp']);#}
                             }
 
                         }
@@ -437,19 +453,20 @@
 
                         L.layerGroup(tmp).addTo(newMarkers);
 
+                        $("#ex1SliderVal").text(time_convert(value));
                         return 'Current value: ' + time_convert(value);
                     }
                 });
 
 
-                mySlider.on("slideStop", function(slideEvt) {
+                mySlider.on("slideStop", function(value) {
                     $("#ex1SliderVal").text(value[slideEvt.value]);
                     tmp = slideEvt.value;
 
                     interval = setInterval(loop, 1000);
                 });
 
-                mySlider.on("slideStart", function(slideEvt) {
+                mySlider.on("slideStart", function(value) {
                     clearInterval(interval);
 
                     markersLayer.clearLayers();
@@ -485,8 +502,19 @@
 
                 // $("#data-holder").text(JSON.stringify(data));
 
+                $("#start").click(function () {
+                     clearInterval(timer);
+                     timer = setInterval(loop, speed);
+                 });
 
-            initMenu();
+
+
+                $("#stop").click(function () {
+                    clearInterval(timer);
+                });
+
+
+                initMenu();
 
 
             {% endif %}
