@@ -329,8 +329,6 @@
                 width: 800px;
                 margin-top: -5px;
                 top: 80%;
-                {#right: 0;#}
-                {#left: 0;#}
             }
 
             .dropdown-submenu {
@@ -415,17 +413,18 @@
                   <li><a href="/remove_location">Delete Data </a></li>
                </ul>
             </li>
+                            {% if data %}
 
             <li>
-                            {% if data %}
                 <a style="color:antiquewhite" id="show1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show All Markers</a>
                 <a style="color:antiquewhite" id="hide1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide All Markers</a>
             </li>
             <li>
                 <a style="color:antiquewhite" id="show2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Show Lines</a>
                 <a style="color:antiquewhite" id="hide2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide Lines</a>
-                             {% endif %}
             </li>
+                             {% endif %}
+
          </ul>
       </div>
 
