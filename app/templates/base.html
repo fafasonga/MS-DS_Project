@@ -74,11 +74,8 @@
         .footer a {
             padding-left:20px;
             padding-right:20px;
-        }
-
-        .footer a {
-            margin-left:20px;
-            margin-right:20px;
+            margin-left:30px;
+            margin-right:30px;
         }
 
         nav {
@@ -105,9 +102,6 @@
         .navbar-nav > li{
             padding-left:20px;
             padding-right:20px;
-        }
-
-        .navbar-nav > li{
             margin-left:20px;
             margin-right:20px;
         }
@@ -149,11 +143,13 @@
             overflow:hidden;
             color:#fff;
         }
+
         .left a{
             color: white;
             text-decoration: cornflowerblue;
             font-weight: bold;
         }
+
         span.menu{
             padding-left: 100%;
         }
@@ -223,7 +219,7 @@
          .sidebar-nav {
             position: absolute;
             top: 70px;
-            width: 130px;
+            width: 140px;
             margin: 0;
             padding: 0;
             list-style: inherit;
@@ -244,8 +240,8 @@
          .sidebar-nav li a:hover {
             text-decoration: whitesmoke;
             color: #fff;
-            background: rgba(255, 255, 255, 0.2);
-            border-left: red 2px solid;
+            background: rgba(255, 255, 255, 0.3);
+            border-left: red 3px solid;
          }
 
          .sidebar-nav li a:active,
@@ -448,13 +444,13 @@
 
                 {% block footer %}
                     {% if data %}
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2X</small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4X</small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20X</small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2 <span class="glyphicon glyphicon-step-forward"></span></small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4 <span class="glyphicon glyphicon-forward"></span></small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20 <span class="glyphicon glyphicon-fast-forward"></span></small></a>
 
 
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="start()">Start</small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="stop()">Stop</small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="start()">Start <span class="glyphicon glyphicon-play"></span></small></a>
+                        <a><small style="color:whitesmoke" class="nav-link" onclick="stop()"><span class="glyphicon glyphicon-pause"></span> Stop</small></a>
 
                     {% endif %}
                 {% endblock %}
