@@ -34,6 +34,7 @@
 
         .footer {
             position: fixed;
+            display: inline-block;
             left: 0;
             bottom: 0;
             height: 37px;
@@ -41,9 +42,9 @@
             text-align: center;
             color: white;
             font-size: large;
-            display: inherit;
             line-height: 20px;
             background-color: #2E2E2E;
+            overflow: hidden;
         }
 
         .footer a:first-child {
@@ -53,14 +54,23 @@
         .footer a {
             color: #70726F;
             font-size: 20px;
-            padding: 5px;
-            border-right: 1px solid #70726F;
+            padding-left:10px;
+            padding-right:10px;
+            margin-left:50px;
+            margin-right:50px;
+            float: right;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: top;
+            {#border-right: 1px solid #70726F;#}
             transition: all .5s ease;
         }
 
-        #footer a:hover {
+        .footer a:hover {
             text-decoration: none;
             color: #fff;
+            cursor: pointer;
             background: rgba(255, 255, 255, 0.2);
             border-left: cornflowerblue 7px solid;
             border-right: cornflowerblue 7px solid;
@@ -69,13 +79,6 @@
         .footer > .container {
             padding-right: 35px;
             padding-left: 80px;
-        }
-
-        .footer a {
-            padding-left:20px;
-            padding-right:20px;
-            margin-left:30px;
-            margin-right:30px;
         }
 
         button {
@@ -374,6 +377,7 @@
                 display: inline-block;
             }
 
+
     </style>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -453,27 +457,5 @@
           </div>
        </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container text-right">
-            <div id="footer">
-                <div class="row">
-
-                {% block footer %}
-                    {% if data %}
-
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="start()"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="stop()"><span class="glyphicon glyphicon-stop" style="color:firebrick"></span> Stop </small></a>
-
-
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2 <span class="glyphicon glyphicon-step-forward"></span></small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4 <span class="glyphicon glyphicon-forward"></span></small></a>
-                        <a><small style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20 <span class="glyphicon glyphicon-fast-forward"></span></small></a>
-
-                    {% endif %}
-                {% endblock %}
-            </div>
-        </div>
-    </footer>
 </body>
 </html>

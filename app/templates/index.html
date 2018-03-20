@@ -163,12 +163,10 @@
         function start() {
             clearInterval(timer);
             timer = setInterval(loop, speed);
-        }
 
 
         function stop() {
             clearInterval(timer);
-        }
 
 
         function doubleSPeed() {
@@ -445,6 +443,7 @@
                                     icon: user_icon
                                 }));
                                 {#$("#ex1SliderVal").text(data[itm]['timestamp']);#}
+                                return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];
                             }
 
                         }
@@ -454,7 +453,7 @@
                         L.layerGroup(tmp).addTo(newMarkers);
 
                         $("#ex1SliderVal").text(time_convert(value));
-                        return 'Current value: ' + time_convert(value);
+                        {#return 'Current value: ' + time_convert(value);#}
                     }
                 });
 
@@ -462,12 +461,15 @@
                 mySlider.on("slideStop", function(value) {
                     $("#ex1SliderVal").text(value[slideEvt.value]);
                     tmp = slideEvt.value;
+                    print("eve", slideEvt);
+                    print("value", value);
+                    print("tmp", tmp);
 
-                    interval = setInterval(loop, 1000);
+                    timer = setInterval(loop, 1000);
                 });
 
                 mySlider.on("slideStart", function(value) {
-                    clearInterval(interval);
+                    clearInterval(timer);
 
                     markersLayer.clearLayers();
                     mymap.removeLayer(markersLayer);

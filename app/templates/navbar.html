@@ -77,6 +77,27 @@
 {#        <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>#}
 {#    </li>#}
 
+
+
     </ul>
   </div>
+
+    <!-- Footer -->
+
+    <div class="footer">
+    <div class="row">
+        {% block footer %}
+                    {% if data %}
+        <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>
+        <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>
+
+        <a style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2 <span class="glyphicon glyphicon-step-forward"></span></a>
+        <a style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4 <span class="glyphicon glyphicon-forward"></span></a>
+        <a style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20 <span class="glyphicon glyphicon-fast-forward"></span></a>
+
+                    {% endif %}
+        {% endblock %}
+    </div>
+
+    </div>
 </nav>
