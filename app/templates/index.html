@@ -8,9 +8,23 @@
 
     <div class="row">
         <div class="col-md-4">
-            <br>
+        <br>
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Current time: <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
+            <br>
+                {% if data %}
+                <input
+                        id="ex1"
+                        data-slider-id='ex1Slider'
+                        type="text"
+                        data-slider-min="0"
+                        data-slider-max="1440"
+                        data-slider-step="1"
+                        data-slider-value="0"
+{#                          data-slider-ticks="[1, 2, 3]"#}
+{#	                        data-slider-ticks-labels='["short", "medium", "long"]'#}
+                        data-provide="slider">
+            {% endif %}
             </div>
             <form method="post" id="fetch_data">
                 <input type="hidden" id="username" name="username">
@@ -18,21 +32,11 @@
         </div>
 
         <div class="col-md-4">
-            <br>
+        <br>
             <div align="center">
                 {% if data %}
                     <p style="font-size:14px;color:black;font-weight:bold">Data length is: {{ count }}</p>
-                    <input
-                            id="ex1"
-                            data-slider-id='ex1Slider'
-                            type="text"
-                            data-slider-min="0"
-                            data-slider-max="1440"
-                            data-slider-step="1"
-                            data-slider-value="0"
-{#                          data-slider-ticks="[1, 2, 3]"#}
-{#	                        data-slider-ticks-labels='["short", "medium", "long"]'#}
-                            data-provide="slider">
+
                 {% endif %}
                 <p id="data-holder"></p>
             </div>
