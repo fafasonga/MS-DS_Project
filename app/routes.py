@@ -134,3 +134,33 @@ def delete_database():
     session.commit()
     return redirect(url_for('home'))
 
+
+general_template = '{"type": "FeatureCollection", "features": [%s]}'
+template = '{"geometry": {"type": "LineString", "coordinates": [[%s, %s], [%s, %s]]}, ' \
+           '"type": "Feature", "properties": {"style": {"color": "red", "weight": 3}, "times": ["%s", "%s"]}}'
+
+
+def group(lst, n):
+    """group([0,3,4,10,2,3], 2) => [(0,3), (4,10), (2,3)]
+
+    Group a list into consecutive n-tuples. Incomplete tuples are
+    discarded e.g.
+
+    >>> group(range(10), 3)
+    [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
+    """
+    return zip(*[lst[i::n] for i in range(n)])
+
+
+@app.route("/blah")
+def blah():
+    geometries = []
+    locations = session.query(Location).all()
+    locations = group(locations, 2)
+    for location in locations:
+        l1, l2 = location
+        # 2008-12-16T15:59:29
+        geometries.append(template % (l1.lan, l1.lat, l2.lan, l2.lat, str(l1.timestamp.strftime("%Y-%m-%dT%H:%M:%S")),
+                                      str(l2.timestamp.strftime("%Y-%m-%dT%H:%M:%S"))))
+
+    return render_template('blah.html', asdf=json.loads(general_template % ", \n".join(geometries)))

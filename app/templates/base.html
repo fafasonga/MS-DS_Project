@@ -127,80 +127,11 @@
             position: center;
             z-index: 9999;
         }
-        .left ul{
-            padding: 0;
-            list-style-type: none;
-            text-align: left;
-        }
-        .left li {
-            width: 100%;
-            height: 60px;
-            line-height: 50px;
-            padding-left: 18px;
-        }
-        .left li:hover {
-            background: #2E2E2E;
-        }
-
-        .left:hover {
-            width: 100%;
-        }
-
-        .left .item-menu {
-            height:50px;
-            overflow:hidden;
-            color:#fff;
-        }
-
-        .left a{
-            color: white;
-            text-decoration: cornflowerblue;
-            font-weight: bold;
-        }
-
-        span.menu{
-            padding-left: 100%;
-        }
-
 
          /* Toggle Styles */
 
          .nav-pills>li>a {
              border-radius: 25px;
-         }
-
-         #wrapper {
-             width: 100%;
-             padding-left: 0;
-             -webkit-transition: all 0.5s ease;
-             -moz-transition: all 0.5s ease;
-             -o-transition: all 0.5s ease;
-             transition: all 0.5s ease;
-             overflow: hidden;
-         }
-
-         #wrapper.toggled {
-            padding-left: 250px;
-            overflow: hidden;
-         }
-
-         #sidebar-wrapper {
-            z-index: 1000;
-            position: absolute;
-            left: 250px;
-            width: auto;
-            height: 100%;
-            margin-left: -250px;
-            overflow-y: auto;
-            background: #2E2E2E;
-            -webkit-transition: all 0.5s ease;
-            -moz-transition: all 0.5s ease;
-            -o-transition: all 0.5s ease;
-            transition: all 0.5s ease;
-         }
-
-         #wrapper.toggled #sidebar-wrapper {
-             width: 250px;
          }
 
          #page-content-wrapper {
@@ -210,96 +141,13 @@
             overflow-x: hidden;
          }
 
-         .xyz {
-             min-width: 400px;
-         }
-
          #wrapper.toggled #page-content-wrapper {
             position: absolute;
             margin-right: 0px;
          }
 
-         .fixed-brand {
-             width: 100%;
-         }
+         @media(min-width:770px) {
 
-         /* Sidebar Styles */
-
-         .sidebar-nav {
-             position: absolute;
-             font-size: 15px;
-             top: 70px;
-             width: 220px;
-             margin: 0;
-             padding: 0;
-             list-style: inherit;
-             margin-top: 2px;
-         }
-
-         .sidebar-nav li {
-             text-indent: 10px;
-             line-height: 70px;
-         }
-
-         .sidebar-nav li a {
-             display: block;
-             text-decoration: none;
-             color: #999999;
-         }
-
-         .sidebar-nav li a:hover {
-             text-decoration: whitesmoke;
-             color: #fff;
-             background: rgba(255, 255, 255, 0.3);
-             border-left: red 3px solid;
-         }
-
-         .sidebar-nav li a:active,
-         .sidebar-nav li a:focus {
-             text-decoration: none;
-         }
-
-         .sidebar-nav > .sidebar-brand {
-             height: 75px;
-             font-size: 30px;
-             line-height: 60px;
-         }
-
-         .sidebar-nav > .sidebar-brand a {
-             color: #999999;
-         }
-
-         .sidebar-nav > .sidebar-brand a:hover {
-             color: #fff;
-             background: none;
-         }
-
-         .no-margin {
-             margin: auto;
-         }
-
-         @media(min-width:768px) {
-            #wrapper {
-                padding-left: 250px;
-            }
-            .fixed-brand {
-                width: 250px;
-            }
-            #wrapper.toggled {
-                padding-left: 0;
-            }
-            #sidebar-wrapper {
-                width: 250px;
-            }
-            #wrapper.toggled #sidebar-wrapper {
-                width: 250px;
-            }
-            #wrapper.toggled-2 #sidebar-wrapper {
-                width: 50px;
-            }
-            #wrapper.toggled-2 #sidebar-wrapper:hover {
-                width: 140px;
-            }
             #page-content-wrapper {
                 top: 40px;
                 padding: 20px;
@@ -403,59 +251,16 @@
     <!-- Header -->
     {% include 'navbar.html' %}
 
-    <div id="wrapper">
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-         <li class="active">
-             <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span><span class="glyphicon glyphicon-home"></span> Positioning System</a>
-         </li>
-
-             <li>
-               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span><span class="glyphicon glyphicon-file"></span>   File</a>
-               <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                  <li><a href="/table">View file</a></li>
-                  <li><a href="{{ url_for('upload_data') }}">Open...</a>
-                    <form class="form-inline mt-2 mt-md-0"></form></li>
-               </ul>
-            </li>
-
-            <li>
-               <a href="/"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span><span class="glyphicon glyphicon-edit"></span>   Edit</a>
-               <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                  <li><a href="/add_user">Insert User</a></li>
-                  <li><a href="/add_location">Insert Data </a></li>
-                   <li class="divider"></li>
-                   <li><a href="/remove_user">Delete User</a></li>
-                  <li><a href="/remove_location">Delete Data </a></li>
-               </ul>
-            </li>
-                            {% if data %}
-
-            <li>
-                <a style="color:antiquewhite" id="show1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span><span class="glyphicon glyphicon-map-marker"></span> Show All Markers</a>
-                <a style="color:antiquewhite" id="hide1"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide All Markers</a>
-            </li>
-            <li>
-                <a style="color:antiquewhite" id="show2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span><span class="glyphicon glyphicon-repeat"></span> Show Lines</a>
-                <a style="color:antiquewhite" id="hide2"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Hide Lines</a>
-            </li>
-                             {% endif %}
-
-         </ul>
-      </div>
-
-        <div id="page-content-wrapper">
-             <div class="container-fluid xyz">
-                <div class="row">
-                   <div class="col-lg-12">
-                       {% block content %}
-                       {% endblock %}
-                   </div>
-                </div>
-             </div>
-          </div>
-       </div>
+    <div id="page-content-wrapper">
+         <div class="container-fluid xyz">
+            <div class="row">
+               <div class="col-lg-12">
+                   {% block content %}
+                   {% endblock %}
+               </div>
+            </div>
+         </div>
+    </div>
 
 </body>
 </html>

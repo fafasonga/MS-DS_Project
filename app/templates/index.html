@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-4">
         <br>
-            <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Current time: <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+            <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
             <br>
                 {% if data %}
@@ -18,27 +18,36 @@
                         data-slider-id='ex1Slider'
                         type="text"
                         data-slider-min="0"
-                        data-slider-max="1440"
+                        data-slider-max="86400"
                         data-slider-step="1"
                         data-slider-value="0"
-{#                          data-slider-ticks="[1, 2, 3]"#}
-{#	                        data-slider-ticks-labels='["short", "medium", "long"]'#}
+{#                        data-slider-ticks="[{{ data }}]"#}
+{#                        data-slider-ticks-labels="[{{ data }}]"#}
                         data-provide="slider">
             {% endif %}
             </div>
             <form method="post" id="fetch_data">
+                <br>
                 <input type="hidden" id="username" name="username">
             </form>
         </div>
 
         <div class="col-md-4">
         <br>
-            <div align="center">
+            <div align="left">
                 {% if data %}
                     <p style="font-size:14px;color:black;font-weight:bold">Data length is: {{ count }}</p>
-
                 {% endif %}
                 <p id="data-holder"></p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <br>
+            <div align="left">
+                {% if data %}
+                    <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -112,12 +121,11 @@
             mymap.removeLayer(markersLayer);
             mySlider.slider('setValue', ++counter);
 
-            if (counter === 1439) {
+            if (counter === 86399) {
                 newMarkers.clearLayers();
                 counter = 0;
             }
         }
-
 
         /**
          * Class for limiting the number of markers on the Map
@@ -155,9 +163,15 @@
          */
 
         function time_convert(num) {
-            var hours = Math.floor(num / 60);
-            var minutes = num % 60;
-            return "\t" + hours + "\th" + ":" + "\t" + minutes + "\tmin";
+            var hours = Math.floor(num / 3600);
+            var minutes = Math.floor((num - (hours * 3600)) / 60);
+            var seconds = num - (hours * 3600) - (minutes * 60);
+
+            if (hours   < 10) {hours   = "0" + hours;}
+            if (minutes < 10) {minutes = "0" + minutes;}
+            if (seconds < 10) {seconds = "0" + seconds;}
+
+            return "\t" + hours + "\th" + ":" + "\t" + minutes  + "\tmin" + ":" + "\t" + seconds + "\tsec";
         }
 
         /**
@@ -169,32 +183,31 @@
             timer = setInterval(loop, speed);
         }
 
-
         function stop() {
             clearInterval(timer);
         }
 
-            function doubleSPeed() {
-                clearInterval(timer);
-                speed = 500;
-                stop();
-                start();
+        function doubleSPeed() {
+            clearInterval(timer);
+            speed = 500;
+            stop();
+            start();
 
-            }
+        }
 
-            function qtrSPeed() {
-                clearInterval(timer);
-                speed = 250;
-                stop();
-                start();
-            }
+        function qtrSPeed() {
+            clearInterval(timer);
+            speed = 250;
+            stop();
+            start();
+        }
 
-            function singleSPeed() {
-                clearInterval(timer);
-                speed = 50;
-                stop();
-                start();
-            }
+        function singleSPeed() {
+            clearInterval(timer);
+            speed = 1;
+            stop();
+            start();
+        }
 
             /**
              * Fetching the User Names to be selected from the Slider.
@@ -322,39 +335,6 @@
                 }
             }
 
-            /**
-             * Function to arrange the web application  navbar, body and footer
-             */
-
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-            $("#menu-toggle-2").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled-2");
-                $('#menu ul').hide();
-            });
-
-            function initMenu() {
-                $('#menu ul').hide();
-                $('#menu ul').children('.current').parent().show();
-                //$('#menu ul:first').show();
-                $('#menu li a').click(
-                    function () {
-                        var checkElement = $(this).next();
-                        if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-                            return false;
-                        }
-                        if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-                            $('#menu ul:visible').slideUp('normal');
-                            checkElement.slideDown('normal');
-                            return false;
-                        }
-                    }
-                );
-            }
-
 
             /**
              * Block of code executing right after page has been loaded
@@ -439,7 +419,7 @@
 
                             for (var itm in data) {
                                 var date = new Date(data[itm]['timestamp']);
-                                var timestmp = (date.getHours() * 60) + date.getMinutes();
+                                var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
 
                                 if (timestmp === value) {
                                     let user_icon = getColor(data[itm]['user_id']);
@@ -447,7 +427,7 @@
                                         time: data[itm]['timestamp'],
                                         icon: user_icon
                                     }));
-                                    {#$("#ex1SliderVal").text(data[itm]['timestamp']);#}
+                                    $("#ex2SliderVal").text(data[itm]['timestamp']);
                                     return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];
                                 }
 
@@ -464,21 +444,23 @@
 
 
                     mySlider.on("slideStop", function (value) {
-                        $("#ex1SliderVal").text(value[slideEvt.value]);
-                        tmp = slideEvt.value;
-                        print("eve", slideEvt);
-                        print("value", value);
-                        print("tmp", tmp);
+                        {#$("#ex1SliderVal").text(value[slideEvt.value]);#}
+                        {#tmp = slideEvt.value;#}
+                        {#print("eve", slideEvt);#}
+                        {#print("value", value);#}
+                        {#print("tmp", tmp);#}
+                        {##}
 
+                        counter = value;
                         timer = setInterval(loop, 1000);
                     });
 
                     mySlider.on("slideStart", function (value) {
                         clearInterval(timer);
 
-                        markersLayer.clearLayers();
-                        mymap.removeLayer(markersLayer);
-                        markersLayer.addTo(mymap);
+                        {#markersLayer.clearLayers();#}
+                        {#mymap.removeLayer(markersLayer);#}
+                        {#markersLayer.addTo(mymap);#}
                     });
 
                     /**
@@ -500,6 +482,11 @@
                         pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
                         path.snakeIn();
+
+                        path.on('snake', function(ev){
+                            console.log(ev.type);
+                            mySlider.slider('setValue', ++counter);
+                        });
                     });
 
                     $("#hide2").click(function () {
@@ -520,17 +507,15 @@
                         clearInterval(timer);
                     });
 
-
-                    initMenu();
-
-
                 {% endif %}
 
                 console.log("ready!");
             });
 
-            $("#check-all-users").click(function () {
+            $(function() {
+                $("#check-all-users").click(function () {
                 $('input:checkbox').not(this).prop('checked', this.checked);
+                });
             });
 
     </script>

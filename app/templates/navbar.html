@@ -1,16 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" role="navigation">
 <!-- navbar-header-->
 
-    <div>
-      <li class="collapse navbar-collapse active" id="bs-example-navbar-collapse-1">
-         <ul class="nav navbar-nav">
-            <li>
-               <a style="color:cornflowerblue"  class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
-            </li>
-         </ul>
-      </li>
-    </div>
-
   <div class="collapse navbar-collapse" id="navbarNavDropdown" role="navigation">
     <ul class="navbar-nav mr-auto">
         <li class="nav nav-item dropdown">
@@ -20,7 +10,7 @@
       <li class="nav nav-item dropdown active">
         <a class="nav-link" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File</a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a style="color:gray" class="nav-link" href="/table">View file</a></li>
+            <li><a style="color:gray" class="nav-link" href="/table">View source</a></li>
             <li class="divider"></li>
             <li class="nav-item dropdown">
                 <a style="color:gray" href="{{ url_for('upload_data') }}">Open...</a>
@@ -31,26 +21,24 @@
 
 
         <li class="nav nav-item dropdown active">
-            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
+            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="">Insert</a>
             <ul class="dropdown-menu">
                 <li class="dropdown-submenu">
-                    <a style="color:gray" class="nav-link" href="/">Insert <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a style="color:gray" href="/add_user">New User <span class="sr-only">(current)</span></a></li>
-                        <li class="divider"></li>
-                        <li><a style="color:gray" href="/add_location">New Data <span class="sr-only">(current)</span></a></li>
-                    </ul>
+                    <li><a style="color:gray" href="/add_user">New User <span class="sr-only">(current)</span></a></li>
+                    <li class="divider"></li>
+                    <li><a style="color:gray" href="/add_location">New Data <span class="sr-only">(current)</span></a></li>
                 </li>
+            </ul>
+        </li>
 
-                <li class="divider"></li>
 
+        <li class="nav nav-item dropdown active">
+            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Delete</a>
+            <ul class="dropdown-menu">
                 <li class="dropdown-submenu">
-                    <a style="color:gray" class="nav-link" href="/">Delete <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a style="color:gray" href="/remove_user">Existing User <span class="sr-only">(current)</span></a></li>
-                        <li class="divider"></li>
-                        <li><a style="color:gray" href="/remove_location">Existing Data <span class="sr-only">(current)</span></a></li>
-                    </ul>
+                    <li><a style="color:gray" href="/remove_user">Existing User <span class="sr-only">(current)</span></a></li>
+                    <li class="divider"></li>
+                    <li><a style="color:gray" href="/remove_location">Existing Data <span class="sr-only">(current)</span></a></li>
                 </li>
             </ul>
         </li>
@@ -60,23 +48,42 @@
             <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
             <ul class="dropdown-menu">
                 {% if users %}
+{#                    <form method="post">#}
+{#                        <div style="padding:20px">#}
+{#                            <select id='run' name="run" multiple="multiple">#}
+{#                                <option id="check-all-users">All users <br></option>#}
+{#                                {% for user in users %}#}
+{#                                    <option name="username" value="{{ user.username }}">{{ user.username }} <br></option>#}
+{#                                {% endfor %}#}
+{#                            </select> <br /><br />#}
+{#                            <input type="button" id="submit" value="Get data" class="btn btn-success" />#}
+{#                        </div>#}
+{#                    </form>#}
+
+
                     <form method="post">
-                    <input type="checkbox" id="check-all-users"> All users <br>
+                        <input type="checkbox" id="check-all-users"> All users <br>
                         {% for user in users %}
                             <input type="checkbox" name="username" value="{{ user.username }}">
-                             {{ user.username }}<br>
+                             {{ user.username }} <br>
                         {% endfor %}
+                        <br>
                         <input type="submit" value="Get data" class="btn btn-success">
                     </form>
                 {% endif %}
             </ul>
         </li>
 
-{#    <li>#}
-{#        <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>#}
-{#        <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>#}
-{#    </li>#}
-
+                            {% if data %}
+            <li class="nav nav-item dropdown active">
+                <a style="color:white" id="show1"> Show All Markers</a>
+                <a style="color:indianred" id="hide1">Hide All Markers</a>
+            </li>
+            <li class="nav nav-item dropdown active">
+                <a style="color:white" id="show2"> Show Lines</a>
+                <a style="color:white" id="hide2">Hide Lines</a>
+            </li>
+                             {% endif %}
 
 
     </ul>

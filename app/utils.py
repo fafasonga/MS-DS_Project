@@ -24,7 +24,6 @@ def upload_csv(f):
     ctr = 0
     lines = f.readlines()
     lines = [l.decode('utf-8') for l in lines]
-    print(lines)
     for line in lines:
         line = line.strip()
         if line == "":
@@ -38,6 +37,8 @@ def upload_csv(f):
             user = User(data[0])
             session.add(user)
         try:
+            print(data)
+            print("date: {}, time: {}".format(data[3], data[4]))
             ts = datetime.strptime(data[3] + " " + data[4], "%d/%m/%Y %H:%M:%S")
             print("Timestamp is :", ts)
         except ValueError:

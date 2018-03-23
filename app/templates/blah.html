@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS = false; L_NO_TOUCH = false; L_DISABLE_3D = false;</script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet" href="https://rawgit.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css" />
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+
+            <style> #map_2e8f977750b147a8903118fce7da5510 {
+                position : relative;
+                width : 100.0%;
+                height: 100.0%;
+                left: 0.0%;
+                top: 0.0%;
+                }
+            </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="https://rawgit.com/nezasa/iso8601-js-period/master/iso8601.min.js"></script>
+    <script src="https://rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css" />
+    <link rel="stylesheet" href="http://apps.socib.es/Leaflet.TimeDimension/dist/leaflet.timedimension.control.min.css" />
+</head>
+<body>
+
+            <div class="folium-map" id="map_2e8f977750b147a8903118fce7da5510" ></div>
+
+<script>
+
+
+
+                var bounds = null;
+
+
+            var map_2e8f977750b147a8903118fce7da5510 = L.map(
+                                  'map_2e8f977750b147a8903118fce7da5510',
+                                  {center: [39.95185,116.45515],
+                                  zoom: 12,
+                                  maxBounds: bounds,
+                                  layers: [],
+                                  worldCopyJump: false,
+                                  crs: L.CRS.EPSG3857
+                                 });
+
+
+
+            var tile_layer_5adf93a567cb4e6c950dc4d3f03a256c = L.tileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+  "attribution": null,
+  "detectRetina": false,
+  "maxZoom": 18,
+  "minZoom": 1,
+  "noWrap": false,
+  "subdomains": "abc"
+}
+                ).addTo(map_2e8f977750b147a8903118fce7da5510);
+
+
+            map_2e8f977750b147a8903118fce7da5510.timeDimension = L.timeDimension({period:"PT1M"});
+            map_2e8f977750b147a8903118fce7da5510.timeDimensionControl = L.control.timeDimension({
+                position: 'bottomleft',
+                autoPlay: true,
+                playerOptions: {
+                    transitionTime: 200,
+                    loop: true}
+                    });
+            map_2e8f977750b147a8903118fce7da5510.addControl(map_2e8f977750b147a8903118fce7da5510.timeDimensionControl);
+
+            var timestamped_geo_json_f4331f1a030b4d46881eea1bcdb9f2d8 = L.timeDimension.layer.geoJson(
+                L.geoJson({{ asdf|tojson|safe }}, {'style': function (feature) {
+                    return feature.properties.style
+                }}),
+                {updateTimeDimension: true,addlastPoint: false}
+                ).addTo(map_2e8f977750b147a8903118fce7da5510);
+
+</script>
+</body>
