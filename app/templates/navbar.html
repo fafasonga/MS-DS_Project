@@ -48,19 +48,6 @@
             <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
             <ul class="dropdown-menu">
                 {% if users %}
-{#                    <form method="post">#}
-{#                        <div style="padding:20px">#}
-{#                            <select id='run' name="run" multiple="multiple">#}
-{#                                <option id="check-all-users">All users <br></option>#}
-{#                                {% for user in users %}#}
-{#                                    <option name="username" value="{{ user.username }}">{{ user.username }} <br></option>#}
-{#                                {% endfor %}#}
-{#                            </select> <br /><br />#}
-{#                            <input type="button" id="submit" value="Get data" class="btn btn-success" />#}
-{#                        </div>#}
-{#                    </form>#}
-
-
                     <form method="post">
                         <input type="checkbox" id="check-all-users"> All users <br>
                         {% for user in users %}
@@ -74,20 +61,48 @@
             </ul>
         </li>
 
-                            {% if data %}
-            <li class="nav nav-item dropdown active">
-                <a style="color:white" id="show1"> Show All Markers</a>
-                <a style="color:indianred" id="hide1">Hide All Markers</a>
-            </li>
-            <li class="nav nav-item dropdown active">
-                <a style="color:white" id="show2"> Show Lines</a>
-                <a style="color:white" id="hide2">Hide Lines</a>
-            </li>
-                             {% endif %}
 
+{#    <li class="nav nav-item dropdown active">#}
+{#        <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>#}
+{#        <ul class="dropdown-menu">#}
+{#            {% if users %}#}
+{#                <form method="post">#}
+{#                    <select id="sel" multiple="multiple">#}
+{#                            <option type="checkbox" id="check-all-users"> All users </option> <br>#}
+{#                        {% for user in users %}#}
+{#                            <option type="checkbox" id="users" name="username" value="{{ user.username }}">{{ user.username }}</option>#}
+{#                        {% endfor %}#}
+{#                        <br>#}
+{#                    <br>#}
+{#                    </select>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                    <input type="submit" id="sub" value="Get data" class="btn btn-success">#}
+{#                </form>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </li>#}
 
     </ul>
   </div>
+
+    <div id="mySidenav" class="sidenav">
+                            {% if data %}
+        <li>
+            <a class="nav-link" style="color:white" id="show1">Show Markers </a>
+            <a class="nav-link" style="color:white" id="hide1"> Hide Markers </a>
+        </li>
+
+        <li>
+            <a class="nav-link" style="color:white" id="show2"> Show Lines </a>
+            <a class="nav-link" style="color:white" id="hide2"> Hide Lines </a>
+        </li>
+
+        <li>
+            <a class="navbar-link" href="/line_draw" id="ani"> Animation </a>
+        </li>
+                             {% endif %}
+    </div>
 
     <!-- Footer -->
 

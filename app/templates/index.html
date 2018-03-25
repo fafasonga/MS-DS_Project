@@ -407,14 +407,12 @@
                         addLayerToMap(pathLayer);
                     });
 
-
                     /**
                      * Block for the Slider display and markers on the Map with 1 minute delay
                      */
 
                     mySlider = $('#ex1').slider({
                         formatter: function (value) {
-
                             {#newMarkers.clearLayers();#}
 
                             for (var itm in data) {
@@ -438,19 +436,33 @@
                             L.layerGroup(tmp).addTo(newMarkers);
 
                             $("#ex1SliderVal").text(time_convert(value));
-                            {#return 'Current value: ' + time_convert(value);#}
+                            return 'Current value: ' + time_convert(value);
                         }
                     });
 
 
-                    mySlider.on("slideStop", function (value) {
-                        {#$("#ex1SliderVal").text(value[slideEvt.value]);#}
-                        {#tmp = slideEvt.value;#}
-                        {#print("eve", slideEvt);#}
-                        {#print("value", value);#}
-                        {#print("tmp", tmp);#}
-                        {##}
+                    {##}
+                    {#var pairs = [];#}
+                    {#for (var i=0; i < data.length; i+=2) {#}
+                        {#console.log(data[val])#}
+                        {#    console.log(data[i]);#}
+                    {#    route = [data[i]['lat'], data[i]['lan']];#}
+                    {#    if (data[i+1] !== undefined) {#}
+                    {#        pairs.push ([data[i], data[i+1]]);#}
+                    {#        var linepath = L.featureGroup([#}
+                    {#            L.marker([route[i]]),#}
+                    {#            L.polyline([route[i], route[i+1]])#}
+                    {#        ]);#}
+                    {##}
+                    {#    } else {#}
+                    {#        pairs.push ([data[i]]);#}
+                    {#    }#}
+                    {##}
+                    {##}
 
+
+                    mySlider.on("slideStop", function (value) {
+                        $("#ex1SliderVal").text(data[value]);
                         counter = value;
                         timer = setInterval(loop, 1000);
                     });
@@ -468,25 +480,25 @@
                      */
 
                     $("#show2").click(function () {
-                        console.log("button that shows Polyline is pressed");
-                        var path = L.polyline(extractPts(data), {
-                            snakingSpeed: 25,
-                            color: 'red',
-                            weight: 3,
-                            opacity: 1,
-                            smoothFactor: 1
-                        });
+                       console.log("button that shows Polyline is pressed");
+                       var path = L.polyline(extractPts(data), {
+                           snakingSpeed: 25,
+                           color: 'red',
+                           weight: 3,
+                           opacity: 1,
+                           smoothFactor: 1
+                       });
 
-                        pathLayer.addLayer((path).addTo(markersLayer));
-                        pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
-                        pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
+                       pathLayer.addLayer((path).addTo(markersLayer));
+                       pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
+                       pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
-                        path.snakeIn();
+                       path.snakeIn();
 
-                        path.on('snake', function(ev){
-                            console.log(ev.type);
-                            mySlider.slider('setValue', ++counter);
-                        });
+                       path.on('snake', function(ev) {
+                           console.log(ev.type);
+                           mySlider.slider('setValue', ++counter);
+                       });
                     });
 
                     $("#hide2").click(function () {
@@ -502,7 +514,6 @@
                     });
 
 
-
                     $("#stop").click(function () {
                         clearInterval(timer);
                     });
@@ -514,9 +525,24 @@
 
             $(function() {
                 $("#check-all-users").click(function () {
-                $('input:checkbox').not(this).prop('checked', this.checked);
+                    $('input:checkbox').not(this).prop('checked', this.checked);
                 });
             });
+
+
+         {#$(function() {#}
+         {#    $('select').multipleSelect({#}
+         {#        width: 200,#}
+         {#        multiple: true,#}
+         {#        multipleWidth: 55#}
+         {#    });#}
+         {##}
+         {#    $("#sel").click(function () {#}
+         {#        $('input:checkbox').not(this).prop('checked', this.checked);#}
+         {#        $( '#users option:selected' ).val();#}
+         {#        alert($('#ms').val());#}
+         {#    })#}
+         {#);#}
 
     </script>
 
