@@ -13,9 +13,13 @@
 
 <form method="post" enctype="multipart/form-data">
     <div>
-        <label for = "file"> Select CSV file from your Computer </label>
+        <label class = "custom-file"> Select CSV file from your Computer </label>
         <input type="file" id="file" name="file" accept="text/csv" required>
+        <span class="custom-file-control"></span>
     </div>
+    <br>
+
+
     <div>
         <input type="submit" value="Open file">
     </div>

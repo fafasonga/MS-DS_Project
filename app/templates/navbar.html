@@ -44,44 +44,43 @@
         </li>
 
 
-        <li class="nav nav-item dropdown active">
-            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
-            <ul class="dropdown-menu">
-                {% if users %}
-                    <form method="post">
-                        <input type="checkbox" id="check-all-users"> All users <br>
-                        {% for user in users %}
-                            <input type="checkbox" name="username" value="{{ user.username }}">
-                             {{ user.username }} <br>
-                        {% endfor %}
-                        <br>
-                        <input type="submit" value="Get data" class="btn btn-success">
-                    </form>
-                {% endif %}
-            </ul>
-        </li>
-
-
-{#    <li class="nav nav-item dropdown active">#}
-{#        <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>#}
-{#        <ul class="dropdown-menu">#}
-{#            {% if users %}#}
-{#                <form method="post">#}
-{#                    <select id="sel" multiple="multiple">#}
-{#                            <option type="checkbox" id="check-all-users"> All users </option> <br>#}
+{#        <li class="nav nav-item dropdown active">#}
+{#            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>#}
+{#            <ul class="dropdown-menu">#}
+{#                {% if users %}#}
+{#                    <form method="post">#}
+{#                        <input type="checkbox" id="check-all-users"> All users <br>#}
 {#                        {% for user in users %}#}
-{#                            <option type="checkbox" id="users" name="username" value="{{ user.username }}">{{ user.username }}</option>#}
+{#                            <input type="checkbox" name="username" value="{{ user.username }}">#}
+{#                             {{ user.username }} <br>#}
 {#                        {% endfor %}#}
 {#                        <br>#}
-{#                    <br>#}
-{#                    </select>#}
-{#                        <br>#}
-{#                        <br>#}
-{#                    <input type="submit" id="sub" value="Get data" class="btn btn-success">#}
-{#                </form>#}
-{#            {% endif %}#}
-{#        </ul>#}
-{#    </li>#}
+{#                        <input type="submit" value="Get data" class="btn btn-success">#}
+{#                    </form>#}
+{#                {% endif %}#}
+{#            </ul>#}
+{#        </li>#}
+
+
+    <li class="nav nav-item dropdown active">
+        <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
+        <ul class="dropdown-menu">
+            {% if users %}
+                <form method="post">
+                    <select id='run' name="username" multiple="multiple">
+                        {% if users %}
+                            {% for user in users %}
+                            <option value="{{ user.username }}">{{ user.username }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                        <br>
+                        <br>
+                    <input type="submit" id="submit" value="Get data" class="btn btn-success">
+                </form>
+            {% endif %}
+        </ul>
+    </li>
 
     </ul>
   </div>

@@ -78,9 +78,20 @@
             $('#show2').show();
         });
 
+        /**
+         * Jquery for Selecting Multiple Users
+         */
 
+         $(function() {
+             $('#run').multipleSelect({
+                 width: 200,
+                 multiple: true,
+                 multipleWidth: 55,
+                 placeholder:" --- Select User --- "
+             });
 
-
+             $('option:checkbox').not(this).prop('checked', this.checked);
+         });
 
         $('#start').click(function () {
             $('#start').css('display', 'none');
@@ -91,9 +102,6 @@
             $('#stop').css('display', 'none');
             $('#start').show();
         });
-
-
-        /** End of block code for the Show and hide of the Marker and Polyline buttons JQUERY */
 
         /**
          * Global declaration of the Variables
@@ -263,6 +271,7 @@
                 });
             }
 
+
             /**
              * Function to convert Json format to Markers Array
              */
@@ -280,6 +289,7 @@
                 }
                 return markers;
             }
+
 
             /**
              * Function to sort the data set
@@ -300,6 +310,7 @@
                 }
             }
 
+
             /**
              * Extracting Latitude and Longitude to be used in Polyline
              */
@@ -311,6 +322,7 @@
                 }
                 return pts;
             }
+
 
             /**
              * Extracting the timestamp with ( old_field = only time ) & ( new_field = date and time )
@@ -324,6 +336,7 @@
                 }
                 return obj;
             }
+
 
             /**
              * Adding a new layer to display all the markers
@@ -469,10 +482,6 @@
 
                     mySlider.on("slideStart", function (value) {
                         clearInterval(timer);
-
-                        {#markersLayer.clearLayers();#}
-                        {#mymap.removeLayer(markersLayer);#}
-                        {#markersLayer.addTo(mymap);#}
                     });
 
                     /**
@@ -490,7 +499,7 @@
                        });
 
                        pathLayer.addLayer((path).addTo(markersLayer));
-                       pathLayer.addLayer(L.marker(extractPts(data)[0]).addTo(markersLayer));
+                       pathLayer.addLayer(L.marker(extractPts(data)[0], {icon: getColor(4)}).addTo(markersLayer));
                        pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
                        path.snakeIn();
@@ -523,26 +532,12 @@
                 console.log("ready!");
             });
 
-            $(function() {
-                $("#check-all-users").click(function () {
-                    $('input:checkbox').not(this).prop('checked', this.checked);
-                });
-            });
+            {#$(function() {#}
+            {#    $("#check-all-users").click(function () {#}
+            {#        $('input:checkbox').not(this).prop('checked', this.checked);#}
+            {#    );#}
+            {#);#}
 
-
-         {#$(function() {#}
-         {#    $('select').multipleSelect({#}
-         {#        width: 200,#}
-         {#        multiple: true,#}
-         {#        multipleWidth: 55#}
-         {#    });#}
-         {##}
-         {#    $("#sel").click(function () {#}
-         {#        $('input:checkbox').not(this).prop('checked', this.checked);#}
-         {#        $( '#users option:selected' ).val();#}
-         {#        alert($('#ms').val());#}
-         {#    })#}
-         {#);#}
 
     </script>
 
