@@ -325,16 +325,15 @@
 
 
             {#function split_pairs(obj) {#}
-            {#    var pairs = [];#}
-            {#    for (var i = 0; i < obj.length; i += 2) {#}
-            {##}
+            {#    let pairs = [];#}
+            {#    for (let i = 0; i < obj.length; i++) {#}
             {#        if (obj[i + 1] !== undefined) {#}
-            {#            route1 = [obj[i]['lat'], obj[i]['lan']];#}
-            {#            route2 = [obj[i + 1]['lat'], obj[i + 1]['lan']];#}
-            {#            pairs.push(new L.LatLng([[obj[i]['lat'], obj[i]['lan']], [obj[i + 1]['lat'], obj[i + 1]['lan']]]));#}
+            {#            pairs.push([[obj[i]['lat'], obj[i]['lan']], [obj[i + 1]['lat'], obj[i + 1]['lan']]]);#}
             {#        }#}
             {#    }#}
-            {##}
+            {#    return pairs;#}
+
+
 
 
             /**
@@ -478,17 +477,15 @@
                     });
 
 
-                    var pairs = [];
-                    for (var i=0; i < data.length; i+=2) {
-                        console.log(data[i]);
-                        route = [data[i]['lat'], data[i]['lan']];
-                        if (data[i + 1] !== undefined) {
-                            pairs.push(new L.LatLng([[data[i]['lat'], data[i]['lan']], [data[i + 1]['lat'], data[i + 1]['lan']]]));
-
-
-                        }
-                    }
-
+                    {#var pairs = [];#}
+                    {#for (var i=0; i < data.length; i+=2) {#}
+                        {#console.log(data[i]);#}
+                    {#    route = [data[i]['lat'], data[i]['lan']];#}
+                    {#    if (data[i + 1] !== undefined) {#}
+                    {#        pairs.push([[data[i]['lat'], data[i]['lan']], [data[i + 1]['lat'], data[i + 1]['lan']]]);#}
+                    {#    }#}
+                    {# #}
+                    {##}
 
 
                     /**
@@ -498,7 +495,7 @@
                     $("#show2").click(function () {
                        console.log("button that shows Polyline is pressed");
                        var path = L.polyline(extractPts(data), {
-                           snakingSpeed: 25,
+                           snakingSpeed: 20,
                            color: 'red',
                            weight: 3,
                            opacity: 1,
@@ -537,6 +534,7 @@
                 {% endif %}
 
                 console.log("ready!");
+                {#console.log(pairs)#}
             });
 
             {#$(function() {#}
