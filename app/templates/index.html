@@ -316,12 +316,25 @@
              */
 
             function extractPts(obj) {
-                var pts = [];
-                for (var i = 0; i < obj.length; i++) {
+                let pts = [];
+                for (let i = 0; i < obj.length; i++) {
                     pts.push(new L.LatLng(obj[i]['lat'], obj[i]['lan']));
                 }
                 return pts;
             }
+
+
+            {#function split_pairs(obj) {#}
+            {#    var pairs = [];#}
+            {#    for (var i = 0; i < obj.length; i += 2) {#}
+            {##}
+            {#        if (obj[i + 1] !== undefined) {#}
+            {#            route1 = [obj[i]['lat'], obj[i]['lan']];#}
+            {#            route2 = [obj[i + 1]['lat'], obj[i + 1]['lan']];#}
+            {#            pairs.push(new L.LatLng([[obj[i]['lat'], obj[i]['lan']], [obj[i + 1]['lat'], obj[i + 1]['lan']]]));#}
+            {#        }#}
+            {#    }#}
+            {##}
 
 
             /**
@@ -454,26 +467,6 @@
                     });
 
 
-                    {##}
-                    {#var pairs = [];#}
-                    {#for (var i=0; i < data.length; i+=2) {#}
-                        {#console.log(data[val])#}
-                        {#    console.log(data[i]);#}
-                    {#    route = [data[i]['lat'], data[i]['lan']];#}
-                    {#    if (data[i+1] !== undefined) {#}
-                    {#        pairs.push ([data[i], data[i+1]]);#}
-                    {#        var linepath = L.featureGroup([#}
-                    {#            L.marker([route[i]]),#}
-                    {#            L.polyline([route[i], route[i+1]])#}
-                    {#        ]);#}
-                    {##}
-                    {#    } else {#}
-                    {#        pairs.push ([data[i]]);#}
-                    {#    }#}
-                    {##}
-                    {##}
-
-
                     mySlider.on("slideStop", function (value) {
                         $("#ex1SliderVal").text(data[value]);
                         counter = value;
@@ -483,6 +476,20 @@
                     mySlider.on("slideStart", function (value) {
                         clearInterval(timer);
                     });
+
+
+                    var pairs = [];
+                    for (var i=0; i < data.length; i+=2) {
+                        console.log(data[i]);
+                        route = [data[i]['lat'], data[i]['lan']];
+                        if (data[i + 1] !== undefined) {
+                            pairs.push(new L.LatLng([[data[i]['lat'], data[i]['lan']], [data[i + 1]['lat'], data[i + 1]['lan']]]));
+
+
+                        }
+                    }
+
+
 
                     /**
                      * Block call for the Polyline display
