@@ -2,8 +2,9 @@
 
 {% block content %}
 
-    <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"></div>
-    <title>Positioning System</title>
+    <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"
+         xmlns="http://www.w3.org/1999/html"></div>
+    <title> Positioning System </title>
 
 
     <div class="row">
@@ -21,6 +22,8 @@
                         data-slider-max="86400"
                         data-slider-step="1"
                         data-slider-value="0"
+                        data-highlight="true"
+                        data-tooltip="always"
 {#                        data-slider-ticks="[{{ data }}]"#}
 {#                        data-slider-ticks-labels="[{{ data }}]"#}
                         data-provide="slider">
@@ -32,15 +35,7 @@
             </form>
         </div>
 
-        <div class="col-md-4">
-        <br>
-            <div align="left">
-                {% if data %}
-                    <p style="font-size:14px;color:black;font-weight:bold">Data length is: {{ count }}</p>
-                {% endif %}
-                <p id="data-holder"></p>
-            </div>
-        </div>
+
 
         <div class="col-md-4">
             <br>
@@ -49,6 +44,30 @@
                     <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
                 {% endif %}
             </div>
+        </div>
+
+    <div class="col-md-4">
+        <br>
+            <div align="left">
+                {% if data %}
+                    <p
+                            style="font-size:14px;
+                            color:black;
+                            font-weight:bold"> Data length is: {{ count }}
+                    </p>
+                <br/>
+                    <div class="col-md-12">
+                        <div class="row">
+                        <span>Initial Timestamp is : <span id="data-holder1" style="color:darkred; font-weight:bold"></span></span><br>
+                        </div>
+                    </div>
+
+                    <div class="span-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <span>Final Timestamp is : <span id="data-holder2" style="color:darkred; font-weight:bold"></span></span><br>
+                        </div>
+                            {% endif %}
+                    </div>
         </div>
     </div>
 
@@ -471,14 +490,19 @@
                     });
 
 
-                    mySlider.on("slideStop", function (value) {
-                        $("#ex1SliderVal").text(data[value]);
-                        counter = value;
-                        timer = setInterval(loop, 1000);
+                    mySlider.on("slideStop", function (e, data) {
+                        {#$("#ex1SliderVal").text(slideEvt);#}
+                        {#counter = value;#}
+                        {#timer = setInterval(loop, 1000);#}
+                        console.log("Stopping effecting");
+                        console.log(slideEvt)
                     });
 
-                    mySlider.on("slideStart", function (value) {
-                        clearInterval(timer);
+                    mySlider.on("slideStart", function (e, data) {
+                        {#$("#ex1SliderVal").text(slideEvt);#}
+                        {#clearInterval(timer);#}
+                        console.log("Starting effecting");
+                        console.log(slideEvt)
                     });
 
 
@@ -524,13 +548,13 @@
                         mymap.removeLayer(markersLayer);
                     });
 
-                    // $("#data-holder").text(JSON.stringify(data));
+                    $("#data-holder1").text(JSON.stringify(data[0]['timestamp']));
+                    $("#data-holder2").text(JSON.stringify(data[data.length - 1]['timestamp']));
 
                     $("#start").click(function () {
                         clearInterval(timer);
                         timer = setInterval(loop, speed);
                     });
-
 
                     $("#stop").click(function () {
                         clearInterval(timer);
