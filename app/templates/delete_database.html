@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+    <input hidden name="command" value="delete_database">
+    <input type="submit" class="btn btn-danger navbar-btn" value="Delete Source File">
+
+{#    <button type="submit" class="btn btn-danger navbar-btn">#}
+{#        <span class="glyphicon glyphicon-trash"></span> Delete source#}
+{#    </button>#}
+</form>
+{% endblock %}

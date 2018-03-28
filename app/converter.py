@@ -1,35 +1,46 @@
+import datetime as dt
 import os
-from datetime import datetime
+from math import cos
 
 import pandas as pd
 import pyproj
 
 geod = pyproj.Geod(ellps='WGS84')
 
-headers_trajectory = ['latitude', 'longitude', 'null', 'altitude', 'timestamp_float', 'date', 'time']
-
+headers_trajectory = ['X', 'Y', 'Timestamp']
 
 def load_trajectory_df(full_filename):
-    subfolder = full_filename.split('/')[-3]
+    df = pd.read_csv(full_filename, header=None, names=headers_trajectory)
 
-    df = pd.read_csv(full_filename, skiprows=6, header=None, names=headers_trajectory)
+    lat = 46.716524
+    lon = 11.652545
 
-    df['date'] = df.apply(lambda z: datetime.strptime(z.date, "%Y-%m-%d").strftime("%d/%m/%Y"), axis=1)
-    df['time'] = df.apply(lambda z: z.time, axis=1)
-    df = df.drop(['null', 'timestamp_float', 'altitude'], axis=1)
+    for itm in range(len(df)):
+        a = df['Y'][itm] / (6076 / 60)
+        b = df['X'][itm] / (4145 / 60)
+        c = lon + b[itm]
+        latitude = lat + a[itm]
+        df['latitude'] = df.apply(latitude)
+
+        longitude = c - (df['X'][itm] / (6076 * cos(itm)) / 60)
+        df['longitude'] = df.apply(longitude)
+        df['date'] = df.apply(dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%d/%m/%Y'), axis=1)
+        df['time'] = df.apply(dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%H:%M:%S'), axis=1)
+        df['Timestamp'] = df.apply(
+            dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%d/%m/%Y %H:%M:%S'), axis=1)
 
     return df
 
 
 LABELS_FILE = 'labels.txt'
-MAIN_FOLDER = 'Data/'
+MAIN_FOLDER = 'Data'
 TRAJ_FOLDER = 'Trajectory/'
 OUTPUT_FOLDER = 'processed_data/'
 
 if __name__ == '__main__':
 
     # dir_target = input("Please, give a path to data: ").strip()
-    dir_target = "/Users/admin/Downloads/Geolife Trajectories 1.3"
+    dir_target = "/Users/admin/Downloads/geo"
     os.chdir(dir_target)
 
     for f in os.listdir(os.path.curdir):
@@ -67,7 +78,7 @@ if __name__ == '__main__':
         if LABELS_FILE in os.listdir(subfolder_):
             filename = subfolder_ + LABELS_FILE
 
-        output_filename = OUTPUT_FOLDER + subfolder + '.csv'
+        output_filename = subfolder + '.csv'
         # if True:
         #     print(df_traj_all)
         #     sys.exit(0)

@@ -91,7 +91,14 @@
              });
 
              $('option:checkbox').not(this).prop('checked', this.checked);
+            {# $('#run').on('click', function(){#}
+            {#    if($(this).is(':checked')) {#}
+            {#        // if your checkbox is checked, submit the form#}
+            {#        $('#run').submit();#}
+            {#    }#}
+            {#);#}
          });
+
 
         $('#start').click(function () {
             $('#start').css('display', 'none');
@@ -112,6 +119,8 @@
         var pathLayer = new L.LayerGroup();
         var counter = 0;
         var speed = 1000;
+        var minSpeed = 1000;
+        var maxSpeed = 0;
         var allMarkers = new L.LayerGroup();
         var newMarkers = new L.LayerGroup();
 
@@ -195,26 +204,22 @@
             clearInterval(timer);
         }
 
-        function doubleSPeed() {
-            clearInterval(timer);
-            speed = 500;
-            stop();
-            start();
 
-        }
 
-        function qtrSPeed() {
+        function decrease() {
             clearInterval(timer);
-            speed = 250;
-            stop();
-            start();
+            if(speed +100 <= minSpeed)
+                speed += 100;
+                stop();
+                start();
         }
 
         function singleSPeed() {
             clearInterval(timer);
-            speed = 1;
-            stop();
-            start();
+            if(speed > maxSpeed )
+                speed = (speed / 2);
+                stop();
+                start();
         }
 
             /**

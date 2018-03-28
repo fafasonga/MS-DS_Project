@@ -39,6 +39,11 @@
                     <li><a style="color:gray" href="/remove_user">Existing User <span class="sr-only">(current)</span></a></li>
                     <li class="divider"></li>
                     <li><a style="color:gray" href="/remove_location">Existing Data <span class="sr-only">(current)</span></a></li>
+                    <li class="divider"></li>
+                    <li class="nav-item dropdown">
+                        <a style="color:gray" href="{{ url_for('delete_database') }}">Delete source </a>
+                        <form class="form-inline mt-2 mt-md-0"></form>
+                    </li>
                 </li>
             </ul>
         </li>
@@ -109,12 +114,13 @@
     <div class="row">
         {% block footer %}
                     {% if data %}
+
+        <a style="color:whitesmoke" class="nav-link" onclick="decrease()"><span class="glyphicon glyphicon-fast-backward"></span> Speed Down</a>
+
         <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>
         <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>
 
-        <a style="color:whitesmoke" class="nav-link" onclick="doubleSPeed()">Speed: 2 <span class="glyphicon glyphicon-step-forward"></span></a>
-        <a style="color:whitesmoke" class="nav-link" onclick="qtrSPeed()">Speed: 4 <span class="glyphicon glyphicon-forward"></span></a>
-        <a style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed: 20 <span class="glyphicon glyphicon-fast-forward"></span></a>
+        <a style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed Up <span class="glyphicon glyphicon-fast-forward"></span></a>
 
                     {% endif %}
         {% endblock %}

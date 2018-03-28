@@ -121,7 +121,7 @@ def upload_data():
         if result != "OK":
             flash(result)
         else:
-            flash("Your file successfully uploaded!")
+            flash("File successfully uploaded!")
             return redirect("/")
     return render_template("upload_csv.html")
 
