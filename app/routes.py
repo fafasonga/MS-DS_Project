@@ -128,10 +128,11 @@ def upload_data():
 # Deleting Existing Elements in the Database
 @app.route("/delete_database", methods=["POST"])
 def delete_database():
-    session.begin()
-    session.query(Location).delete()
-    session.query(User).delete()
-    session.commit()
+    if request.method == 'POST':
+        session.begin()
+        session.query(Location).delete()
+        session.query(User).delete()
+        session.commit()
     return redirect(url_for('home'))
 
 

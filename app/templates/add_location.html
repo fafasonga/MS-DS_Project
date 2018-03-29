@@ -1,36 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post" action="/add_location">
-    {{ form.hidden_tag() }}
-    <P>
-        {{ form.lat.label }}
-        {{ form.lat() }}
-        {% for error in form.lat.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-    </P>
-    <P>
-        {{ form.lan.label }}
-        {{ form.lan() }}
-        {% for error in form.lan.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-    </P>
-    <P>
-        {{ form.timestamp.label }}
-        {{ form.timestamp() }}
-        {% for error in form.timestamp.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-    </P>
-    <P>
-        {{ form.user_id.label }}
-        {{ form.user_id() }}
-        {% for error in form.user_id.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-    </P>
-    <p>{{ form.submit() }}</p>
-</form>
+
+    <div align="center">
+     <div class="panel panel-default">
+         <div class="panel-heading">
+            <strong>Please Fill the Blanks in the correct format and mind the gap between date and time ==> </strong>
+             <strong style="color: red">Lat & Lon: 9.99 float value then Timestamp : 10/10/2010 10H:01M:50S</strong>
+        </div>
+            <br/><br/>
+            <form method="post" action="/add_location">
+                {{ form.hidden_tag() }}
+                <P>
+                    {{ form.lat.label }}
+                    {{ form.lat() }}
+                    {% for error in form.lat.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </P>
+                <P>
+                    {{ form.lan.label }}
+                    {{ form.lan() }}
+                    {% for error in form.lan.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </P>
+                <P>
+                    {{ form.timestamp.label }}
+                    {{ form.timestamp() }}
+                    {% for error in form.timestamp.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </P>
+                <P>
+                    {{ form.user_id.label }}
+                    {{ form.user_id() }}
+                    {% for error in form.user_id.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </P>
+                <div>
+                    <p>{{ form.submit() }}</p>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -2,9 +2,28 @@
 
 {% block content %}
 
-<form method="post">
-    <input type="text" name="username" placeholder="username" required>
-    <input type="submit" value="Insert New User">
-</form>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Please Enter the Username for the New User to be Inserted...</strong>
+            </div>
+            <br><br>
+            <div align="center">
+                <div class="form-group">
+                    <form method="post">
+                        <div>
+                            <input type="text" name="username" placeholder="username" required>
+                        </div>
+                        <br /><br />
+{#                        <input type="submit" value="Insert New User">#}
+
+                        <div>
+                            <button type="submit" value="Insert New User" id="user-submit" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-file"></span> Insert User </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

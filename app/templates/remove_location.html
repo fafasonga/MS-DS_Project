@@ -2,13 +2,28 @@
 
 {% block content %}
 
-<form method="post" action="/remove_location">
-    {% for location in locations %}
-        <input type="checkbox" name="location[]" value="{{ location.id }}">{{ location }}<br>
-    {% endfor %}
-    <button type="submit" class="btn btn-danger navbar-btn">
-        <span class="glyphicon glyphicon-trash"></span> remove
-    </button>
-</form>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Please Select the Data to be Deleted...</strong>
+            </div>
+            <br><br>
+            <div align="center">
+                <div class="form-group">
+                    <form method="post" action="/remove_location">
+                        {% for location in locations %}
+                            <input type="checkbox" name="location[]" value="{{ location.id }}">{{ location }}<br>
+                        {% endfor %}
+                        <br /><br />
+                        <div>
+                            <button type="submit" class="btn btn-danger navbar-btn">
+                            <span class="glyphicon glyphicon-trash"></span> remove
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
