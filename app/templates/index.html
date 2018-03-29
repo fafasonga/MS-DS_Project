@@ -35,18 +35,7 @@
             </form>
         </div>
 
-
-
         <div class="col-md-4">
-            <br>
-            <div align="left">
-                {% if data %}
-                    <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-                {% endif %}
-            </div>
-        </div>
-
-    <div class="col-md-4">
         <br>
             <div align="left">
                 {% if data %}
@@ -58,16 +47,26 @@
                 <br/>
                     <div class="col-md-12">
                         <div class="row">
-                        <span>Initial Timestamp is : <span id="data-holder1" style="color:darkred; font-weight:bold"></span></span><br>
+                        <span>Initial Timestamp is : <span id="data-holder1" style="font-size:12px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
 
                     <div class="span-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="row">
-                            <span>Final Timestamp is : <span id="data-holder2" style="color:darkred; font-weight:bold"></span></span><br>
+                            <span>Final Timestamp is : <span id="data-holder2" style="font-size:12px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                             {% endif %}
                     </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <br>
+            <div align="left">
+                {% if data %}
+                    <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                {% endif %}
+            </div>
         </div>
     </div>
 

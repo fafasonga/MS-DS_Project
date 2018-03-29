@@ -40,7 +40,7 @@ OUTPUT_FOLDER = 'processed_data/'
 if __name__ == '__main__':
 
     # dir_target = input("Please, give a path to data: ").strip()
-    dir_target = "/Users/admin/Downloads/geo"
+    dir_target = "/Users/admin/Downloads/geo/"
     os.chdir(dir_target)
 
     for f in os.listdir(os.path.curdir):
