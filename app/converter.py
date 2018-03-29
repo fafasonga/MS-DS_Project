@@ -1,88 +1,79 @@
-import datetime as dt
+import datetime
 import os
 from math import cos
 
 import pandas as pd
-import pyproj
 
-geod = pyproj.Geod(ellps='WGS84')
+headers_trajectory = ['latitude', 'longitude', 'timestamp', 'date', 'time', 'name']
 
-headers_trajectory = ['X', 'Y', 'Timestamp']
 
 def load_trajectory_df(full_filename):
-    df = pd.read_csv(full_filename, header=None, names=headers_trajectory)
-
-    lat = 46.716524
-    lon = 11.652545
+    df = pd.read_csv(full_filename, names=headers_trajectory)
 
     for itm in range(len(df)):
-        a = df['Y'][itm] / (6076 / 60)
-        b = df['X'][itm] / (4145 / 60)
-        c = lon + b[itm]
-        latitude = lat + a[itm]
-        df['latitude'] = df.apply(latitude)
+        value = int(df['timestamp'][itm])
+        date = datetime.datetime.fromtimestamp(value).strftime('%Y/%m/%d')
+        time = datetime.datetime.fromtimestamp(value).strftime('%H:%M:%S')
+        timestamp = datetime.datetime.fromtimestamp(value).strftime('%Y/%m/%d %H:%M:%S')
 
-        longitude = c - (df['X'][itm] / (6076 * cos(itm)) / 60)
-        df['longitude'] = df.apply(longitude)
-        df['date'] = df.apply(dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%d/%m/%Y'), axis=1)
-        df['time'] = df.apply(dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%H:%M:%S'), axis=1)
-        df['Timestamp'] = df.apply(
-            dt.datetime.datetime.fromtimestamp(int(df['Timestamp'][itm])).strftime('%d/%m/%Y %H:%M:%S'), axis=1)
+        df['date'][itm] = date
+        df['time'][itm] = time
+        df['timestamp'][itm] = timestamp
+
+        # Calculating the Latitude and Longitude
+        lat = 46.716524
+        lon = 11.652545
+
+        a = df['longitude'][itm] / 6076 / 60
+        b = df['latitude'][itm] / 4145 / 60
+        c = lon + b
+        latitude = lat + a
+        longitude = c - (df['latitude'][itm] / (6076 * cos(itm)) / 60)
+
+        df['latitude'][itm] = latitude
+        df['longitude'][itm] = longitude
+
+        df.drop(['timestamp'], axis=1)
 
     return df
 
 
-LABELS_FILE = 'labels.txt'
-MAIN_FOLDER = 'Data'
-TRAJ_FOLDER = 'Trajectory/'
+
 OUTPUT_FOLDER = 'processed_data/'
 
 if __name__ == '__main__':
 
     # dir_target = input("Please, give a path to data: ").strip()
-    dir_target = "/Users/admin/Downloads/geo/"
+    dir_target = "/Users/admin/Downloads/Geo/Data/client1/Trajectory/"
     os.chdir(dir_target)
+    # print("target File : ", dir_target)
 
-    for f in os.listdir(os.path.curdir):
-        print(f)
+    # list_df_traj = []
+
+    for file in os.listdir(os.path.curdir):
+        conversion = load_trajectory_df(file)
+        # list_df_traj.append(conversion)
+        print(conversion)
+
+    # print(len(list_df_traj))
 
     # sys.exit(0)
 
-    if not os.path.exists(OUTPUT_FOLDER):
-        os.makedirs(OUTPUT_FOLDER)
-    directories = os.listdir(MAIN_FOLDER)
+    cols = ""
+    for df in list_df_traj:
+        df['name'] = 'client' + dir_target
+        cols = df.columns.tolist()
+        cols = cols[-1:] + cols[:-1]
+        df = df.ix[:, cols]
 
-    for subfolder in directories:
-        list_df_traj = []
-        subfolder_ = MAIN_FOLDER + subfolder + '/'
-        traj_folder = MAIN_FOLDER + subfolder + '/' + TRAJ_FOLDER
-        traj_files = os.listdir(traj_folder)
+    # sys.exit(1)
+    df_traj_all = pd.concat(list_df_traj)
 
-        traj_files_full_path = [traj_folder + traj_file for traj_file in traj_files]
-        print(subfolder, len(traj_files_full_path))
-
-        for file in traj_files_full_path:
-            list_df_traj.append(load_trajectory_df(file))
-
-        cols = ""
-        for df in list_df_traj:
-            df['name'] = OUTPUT_FOLDER + subfolder
-            cols = df.columns.tolist()
-            cols = cols[-1:] + cols[:-1]
-            df = df.ix[:, cols]
-
-        # sys.exit(1)
-        df_traj_all = pd.concat(list_df_traj)
-        list_df_traj = []
-
-        if LABELS_FILE in os.listdir(subfolder_):
-            filename = subfolder_ + LABELS_FILE
-
-        output_filename = subfolder + '.csv'
-        # if True:
-        #     print(df_traj_all)
-        #     sys.exit(0)
-        # continue
-        print("Saving as: {}".format(os.path.abspath(output_filename)))
-        df_traj_all.to_csv(output_filename, index=False, columns=cols, sep=";")
-        del df_traj_all
+    output_filename = "client" + dir_target + '.csv'
+    # if True:
+    #     print(df_traj_all)
+    #     sys.exit(0)
+    # continue
+    print("Saving as: {}".format(os.path.abspath(output_filename)))
+    df_traj_all.to_csv(output_filename, index=False, columns=cols, sep=";")
+    del df_traj_all
