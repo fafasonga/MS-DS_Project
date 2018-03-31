@@ -33,7 +33,7 @@ def load_trajectory_df(full_filename):
         df['latitude'][itm] = latitude
         df['longitude'][itm] = longitude
 
-        df.drop(['timestamp'], axis=1)
+    df.drop(['timestamp'], axis=1, inplace=True)
 
     return df
 
@@ -47,32 +47,40 @@ if __name__ == '__main__':
     os.chdir(dir_target)
     # print("target File : ", dir_target)
 
-    # list_df_traj = []
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
+
+    list_df_traj = []
 
     for file in os.listdir(os.path.curdir):
         conversion = load_trajectory_df(file)
-        # list_df_traj.append(conversion)
-        print(conversion)
+        # print((conversion))
 
-    # print(len(list_df_traj))
+        list_df_traj = [(conversion)]
 
-    # sys.exit(0)
+        # print(len(list_df_traj))
 
-    cols = ""
-    for df in list_df_traj:
-        df['name'] = 'client' + dir_target
-        cols = df.columns.tolist()
-        cols = cols[-1:] + cols[:-1]
-        df = df.ix[:, cols]
+        # sys.exit(0)
 
-    # sys.exit(1)
-    df_traj_all = pd.concat(list_df_traj)
+        print(os.path.basename(file))
+        # for df in list_df_traj:
+        #     print(df)
+        cols = ""
+        for df in list_df_traj:
+            df['name'] = 'client_{}'.format(os.path.basename(file))
+            cols = df.columns.tolist()
+            cols = cols[-1:] + cols[:-1]
+            df = df.ix[:, cols]
+        print(list_df_traj)
 
-    output_filename = "client" + dir_target + '.csv'
-    # if True:
-    #     print(df_traj_all)
-    #     sys.exit(0)
-    # continue
-    print("Saving as: {}".format(os.path.abspath(output_filename)))
-    df_traj_all.to_csv(output_filename, index=False, columns=cols, sep=";")
-    del df_traj_all
+        # sys.exit(1)
+        df_traj_all = pd.concat(list_df_traj)
+
+        output_filename = os.path.basename(file) + ".modified"
+        # if True:
+        #     print(df_traj_all)
+        #     sys.exit(0)
+        # continue
+        print("Saving as: {}".format(os.path.abspath(output_filename)))
+        df_traj_all.to_csv(OUTPUT_FOLDER + "/" + output_filename, index=False, columns=cols, sep=";")
+        del df_traj_all
