@@ -1,6 +1,6 @@
 import json
 
-from flask import render_template, request, flash, url_for
+from flask import render_template, request, flash
 from werkzeug.utils import redirect
 
 from app import app, session
@@ -122,18 +122,19 @@ def upload_data():
             flash(result)
         else:
             flash("File successfully uploaded!")
-            return redirect("/")
+            return redirect("/table")
     return render_template("upload_csv.html")
 
 # Deleting Existing Elements in the Database
-@app.route("/delete_database", methods=["POST"])
+@app.route("/delete_database", methods=["GET", "POST"])
 def delete_database():
     if request.method == 'POST':
         session.begin()
         session.query(Location).delete()
         session.query(User).delete()
         session.commit()
-    return redirect(url_for('home'))
+        return redirect("/table")
+    return render_template("delete_database.html")
 
 
 general_template = '{"type": "FeatureCollection", "features": [%s]}'

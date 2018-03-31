@@ -2,12 +2,25 @@
 
 {% block content %}
 
-<form method="post">
-    <input hidden name="command" value="delete_database">
-    <input type="submit" class="btn btn-danger navbar-btn" value="Delete Source File">
+    <div class="container">
+        <div class="panel panel-default">
+            <div id="hed" class="panel-heading">
+                <strong> <font size="4"><span style="color: darkred" class="glyphicon glyphicon-warning-sign"></span> Are you Sure you want to delete Existing saved File... </font> </strong>
+            </div>
+            <br><br>
+            <div align="center">
+                <div class="form-group">
 
-{#    <button type="submit" class="btn btn-danger navbar-btn">#}
-{#        <span class="glyphicon glyphicon-trash"></span> Delete source#}
-{#    </button>#}
-</form>
+                    <form method="post">
+                        <input hidden name="command" value="delete_database">
+                    {#    <input type="submit" class="btn btn-danger navbar-btn" value="Delete Source File">#}
+
+                        <button type="submit" id="data_del" class="btn btn-danger navbar-btn">
+                            <span class="glyphicon glyphicon-trash"></span> Delete Source File
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

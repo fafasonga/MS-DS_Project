@@ -38,7 +38,6 @@ def load_trajectory_df(full_filename):
     return df
 
 
-
 OUTPUT_FOLDER = 'processed_data/'
 
 if __name__ == '__main__':
