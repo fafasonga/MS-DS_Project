@@ -12,9 +12,9 @@ def load_trajectory_df(full_filename):
 
     for itm in range(len(df)):
         value = int(df['timestamp'][itm])
-        date = datetime.datetime.fromtimestamp(value).strftime('%Y/%m/%d')
+        date = datetime.datetime.fromtimestamp(value).strftime('%d/%m/%Y')
         time = datetime.datetime.fromtimestamp(value).strftime('%H:%M:%S')
-        timestamp = datetime.datetime.fromtimestamp(value).strftime('%Y/%m/%d %H:%M:%S')
+        timestamp = datetime.datetime.fromtimestamp(value).strftime('%d/%m/%Y %H:%M:%S')
 
         df['date'][itm] = date
         df['time'][itm] = time
@@ -28,7 +28,9 @@ def load_trajectory_df(full_filename):
         b = df['latitude'][itm] / 4145 / 60
         c = lon + b
         latitude = lat + a
+        latitude = round(latitude, 5)
         longitude = c - (df['latitude'][itm] / (6076 * cos(itm)) / 60)
+        longitude = round(longitude, 5)
 
         df['latitude'][itm] = latitude
         df['longitude'][itm] = longitude
@@ -43,9 +45,8 @@ OUTPUT_FOLDER = 'processed_data/'
 if __name__ == '__main__':
 
     # dir_target = input("Please, give a path to data: ").strip()
-    dir_target = "/Users/admin/Downloads/Geo/Data/client1/Trajectory/"
+    dir_target = "/Users/admin/Documents/Data Trajectory/"
     os.chdir(dir_target)
-    # print("target File : ", dir_target)
 
     if not os.path.exists(OUTPUT_FOLDER):
         os.makedirs(OUTPUT_FOLDER)
@@ -54,29 +55,31 @@ if __name__ == '__main__':
 
     for file in os.listdir(os.path.curdir):
         conversion = load_trajectory_df(file)
-        # print((conversion))
 
-        list_df_traj = [(conversion)]
+        list_df_traj = [conversion]
 
         # print(len(list_df_traj))
 
         # sys.exit(0)
 
         print(os.path.basename(file))
+
         # for df in list_df_traj:
         #     print(df)
         cols = ""
         for df in list_df_traj:
-            df['name'] = 'client_{}'.format(os.path.basename(file))
-            cols = df.columns.tolist()
-            cols = cols[-1:] + cols[:-1]
-            df = df.ix[:, cols]
+            for i in range(len(list_df_traj)):
+                df['name'] = os.path.basename(file)
+                cols = df.columns.tolist()
+                cols = cols[-1:] + cols[:-1]
+                df = df.ix[:, cols]
         print(list_df_traj)
 
         # sys.exit(1)
         df_traj_all = pd.concat(list_df_traj)
 
-        output_filename = os.path.basename(file) + ".modified"
+        # output_filename = os.path.basename(file) + ".modified"
+        output_filename = os.path.basename(file)
         # if True:
         #     print(df_traj_all)
         #     sys.exit(0)

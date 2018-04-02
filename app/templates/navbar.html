@@ -4,28 +4,28 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown" role="navigation">
     <ul class="navbar-nav mr-auto">
         <li class="nav nav-item dropdown">
-            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-screenshot" aria-hidden="false"></span> Positioning System</a>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-screenshot" aria-hidden="false"></span> Positioning System </a>
         </li>
 
       <li class="nav nav-item dropdown active">
-        <a class="nav-link" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File</a>
+        <a class="nav-link" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> File </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li><a style="color:gray" class="nav-link" href="/table">View source</a></li>
             <li class="divider"></li>
             <li class="nav-item dropdown">
-                <a style="color:gray" href="{{ url_for('upload_data') }}">Open...</a>
+                <a style="color:gray" href="{{ url_for('upload_data') }}"> Open... </a>
                 <form class="form-inline mt-2 mt-md-0"></form>
             </li>
         </ul>
       </li>
 
         <li class="nav nav-item dropdown active">
-            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="">Insert</a>
+            <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Insert </a>
             <ul class="dropdown-menu">
                 <li class="dropdown-submenu">
-                    <li><a style="color:gray" href="/add_user">New User <span class="sr-only">(current)</span></a></li>
+                    <li><a style="color:gray" href="/add_user"> New User <span class="sr-only">(current)</span></a></li>
                     <li class="divider"></li>
-                    <li><a style="color:gray" href="/add_location">New Data <span class="sr-only">(current)</span></a></li>
+                    <li><a style="color:gray" href="/add_location"> New Data <span class="sr-only">(current)</span></a></li>
                 </li>
             </ul>
         </li>
@@ -35,12 +35,12 @@
             <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Delete</a>
             <ul class="dropdown-menu">
                 <li class="dropdown-submenu">
-                    <li><a style="color:gray" href="/remove_user">Existing User <span class="sr-only">(current)</span></a></li>
+                    <li><a style="color:gray" href="/remove_user"> Existing User <span class="sr-only">(current)</span></a></li>
                     <li class="divider"></li>
-                    <li><a style="color:gray" href="/remove_location">Existing Data <span class="sr-only">(current)</span></a></li>
+                    <li><a style="color:gray" href="/remove_location"> Existing Data <span class="sr-only">(current)</span></a></li>
                     <li class="divider"></li>
                     <li class="nav-item dropdown">
-                        <a style="color:gray" href="{{ url_for('delete_database') }}">Delete source </a>
+                        <a style="color:gray" href="{{ url_for('delete_database') }}"> Delete source </a>
                         <form class="form-inline mt-2 mt-md-0"></form>
                     </li>
                 </li>
@@ -101,9 +101,9 @@
             <a class="nav-link" style="color:white" id="hide2"> Hide Lines </a>
         </li>
 
-        <li>
-            <a class="navbar-link" href="/line_draw" id="ani"> Animation </a>
-        </li>
+{#        <li>#}
+{#            <a class="navbar-link" href="/line_draw" id="ani"> Animation </a>#}
+{#        </li>#}
                              {% endif %}
     </div>
 
