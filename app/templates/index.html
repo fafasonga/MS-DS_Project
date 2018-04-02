@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-md-4">
-        <br>
+{#        <br>#}
             <div align="left">
                 {% if data %}
                     <p
@@ -389,7 +389,7 @@
              * Creating a map
              */
 
-            mymap = L.map('map').setView([46.71774876409919, 11.653304697298898], 13);
+            mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
@@ -468,6 +468,9 @@
                                     smoothFactor: 1
                                 });
                                 markersHolder.addMarker(line);
+
+                                $("#ex2SliderVal").text(data[i]['timestamp']);
+                                return 'Current Marker Timestamp is : ' + data[i]['timestamp'];
                             }
                         }
 
