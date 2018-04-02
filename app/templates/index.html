@@ -43,6 +43,7 @@
                             color:black;
                             font-weight:bold"> Data length is: {{ count }}
                     </p>
+                    <br/>
                     <div class="col-md-12">
                         <div class="row">
                         <span>Initial Timestamp is : <span id="data-holder1" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
@@ -100,7 +101,7 @@
 
          $(function() {
              $('#run').multipleSelect({
-                 width: 300,
+                 width: 260,
                  multiple: true,
                  multipleWidth: 80,
                  placeholder:" --- Select User --- "
@@ -266,32 +267,32 @@
                     u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png';
                     break;
                 case 3:
-                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
-                    break;
-                case 4:
                     u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png';
                     break;
+                case 4:
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
+                    break;
                 case 5:
-                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png';
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
                     break;
                 case 6:
-                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
                     break;
                 case 7:
                     u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png';
                     break;
                 default:
-                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
+                    u = 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
                     break;
             }
 
             return icon = new L.Icon({
                 iconUrl: u,
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [20, 35],
+                iconSize: [20, 30],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -24],
-                shadowSize: [21, 21]
+                shadowSize: [18, 18]
             });
         }
 
@@ -447,24 +448,44 @@
                  * Block for the Slider display and markers on the Map with 1 minute delay
                  */
 
+                var route = L.featureGroup();
+
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
                         {#newMarkers.clearLayers();#}
 
-                        for (var itm in data) {
-                            var date = new Date(data[itm]['timestamp']);
+                        nu = data.length;
+
+                        for (var i = 0; i < nu - 1 ; i++) {
+                            var date = new Date(data[i]['timestamp']);
                             var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
 
                             if (timestmp === value) {
-                                let user_icon = getColor(data[itm]['user_id']);
-                                markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
-                                    time: data[itm]['timestamp'],
-                                    icon: user_icon
-                                }));
-                                $("#ex2SliderVal").text(data[itm]['timestamp']);
-                                return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];
+                                var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {
+                                    color:'red',
+                                    weight: 3,
+                                    opacity: 1,
+                                    smoothFactor: 1
+                                });
+                                markersHolder.addMarker(line);
                             }
                         }
+
+
+                        {#for (var itm in data) {#}
+                        {#    var date = new Date(data[itm]['timestamp']);#}
+                        {#    var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());#}
+                        {##}
+                        {#    if (timestmp === value) {#}
+                        {#        let user_icon = getColor(data[itm]['user_id']);#}
+                        {#        markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {#}
+                        {#            time: data[itm]['timestamp'],#}
+                        {#            icon: user_icon#}
+                        {#        }));#}
+                        {##}
+                        {#        $("#ex2SliderVal").text(data[itm]['timestamp']);#}
+                        {#        return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];#}
+
 
                         let tmp = markersHolder.getMarkers();
 
