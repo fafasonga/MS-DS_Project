@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-md-4">
-        <br>
+{#        <br>#}
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
             <br>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-md-4">
-            <br>
+{#            <br>#}
             <div align="left">
                 {% if data %}
                     <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
@@ -501,29 +501,32 @@
 
 
                 mySlider.on("slideStop", function (slideEvt, value) {
-                    {#$("#ex1SliderVal").text()#}
                     tmp = slideEvt.timestamp;
                     console.log(tmp);
                     console.log("Stopping effecting");
 
-                    for (var itm in data) {
+                    for (var i = 0; i < nu - 1 ; i++) {
                         if (tmp === value) {
-                            let user_icon = getColor(data[itm]['user_id']);
-                            markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
-                                time: data[itm]['timestamp'],
-                                icon: user_icon
-                            }));
-                            $("#ex2SliderVal").text(data[itm]['timestamp']);
-                            return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];
+                            var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {
+                                color:'red',
+                                weight: 3,
+                                opacity: 1,
+                                smoothFactor: 1
+                            });
+                                markersHolder.addMarker(line);
+
+                            $("#ex2SliderVal").text(data[i]['timestamp']);
+                            return 'Current Marker Timestamp is : ' + data[i]['timestamp'];
                         }
                     }
 
                     {#clearInterval(timer);#}
                     timer = setInterval(loop, speed);
+
                 });
 
                 mySlider.on("slideStart", function (slideEvt) {
-                    clearInterval(timer);
+                    {#clearInterval(timer);#}
 
                     markersLayer.clearLayers();
                     mymap.removeLayer(markersLayer);
@@ -548,7 +551,7 @@
                    });
 
                    pathLayer.addLayer((path).addTo(markersLayer));
-                   pathLayer.addLayer(L.marker(extractPts(data)[0], {icon: getColor(4)}).addTo(markersLayer));
+                   pathLayer.addLayer(L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(markersLayer));
                    pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
                    path.snakeIn();
