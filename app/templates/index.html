@@ -12,8 +12,8 @@
 {#        <br>#}
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
-            <br>
-            <br />
+{#            <br>#}
+{#            <br />#}
                 {% if data %}
                 <input
                         id="ex1"
@@ -23,16 +23,40 @@
                         data-slider-max="86400"
                         data-slider-step="1"
                         data-slider-value="0"
-                        data-highlight="true"
-                        data-tooltip="always"
-                        data-provide="slider">
-            {% endif %}
-            </div>
+                        data-provide="slider" />
+                    </div>
+                    <br />
+
+
+            <div class="dropup">
+{#                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Speed </button>#}
+                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="4"> <span class="glyphicon glyphicon-fast-forward"></span></font> </button>
+                <div class="dropdown-menu">
+                    <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <input
+                                id="ex4"
+                                data-slider-id='ex4Slider'
+                                type="range"
+                                data-slider-name="slider-1"
+                                data-slider-min="1"
+                                data-slider-max="86400"
+                                data-slider-scale="logarithmic"
+                                data-slider-step="1"
+                                data-slider-value="0"
+                                data-provide="slider" />
+
+                        </div>
+                    </div>
+              </div>
+
             <form method="post" id="fetch_data">
                 <br>
                 <input type="hidden" id="username" name="username">
             </form>
+                                {% endif %}
         </div>
+
 
         <div class="col-md-4">
 {#        <br>#}
@@ -43,19 +67,22 @@
                             color:black;
                             font-weight:bold"> Data length is: {{ count }}
                     </p>
+
                     <br/>
                     <div class="col-md-12">
                         <div class="row">
                         <span>Initial Timestamp is : <span id="data-holder1" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
+                        <br />
 
                     <div class="col-md-12">
                         <div class="row">
                             <span>Final Timestamp is : <span id="data-holder2" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
-                            {% endif %}
                     </div>
+
+                                            {% endif %}
             </div>
         </div>
 
@@ -64,11 +91,10 @@
             <div align="left">
                 {% if data %}
                     <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-                {% endif %}
+                                        {% endif %}
             </div>
         </div>
     </div>
-
     <script>
 
         /**
@@ -389,7 +415,7 @@
              * Creating a map
              */
 
-            mymap = L.map('map').setView([39.92553946, 116.45336151], 12);
+            mymap = L.map('map').setView([46.71774876409919, 11.653304697298898], 10);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
@@ -579,6 +605,15 @@
                     clearInterval(timer);
                 });
 
+                $("#ex4").on("slide", function(slideEvt) {
+                  clearInterval(timer);
+                  if(speed > maxSpeed )
+                      speed = 1000 * (1 / slideEvt.value);
+                        stop();
+                        start();
+                  $("#ex4SliderVal").text(slideEvt.value);
+              });
+
             {% endif %}
 
             console.log("ready!");
@@ -586,6 +621,7 @@
               $('form input').change(function () {
                   $('form p').text(this.files.length + " file(s) selected");
               });
+
         });
 
         {#$(function() {#}
