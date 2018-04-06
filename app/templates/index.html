@@ -209,11 +209,11 @@
 
                 if (this.markers.length >= this.limit) {
                     var removedElem = this.markers.shift();
-                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
+                    {#console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);#}
                 }
 
                 this.markers.push(value);
-                console.log("This.markers is : ", this.markers);
+                {#console.log("This.markers is : ", this.markers);#}
                 return this.markers;
             }
 
@@ -223,7 +223,7 @@
         }
 
         /**
-         * Function to convert integer values into Hours and Minutes
+         * Function to convert integer values into Hours and Minutes and Seconds
          */
 
         function time_convert(num) {
@@ -238,6 +238,22 @@
             return "\t" + hours + "\th" + ":" + "\t" + minutes  + "\tmin" + ":" + "\t" + seconds + "\tsec";
         }
 
+         /**
+         * Function to convert integer values into Hours and Minutes and Seconds
+         */
+
+        function tmp_convert(num) {
+            var hours = Math.floor(num / 3600);
+            var minutes = Math.floor((num - (hours * 3600)) / 60);
+            var seconds = num - (hours * 3600) - (minutes * 60);
+
+            if (hours   < 10) {hours   = "0" + hours;}
+            if (minutes < 10) {minutes = "0" + minutes;}
+            if (seconds < 10) {seconds = "0" + seconds;}
+
+            return hours + ":" + minutes + ":" + seconds;
+        }
+
         /**
          * Start defining functions for different Buttons to visualize the markers
          */
@@ -250,7 +266,6 @@
         function stop() {
             clearInterval(timer);
         }
-
 
         function decrease() {
             clearInterval(timer);
@@ -415,7 +430,8 @@
              * Creating a map
              */
 
-            mymap = L.map('map').setView([46.71774876409919, 11.653304697298898], 10);
+            {#mymap = new L.map('map').setView([46.71774876409919, 11.653304697298898], 10);#}
+            mymap = new L.map('map').setView([39.92553946, 116.45336151], 12);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
@@ -442,11 +458,11 @@
             });
 
 
-            {% if data %}
+                    {% if data %}
 
                 let data = JSON.parse({{ data|tojson|safe }});
-                data = replaceByValue(data, 'timestamp', 'dt');
-                data.sort(GetSortOrder('dt'));
+                data = replaceByValue(data, 'timestamp', 'dtt');
+                data.sort(GetSortOrder('dtt'));
 
                 /**
                  * JQUERY to show and hide all the markers on the Map
@@ -474,15 +490,11 @@
                  * Block for the Slider display and markers on the Map with 1 minute delay
                  */
 
-                var route = L.featureGroup();
-
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
                         {#newMarkers.clearLayers();#}
 
-                        nu = data.length;
-
-                        for (var i = 0; i < nu - 1 ; i++) {
+                        for (var i = 0; i < data.length-1 ; i++) {
                             var date = new Date(data[i]['timestamp']);
                             var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
 
@@ -525,41 +537,95 @@
                     }
                 });
 
+                mySlider.on("slideStop", function(slideEvt) {
+                    tmp = slideEvt.target.value;
+                    con_time = tmp_convert(tmp);
 
-                mySlider.on("slideStop", function (slideEvt, value) {
-                    tmp = slideEvt.timestamp;
-                    console.log(tmp);
-                    console.log("Stopping effecting");
+                     for (var itm = 0; itm < data.length-1 ; itm++) {
+                         if (con_time > data[itm]['dtt']) {
+                             {#console.log(data[itm]['timestamp']);#}
+                             {#   let user_icon = getColor(data[itm]['user_id']);#}
+                             {#   markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {#}
+                             {#       time: data[itm]['timestamp'],#}
+                             {#       icon: user_icon#}
+                             {#   ));#}
 
-                    for (var i = 0; i < nu - 1 ; i++) {
-                        if (tmp === value) {
-                            var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {
-                                color:'red',
-                                weight: 3,
-                                opacity: 1,
-                                smoothFactor: 1
-                            });
-                                markersHolder.addMarker(line);
+                             {#console.log("This value is : ", [[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]]);#}
 
-                            $("#ex2SliderVal").text(data[i]['timestamp']);
-                            return 'Current Marker Timestamp is : ' + data[i]['timestamp'];
-                        }
-                    }
+                             var lines = L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
+                                 color: 'red',
+                                 weight: 3,
+                                 opacity: 1,
+                                 smoothFactor: 1
+                             }).addTo(markersLayer);
+
+                             markersHolder.addMarker(lines);
+
+                             counter = tmp;
+                             start();
+
+                             $("#ex2SliderVal").text(data[itm]['timestamp']);
+                         }
+                     }
+                 });
+
+                {#mySlider.on("slide",(evt,value)=>{#}
+                {#    console.log("time",evt.timeStamp)#}
+{#                mySlider.on("slide", function (slideEvt, value) {#}
+{#                    tmp = slideEvt.timeStamp;#}
+{#                    console.log(tmp);#}
+{#                    test = new Date("23:56:54");#}
+{#                    console.log("Test", test);#}
+{#                    tds= new  Date(tmp.getHours().toString() + ":" + tmp.getMinutes().toString() + ":" + tmp.getSeconds().toString());#}
+                    {#dss = tds.getHours()+":" +tds.getMinutes()+":" + tds.getSeconds();#}
+{#                    console.log("time : ", tds);#}
+{#                    console.log(data);#}
+{#                    ind = 1;#}
+{#                    while (tmp > new Date(data[ind]['dtt'])) {#}
+{#                          var line = new L.polyline([[data[ind -1 ]['lat'], data[ind - 1]['lan']],[data[ind]['lat'], data[ind]['lan']]], {#}
+{#                                    color:'red',#}
+{#                                    weight: 3,#}
+{#                                    opacity: 1,#}
+{#                                    smoothFactor: 1#}
+{#                                });#}
+{#                                markersHolder.addMarker(line);#}
+{#                                ind ++;#}
+{#                            console.log("ind ", ind);#}
+{##}
+{#                            $("#ex2SliderVal").text(data[ind]['dtt']);#}
+{#                            return 'Current Marker Timestamp is : ' + data[ind]['dtt'];#}
+{##}
+{#                    }#}
+
+
+                    {#for (var i = 0; i < nu - 1 ; i++) {#}
+                    {#    if (tmp === value) {#}
+                    {#        var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {#}
+                    {#            color:'red',#}
+                    {#            weight: 3,#}
+                    {#            opacity: 1,#}
+                    {#            smoothFactor: 1#}
+                    {#        });#}
+                    {#            markersHolder.addMarker(line);#}
+                    {##}
+                    {#        $("#ex2SliderVal").text(data[i]['timestamp']);#}
+                    {#        return 'Current Marker Timestamp is : ' + data[i]['timestamp'];#}
+                    {#    #}
+
 
                     {#clearInterval(timer);#}
-                    timer = setInterval(loop, speed);
+                    {#timer = setInterval(loop, speed);#}
 
-                });
+                {#);#}
 
-                mySlider.on("slideStart", function (slideEvt) {
-                    {#clearInterval(timer);#}
+                mySlider.on("slideStart", function () {
+                    clearInterval(timer);
 
                     markersLayer.clearLayers();
                     mymap.removeLayer(markersLayer);
                     markersLayer.addTo(mymap);
-                    console.log(slideEvt);
                     console.log("Starting effecting");
-                    start();
+                    {#start();#}
                 });
 
                 /**
@@ -584,7 +650,8 @@
 
                    path.on('snake', function(ev) {
                        console.log(ev.type);
-                       mySlider.slider('setValue', ++counter);
+                       start();
+                       {#mySlider.slider('setValue', ++counter);#}
                    });
                 });
 
@@ -616,12 +683,10 @@
 
             {% endif %}
 
-            console.log("ready!");
-
               $('form input').change(function () {
                   $('form p').text(this.files.length + " file(s) selected");
               });
-
+              console.log("ready!");
         });
 
         {#$(function() {#}
