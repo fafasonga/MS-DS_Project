@@ -512,6 +512,9 @@
                             }
                         }
 
+                        L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(mymap);
+                        L.marker(extractPts(data)[data.length - 1]).addTo(mymap);
+
 
                         {#for (var itm in data) {#}
                         {#    var date = new Date(data[itm]['timestamp']);#}
@@ -537,29 +540,21 @@
                     }
                 });
 
-                mySlider.on("slideStop", function(slideEvt) {
+                mySlider.on("slide", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
 
                      for (var itm = 0; itm < data.length-1 ; itm++) {
                          if (con_time > data[itm]['dtt']) {
-                             {#console.log(data[itm]['timestamp']);#}
-                             {#   let user_icon = getColor(data[itm]['user_id']);#}
-                             {#   markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {#}
-                             {#       time: data[itm]['timestamp'],#}
-                             {#       icon: user_icon#}
-                             {#   ));#}
-
-                             {#console.log("This value is : ", [[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]]);#}
 
                              var lines = L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
                                  color: 'red',
                                  weight: 3,
                                  opacity: 1,
                                  smoothFactor: 1
-                             }).addTo(markersLayer);
+                             }).addTo(mymap);
 
-                             markersHolder.addMarker(lines);
+                             {#markersHolder.addMarker(lines);#}
 
                              counter = tmp;
                              start();
@@ -569,55 +564,6 @@
                      }
                  });
 
-                {#mySlider.on("slide",(evt,value)=>{#}
-                {#    console.log("time",evt.timeStamp)#}
-{#                mySlider.on("slide", function (slideEvt, value) {#}
-{#                    tmp = slideEvt.timeStamp;#}
-{#                    console.log(tmp);#}
-{#                    test = new Date("23:56:54");#}
-{#                    console.log("Test", test);#}
-{#                    tds= new  Date(tmp.getHours().toString() + ":" + tmp.getMinutes().toString() + ":" + tmp.getSeconds().toString());#}
-                    {#dss = tds.getHours()+":" +tds.getMinutes()+":" + tds.getSeconds();#}
-{#                    console.log("time : ", tds);#}
-{#                    console.log(data);#}
-{#                    ind = 1;#}
-{#                    while (tmp > new Date(data[ind]['dtt'])) {#}
-{#                          var line = new L.polyline([[data[ind -1 ]['lat'], data[ind - 1]['lan']],[data[ind]['lat'], data[ind]['lan']]], {#}
-{#                                    color:'red',#}
-{#                                    weight: 3,#}
-{#                                    opacity: 1,#}
-{#                                    smoothFactor: 1#}
-{#                                });#}
-{#                                markersHolder.addMarker(line);#}
-{#                                ind ++;#}
-{#                            console.log("ind ", ind);#}
-{##}
-{#                            $("#ex2SliderVal").text(data[ind]['dtt']);#}
-{#                            return 'Current Marker Timestamp is : ' + data[ind]['dtt'];#}
-{##}
-{#                    }#}
-
-
-                    {#for (var i = 0; i < nu - 1 ; i++) {#}
-                    {#    if (tmp === value) {#}
-                    {#        var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {#}
-                    {#            color:'red',#}
-                    {#            weight: 3,#}
-                    {#            opacity: 1,#}
-                    {#            smoothFactor: 1#}
-                    {#        });#}
-                    {#            markersHolder.addMarker(line);#}
-                    {##}
-                    {#        $("#ex2SliderVal").text(data[i]['timestamp']);#}
-                    {#        return 'Current Marker Timestamp is : ' + data[i]['timestamp'];#}
-                    {#    #}
-
-
-                    {#clearInterval(timer);#}
-                    {#timer = setInterval(loop, speed);#}
-
-                {#);#}
-
                 mySlider.on("slideStart", function () {
                     clearInterval(timer);
 
@@ -625,7 +571,6 @@
                     mymap.removeLayer(markersLayer);
                     markersLayer.addTo(mymap);
                     console.log("Starting effecting");
-                    {#start();#}
                 });
 
                 /**
@@ -634,7 +579,7 @@
 
                 $("#show2").click(function () {
                    console.log("button that shows Polyline is pressed");
-                   var path = L.polyline(extractPts(data), {
+                   var path = new L.polyline(extractPts(data), {
                        snakingSpeed: 20,
                        color: 'red',
                        weight: 3,
@@ -643,15 +588,14 @@
                    });
 
                    pathLayer.addLayer((path).addTo(markersLayer));
-                   pathLayer.addLayer(L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(markersLayer));
-                   pathLayer.addLayer(L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
+                   pathLayer.addLayer( new L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(markersLayer));
+                   pathLayer.addLayer( new L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
 
                    path.snakeIn();
 
                    path.on('snake', function(ev) {
                        console.log(ev.type);
-                       start();
-                       {#mySlider.slider('setValue', ++counter);#}
+                       mySlider.slider('setValue', ++counter);
                    });
                 });
 
@@ -676,6 +620,7 @@
                   clearInterval(timer);
                   if(speed > maxSpeed )
                       speed = 1000 * (1 / slideEvt.value);
+                        console.log("Speed is : ", speed);
                         stop();
                         start();
                   $("#ex4SliderVal").text(slideEvt.value);
