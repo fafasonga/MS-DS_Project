@@ -1,41 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong><font size="4"> Select .CSV file from your Computer </font> </strong>
+            </div>
+                <div align="center">
+                    <div class="form-group">
+                        <form action="/upload_csv" method="post" enctype="multipart/form-data" id="js-upload-form">
+                                <br /><br />
+                                <div id="file_open">
+                                    <br />
+                                    <span class="btn btn-default btn-file">
+                                        <input type="file" name="file" accept="text/csv" class="btn btn-default btn-lg" required>
+                                    </span>
+                                    <p><strong> Drag your files in the Box or click to select file...</strong></p>
+                                    <span class="custom-file-control"></span>
+                                </div>
 
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong><font size="4"> Select .CSV file from your Computer </font> </strong>
-        </div>
-            <div align="center">
-                <div class="form-group">
-                    <form action="/upload_csv" method="post" enctype="multipart/form-data" id="js-upload-form">
-                            <br /><br />
-                            <div id="file_open">
+                            <br />
                                 <br />
-                                <span class="btn btn-default btn-file">
-                                    <input type="file" name="file" accept="text/csv" class="btn btn-default btn-lg" required>
-                                </span>
-                                <p><strong> Drag your files in the Box or click to select file...</strong></p>
-                                <span class="custom-file-control"></span>
+                                <br />
+                                    <br />
+                                <br />
+                                <br />
+
+                            <div align="center">
+                                <button type="submit" value="Open file" id="js-upload-submit" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-file"></span> Open... </button>
                             </div>
-
-                        <br />
-                            <br />
-                            <br />
-                                <br />
-                            <br />
-                            <br />
-
-                        <div align="center">
-                            <button type="submit" value="Open file" id="js-upload-submit" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-file"></span> Open... </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

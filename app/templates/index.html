@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    <br />
     <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"
          xmlns="http://www.w3.org/1999/html"></div>
     <title> Positioning System </title>
@@ -12,25 +12,21 @@
 {#        <br>#}
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
-{#            <br>#}
-{#            <br />#}
                 {% if data %}
-                <input
-                        id="ex1"
-                        data-slider-id='ex1Slider'
-                        type="text"
-                        data-slider-min="0"
-                        data-slider-max="86400"
-                        data-slider-step="1"
-                        data-slider-value="0"
-                        data-provide="slider" />
-                    </div>
+                    <input
+                            id="ex1"
+                            data-slider-id='ex1Slider'
+                            type="text"
+                            data-slider-min="0"
+                            data-slider-max="86400"
+                            data-slider-step="1"
+                            data-slider-value="0"
+                            data-provide="slider" />
+                        </div>
                     <br />
 
-
             <div class="dropup">
-{#                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Speed </button>#}
-                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="4"> <span class="glyphicon glyphicon-fast-forward"></span></font> </button>
+                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="2"> Speed <span class="glyphicon glyphicon-fast-forward"></span></font> </button>
                 <div class="dropdown-menu">
                     <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
                     <div class="btn-group" role="group" aria-label="...">
@@ -45,7 +41,6 @@
                                 data-slider-step="1"
                                 data-slider-value="0"
                                 data-provide="slider" />
-
                         </div>
                     </div>
               </div>
@@ -81,7 +76,6 @@
                             <span>Final Timestamp is : <span id="data-holder2" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
-
                                             {% endif %}
             </div>
         </div>
@@ -543,18 +537,17 @@
                 mySlider.on("slide", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
+                    newMarkers.clearLayers();
 
                      for (var itm = 0; itm < data.length-1 ; itm++) {
                          if (con_time > data[itm]['dtt']) {
 
-                             var lines = L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
+                             new L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
                                  color: 'red',
                                  weight: 3,
                                  opacity: 1,
                                  smoothFactor: 1
-                             }).addTo(mymap);
-
-                             {#markersHolder.addMarker(lines);#}
+                             }).addTo(newMarkers);
 
                              counter = tmp;
                              start();
@@ -570,7 +563,6 @@
                     markersLayer.clearLayers();
                     mymap.removeLayer(markersLayer);
                     markersLayer.addTo(mymap);
-                    console.log("Starting effecting");
                 });
 
                 /**
@@ -633,13 +625,6 @@
               });
               console.log("ready!");
         });
-
-        {#$(function() {#}
-        {#    $("#check-all-users").click(function () {#}
-        {#        $('input:checkbox').not(this).prop('checked', this.checked);#}
-        {#    );#}
-        {#);#}
-
 
     </script>
 

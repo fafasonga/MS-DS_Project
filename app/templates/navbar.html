@@ -10,10 +10,11 @@
       <li class="nav nav-item dropdown active">
         <a class="nav-link" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> File </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a style="color:gray" class="nav-link" href="/table">View source</a></li>
+            <li><a style="color:gray" class="nav-link" href="/table">View source<span class="sr-only">(current)</span></a></li>
             <li class="divider"></li>
+
             <li class="nav-item dropdown">
-                <a style="color:gray" href="{{ url_for('upload_data') }}"> Open... </a>
+                <li><a style="color:gray" href="{{ url_for('upload_data') }}">New Scratch file</a></li>
                 <form class="form-inline mt-2 mt-md-0"></form>
             </li>
         </ul>
@@ -110,7 +111,7 @@
         {% block footer %}
                     {% if data %}
 
-        <a style="color:whitesmoke" class="nav-link" onclick="decrease()"><span class="glyphicon glyphicon-fast-backward"></span> Speed Down</a>
+        <a style="color:whitesmoke" class="nav-link" onclick="decrease()"><span class="glyphicon glyphicon-fast-backward"></span> Slow Down</a>
 
         <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>
         <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>
