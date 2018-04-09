@@ -78,7 +78,6 @@ def remove_location():
         print(location)
 
         session.query(Location).filter(Location.id.in_(location)).delete(synchronize_session='fetch')
-
         return redirect("/")
     else:
         locations = session.query(Location).all()
@@ -98,19 +97,18 @@ def add_user():
         return render_template("add_user.html")
 
 
-# Routing for the page to delete users to the Database
+# Routing for the page to delete users from the Database
 @app.route("/remove_user", methods=["POST", "GET"])
 def remove_user():
     if request.method == 'POST':
         user = request.form.getlist('user[]')
         print(user)
-
         session.query(User).filter(User.id.in_(user)).delete(synchronize_session='fetch')
-
         return redirect("/")
     else:
         users = session.query(User).all()
         return render_template("remove_user.html", users=users)
+
 
 # Uploading New CSV files from Computer directories
 @app.route("/upload_csv", methods=["POST", "GET"])
@@ -125,7 +123,8 @@ def upload_data():
             return redirect("/table")
     return render_template("upload_csv.html")
 
-# Deleting Existing Elements in the Database
+
+# Clearing the Existing Database
 @app.route("/delete_database", methods=["GET", "POST"])
 def delete_database():
     if request.method == 'POST':
@@ -142,27 +141,19 @@ template = '{"geometry": {"type": "LineString", "coordinates": [[%s, %s], [%s, %
            '"type": "Feature", "properties": {"style": {"color": "red", "weight": 3}, "times": ["%s", "%s"]}}'
 
 
-# Function to display Animations to the map
-def group(lst, n):
-    """group([0,3,4,10,2,3], 2) => [(0,3), (4,10), (2,3)]
-
-    Group a list into consecutive n-tuples. Incomplete tuples are
-    discarded e.g.
-
-    >>> group(range(10), 3)
-    [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
-    """
-    return zip(*[lst[i::n] for i in range(n)])
-
-
-@app.route("/line_draw", methods=["GET", "POST"])
-def line_draw():
-    geometries = []
-    locations = session.query(Location).all()
-    locations = group(locations, 2)
-    for location in locations:
-        l1, l2 = location
-        geometries.append(template % (l1.lan, l1.lat, l2.lan, l2.lat, str(l1.timestamp.strftime("%Y-%m-%dT%H:%M:%S")),
-                                      str(l2.timestamp.strftime("%Y-%m-%dT%H:%M:%S"))))
-
-    return render_template('line_draw.html', asdf=json.loads(general_template % ", \n".join(geometries)))
+# # Function to display Animations to the map
+# def group(lst, n):
+#     return zip(*[lst[i::n] for i in range(n)])
+#
+#
+# @app.route("/line_draw", methods=["GET", "POST"])
+# def line_draw():
+#     geometries = []
+#     locations = session.query(Location).all()
+#     locations = group(locations, 2)
+#     for location in locations:
+#         l1, l2 = location
+#         geometries.append(template % (l1.lan, l1.lat, l2.lan, l2.lat, str(l1.timestamp.strftime("%Y-%m-%dT%H:%M:%S")),
+#                                       str(l2.timestamp.strftime("%Y-%m-%dT%H:%M:%S"))))
+#
+#     return render_template('line_draw.html', asdf=json.loads(general_template % ", \n".join(geometries)))

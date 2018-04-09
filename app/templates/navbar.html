@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" role="navigation">
-<!-- navbar-header-->
 
+    <!-- navbar-header-->
   <div class="collapse navbar-collapse" id="navbarNavDropdown" role="navigation">
     <ul class="navbar-nav mr-auto">
         <li class="nav nav-item dropdown">
@@ -10,7 +10,7 @@
       <li class="nav nav-item dropdown active">
         <a class="nav-link" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> File </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a style="color:gray" class="nav-link" href="/table">View source<span class="sr-only">(current)</span></a></li>
+            <li><a style="color:gray" class="nav-link" href="/table">View Entries<span class="sr-only">(current)</span></a></li>
             <li class="divider"></li>
 
             <li class="nav-item dropdown">
@@ -81,7 +81,9 @@
                     </select>
                         <br>
                         <br>
-                    <input type="submit" id="submit" value="Get data" class="btn btn-success">
+                    <div align="center">
+                        <input type="submit"  id="submit" value="Get data" class="btn btn-success">
+                    </div>
                 </form>
             {% endif %}
         </ul>
@@ -107,20 +109,19 @@
     <!-- Footer -->
 
     <div class="footer">
-    <div class="row">
-        {% block footer %}
-                    {% if data %}
+        <div class="row">
+                {% block footer %}
+                            {% if data %}
 
-        <a style="color:whitesmoke" class="nav-link" onclick="decrease()"><span class="glyphicon glyphicon-fast-backward"></span> Slow Down</a>
+            <a style="color:whitesmoke" class="nav-link" onclick="decrease()"><span class="glyphicon glyphicon-fast-backward"></span> Slow Down</a>
 
-        <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>
-        <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>
+            <a id="start" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-play " style="color:green"></span> Start </a>
+            <a id="stop" style="color:whitesmoke" class="nav-link"><span class="glyphicon glyphicon-pause" style="color:red"></span> Stop </a>
 
-        <a style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed Up <span class="glyphicon glyphicon-fast-forward"></span></a>
+            <a style="color:whitesmoke" class="nav-link" onclick="singleSPeed()">Speed Up <span class="glyphicon glyphicon-fast-forward"></span></a>
 
-                    {% endif %}
-        {% endblock %}
-    </div>
-
+                            {% endif %}
+                {% endblock %}
+        </div>
     </div>
 </nav>

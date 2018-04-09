@@ -7,7 +7,6 @@ from app.models import Location, User
 
 # Loading dataset to the Database from an external source
 
-
 users = {"name": 0}
 
 

@@ -6,8 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
 
 Base = declarative_base()
 
-# creating the template for our Database
 
+# creating the template for our Database
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj.__class__, DeclarativeMeta):
@@ -27,6 +27,7 @@ class AlchemyEncoder(json.JSONEncoder):
             return fields
 
         return json.JSONEncoder.default(self, obj)
+
 
 class User(Base):
     __tablename__ = "user"

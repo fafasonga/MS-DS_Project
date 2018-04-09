@@ -9,10 +9,9 @@
 
     <div class="row">
         <div class="col-md-4">
-{#        <br>#}
+                                {% if data %}
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
-                {% if data %}
                     <input
                             id="ex1"
                             data-slider-id='ex1Slider'
@@ -54,7 +53,6 @@
 
 
         <div class="col-md-4">
-{#        <br>#}
             <div align="left">
                 {% if data %}
                     <p
@@ -81,11 +79,10 @@
         </div>
 
         <div class="col-md-4">
-{#            <br>#}
             <div align="left">
                 {% if data %}
-                    <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-                                        {% endif %}
+                <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -128,12 +125,6 @@
              });
 
              $('option:checkbox').not(this).prop('checked', this.checked);
-            {# $('#run').on('click', function(){#}
-            {#    if($(this).is(':checked')) {#}
-            {#        // if your checkbox is checked, submit the form#}
-            {#        $('#run').submit();#}
-            {#    }#}
-            {#);#}
          });
 
          /**
@@ -151,7 +142,7 @@
         });
 
         /**
-         * Global Variables declarations
+         * Variables declaration Globally
          */
 
         var mymap;
@@ -171,7 +162,7 @@
 
 
         /**
-         * Block for displaying the slider in infinite loops
+         * Block function for displaying the slider in infinite loops
          */
 
         function loop() {
@@ -181,12 +172,11 @@
             if (counter === 86399) {
                 newMarkers.clearLayers();
                 counter = 0;
-
             }
         }
 
         /**
-         * Class for limiting the number of markers on the Map
+         * Class initialization for limiting the number of markers on the Map
          */
 
         class ArrayHolder {
@@ -203,11 +193,12 @@
 
                 if (this.markers.length >= this.limit) {
                     var removedElem = this.markers.shift();
-                    {#console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);#}
+                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
                 }
 
                 this.markers.push(value);
-                {#console.log("This.markers is : ", this.markers);#}
+                console.log("This.markers is : ", this.markers);
+
                 return this.markers;
             }
 
@@ -217,7 +208,7 @@
         }
 
         /**
-         * Function to convert integer values into Hours and Minutes and Seconds
+         * Function to convert integer values into Hours and Minutes and Seconds format to be displayed on the slider
          */
 
         function time_convert(num) {
@@ -233,7 +224,7 @@
         }
 
          /**
-         * Function to convert integer values into Hours and Minutes and Seconds
+         * Function to convert integer values into Hours and Minutes and Seconds format for more analysis
          */
 
         function tmp_convert(num) {
@@ -249,7 +240,7 @@
         }
 
         /**
-         * Start defining functions for different Buttons to visualize the markers
+         * Functions declaration for the buttons in the footer
          */
 
         function start() {
@@ -288,7 +279,7 @@
         }
 
         /**
-         * Assigning different colors to the icons of different markers
+         * Assigning different colors to the markers icons.
          */
 
         function getColor(id) {
@@ -340,7 +331,7 @@
             let markers = [];
             for (var k = 0; k < obj.length; ++k) {
                 markers.push(
-                    L.marker([obj[k]['lat'], obj[k]['lan']], {
+                    new L.marker([obj[k]['lat'], obj[k]['lan']], {
                         time: obj[k]['timestamp'],
                         icon: getColor(obj[k]['user_id'])
                     })
@@ -351,7 +342,7 @@
 
 
         /**
-         * Function to sort the data set
+         * Function to sort the dataset
          */
 
         function n(n) {
@@ -371,7 +362,7 @@
 
 
         /**
-         * Extracting Latitude and Longitude to be used in Polyline
+         * Function to extracting Latitude and Longitude to be used in Polyline
          */
 
         function extractPts(obj) {
@@ -398,7 +389,7 @@
 
 
         /**
-         * Adding a new layer to display all the markers
+         * Adding a new layer to display all the markers at the same time
          */
 
         function addLayerToMap(layer) {
@@ -409,7 +400,7 @@
 
 
         /**
-         * Block of code executing right after page has been loaded
+         * Block code to be executing right after page has been loaded
          */
 
         $(document).ready(function () {
@@ -421,7 +412,7 @@
             });
 
             /**
-             * Creating a map
+             * Creating a Map
              */
 
             {#mymap = new L.map('map').setView([46.71774876409919, 11.653304697298898], 10);#}
@@ -450,16 +441,18 @@
                 e.stopPropagation();
                 e.preventDefault();
             });
-
-
                     {% if data %}
+
+                /**
+                 * Spliting the Timestamp in a format that contain the date and time and another contain only the time
+                 */
 
                 let data = JSON.parse({{ data|tojson|safe }});
                 data = replaceByValue(data, 'timestamp', 'dtt');
                 data.sort(GetSortOrder('dtt'));
 
                 /**
-                 * JQUERY to show and hide all the markers on the Map
+                 * JQUERY to show / hide all markers on the Map
                  */
 
                 $("#show1").click(function () {
@@ -481,13 +474,12 @@
                 });
 
                 /**
-                 * Block for the Slider display and markers on the Map with 1 minute delay
+                 * Block for the Slider display to visualize the markers on the Map.
                  */
 
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
                         {#newMarkers.clearLayers();#}
-
                         for (var i = 0; i < data.length-1 ; i++) {
                             var date = new Date(data[i]['timestamp']);
                             var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());

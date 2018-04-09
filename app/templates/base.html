@@ -48,6 +48,11 @@
             overflow: hidden;
         }
 
+        .footer > .container {
+            padding-right: 35px;
+            padding-left: 80px;
+        }
+
         .footer a:first-child {
             border-left: 1px solid #70726F;
         }
@@ -76,14 +81,13 @@
             border-right: cornflowerblue 7px solid;
         }
 
-        .footer > .container {
-            padding-right: 35px;
-            padding-left: 80px;
+        button {
+            width: 70px;
+            height: 40px;
         }
 
-        button {
-             width: 70px;
-             height: 40px;
+        #submit {
+            justify-content: center;
         }
 
 
@@ -215,10 +219,14 @@
             margin-top: -1px;
         }
 
-
         #hide1
         {
             display: none;
+        }
+
+        #hide1 {
+            top: 300px;
+            background-color: #f44336;
         }
 
         #hide2
@@ -226,9 +234,9 @@
             display: none;
         }
 
-        #stop
-        {
-            display: none;
+        #hide2 {
+            top: 450px;
+            background-color: #555
         }
 
         #show1
@@ -236,9 +244,19 @@
             display: inline-block;
         }
 
+        #show1 {
+            top: 300px;
+            background-color: #f44336;
+        }
+
         #show2
         {
             display: inline-block;
+        }
+
+        #show2 {
+            top: 450px;
+            background-color: #555
         }
 
         #start
@@ -246,6 +264,10 @@
             display: inline-block;
         }
 
+        #stop
+        {
+            display: none;
+        }
 
         .multipleSelect-container>li>a>label {
           padding: 4px 20px 3px 20px;
@@ -265,25 +287,6 @@
 
         #mySidenav a:hover {
             left: 0;
-        }
-
-        #show1 {
-            top: 300px;
-            background-color: #f44336;
-        }
-
-        #hide1 {
-            top: 300px;
-            background-color: #f44336;
-        }
-
-        #show2 {
-            top: 450px;
-            background-color: #555
-        }
-        #hide2 {
-            top: 450px;
-            background-color: #555
         }
 
         #file_open {
@@ -326,6 +329,7 @@
 
 
     </style>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">

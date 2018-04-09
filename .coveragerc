@@ -11,12 +11,17 @@ exclude_lines =
     if isinstance()
     if not isinstance()
     lines = f.readlines()
-    data = line.split()
     line = line.strip()
+    if line
+	for line
+    data = line.split()
+
 
     fields[field]
     result = check_csv()
     l.decode()
+    Location.id.in_()
+    User.id.in_()
 
     @app.route()
     if result != "OK"
@@ -38,8 +43,6 @@ exclude_lines =
 	print()
 	f.close()
 	ctr = 0
-	if line
-	for line
 
 	try:
 
