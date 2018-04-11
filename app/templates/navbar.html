@@ -14,7 +14,7 @@
             <li class="divider"></li>
 
             <li class="nav-item dropdown">
-                <li><a style="color:gray" href="{{ url_for('upload_data') }}">New Scratch file</a></li>
+                <li><a style="color:gray" href="{{ url_for('upload_data') }}"> Import... </a></li>
                 <form class="form-inline mt-2 mt-md-0"></form>
             </li>
         </ul>
@@ -68,8 +68,10 @@
 
 
     <li class="nav nav-item dropdown active">
-        <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Run</a>
+        <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Run</a>
         <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+                    <li><a style="color:gray" href="/"> Click checkbox <span class="sr-only">(current)</span></a></li>
             {% if users %}
                 <form method="post">
                     <select id='run' name="username" multiple="multiple">

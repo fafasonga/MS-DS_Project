@@ -24,25 +24,37 @@
                         </div>
                     <br />
 
-            <div class="dropup">
-                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="2"> Speed <span class="glyphicon glyphicon-fast-forward"></span></font> </button>
-                <div class="dropdown-menu">
-                    <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-                    <div class="btn-group" role="group" aria-label="...">
-                        <input
-                                id="ex4"
-                                data-slider-id='ex4Slider'
-                                type="range"
-                                data-slider-name="slider-1"
-                                data-slider-min="1"
-                                data-slider-max="86400"
-                                data-slider-scale="logarithmic"
-                                data-slider-step="1"
-                                data-slider-value="0"
-                                data-provide="slider" />
-                        </div>
-                    </div>
-              </div>
+            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+            <div class="btn-group" role="group" aria-label="...">
+                <input
+                        id="ex4"
+                        data-slider-id='ex4Slider'
+                        type="text"
+                        data-slider-min="1"
+                        data-slider-max="86400"
+                        data-slider-step="1"
+                        data-slider-value="0"
+                        data-provide="slider" />
+                </div>
+
+{#            <div class="dropup">#}
+{#                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="2"> Speed <span class="glyphicon glyphicon-fast-forward"></span></font> </button>#}
+{#                <div class="dropdown-menu">#}
+{#                    <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>#}
+{#                    <div class="btn-group" role="group" aria-label="...">#}
+{#                        <input#}
+{#                                id="ex4"#}
+{#                                data-slider-id='ex4Slider'#}
+{#                                type="range"#}
+{#                                data-slider-name="slider-1"#}
+{#                                data-slider-min="1"#}
+{#                                data-slider-max="86400"#}
+{#                                data-slider-step="1"#}
+{#                                data-slider-value="0"#}
+{#                                data-provide="slider" />#}
+{#                        </div>#}
+{#                    </div>#}
+{#              </div>#}
 
             <form method="post" id="fetch_data">
                 <br>
@@ -54,7 +66,7 @@
 
         <div class="col-md-4">
             <div align="left">
-                {% if data %}
+                                {% if data %}
                     <p
                             style="font-size:14px;
                             color:black;
@@ -74,14 +86,14 @@
                             <span>Final Timestamp is : <span id="data-holder2" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
-                                            {% endif %}
+                                    {% endif %}
             </div>
         </div>
 
         <div class="col-md-4">
             <div align="left">
                 {% if data %}
-                <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold">Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold"> Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
                 {% endif %}
             </div>
         </div>
@@ -160,6 +172,8 @@
 
         var isAddingLayerAllowed = true;
 
+        var coord = [];
+        console.log();
 
         /**
          * Block function for displaying the slider in infinite loops
@@ -416,7 +430,10 @@
              */
 
             {#mymap = new L.map('map').setView([46.71774876409919, 11.653304697298898], 10);#}
-            mymap = new L.map('map').setView([39.92553946, 116.45336151], 12);
+            mymap = new L.map('map', {
+                preferCanvas: true
+                {#renderer: L.canvas()#}
+            }).setView([39.92553946, 116.45336151], 12);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
@@ -451,6 +468,8 @@
                 data = replaceByValue(data, 'timestamp', 'dtt');
                 data.sort(GetSortOrder('dtt'));
 
+                coord.push(data[0]['lan']);
+
                 /**
                  * JQUERY to show / hide all markers on the Map
                  */
@@ -479,7 +498,6 @@
 
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
-                        {#newMarkers.clearLayers();#}
                         for (var i = 0; i < data.length-1 ; i++) {
                             var date = new Date(data[i]['timestamp']);
                             var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
@@ -526,13 +544,38 @@
                     }
                 });
 
-                mySlider.on("slide", function(slideEvt) {
+                {#mySlider.on("slide", function(slideEvt) {#}
+                {#    tmp = slideEvt.target.value;#}
+                {#    con_time = tmp_convert(tmp);#}
+                {#    newMarkers.clearLayers();#}
+                {##}
+                {#     for (var itm = 0; itm < data.length-1 ; itm++) {#}
+                {#         if (con_time > data[itm]['dtt']) {#}
+                {##}
+                {#             new L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {#}
+                {#                 color: 'red',#}
+                {#                 weight: 3,#}
+                {#                 opacity: 1,#}
+                {#                 smoothFactor: 1#}
+                {#             ).addTo(newMarkers);#}
+                {##}
+                {#             counter = tmp;#}
+                {#             start();#}
+                {##}
+                {#             $("#ex2SliderVal").text(data[itm]['timestamp']);#}
+                {#         #}
+                {#     #}
+                {# );#}
+
+                mySlider.on("slideStop", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
+                    {#console.log("time is ", con_time);#}
                     newMarkers.clearLayers();
 
                      for (var itm = 0; itm < data.length-1 ; itm++) {
-                         if (con_time > data[itm]['dtt']) {
+                         if (con_time >= data[itm]['dtt']) {
+                             {#console.log(data[itm]['dtt']);#}
 
                              new L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
                                  color: 'red',
@@ -603,11 +646,14 @@
                 $("#ex4").on("slide", function(slideEvt) {
                   clearInterval(timer);
                   if(speed > maxSpeed )
+                  {
                       speed = 1000 * (1 / slideEvt.value);
-                        console.log("Speed is : ", speed);
-                        stop();
-                        start();
-                  $("#ex4SliderVal").text(slideEvt.value);
+                      console.log("Speed is : ", slideEvt.value);
+                      stop();
+                      start();
+                  }
+
+                  $("#ex4SliderVal").text(speed);
               });
 
             {% endif %}
