@@ -474,23 +474,23 @@
                  * JQUERY to show / hide all markers on the Map
                  */
 
-                $("#show1").click(function () {
-                    console.log("button that shows all markers is pressed");
-                    allMarkers = new L.LayerGroup();
-                    L.layerGroup(transformFromJsonToMarker(data)).addTo(allMarkers);
-                    mymap.removeLayer(markersLayer);
-                    mymap.removeLayer(pathLayer);
-                    isAddingLayerAllowed = false;
-                    allMarkers.addTo(mymap);
-                });
-
-                $("#hide1").click(function () {
-                    console.log("button that hides all markers is pressed");
-                    mymap.removeLayer(allMarkers);
-                    isAddingLayerAllowed = true;
-                    addLayerToMap(markersLayer);
-                    addLayerToMap(pathLayer);
-                });
+                {#$("#show1").click(function () {#}
+                {#    console.log("button that shows all markers is pressed");#}
+                {#    allMarkers = new L.LayerGroup();#}
+                {#    L.layerGroup(transformFromJsonToMarker(data)).addTo(allMarkers);#}
+                {#    mymap.removeLayer(markersLayer);#}
+                {#    mymap.removeLayer(pathLayer);#}
+                {#    isAddingLayerAllowed = false;#}
+                {#    allMarkers.addTo(mymap);#}
+                {#);#}
+                {##}
+                {#$("#hide1").click(function () {#}
+                {#    console.log("button that hides all markers is pressed");#}
+                {#    mymap.removeLayer(allMarkers);#}
+                {#    isAddingLayerAllowed = true;#}
+                {#    addLayerToMap(markersLayer);#}
+                {#    addLayerToMap(pathLayer);#}
+                {#);#}
 
                 /**
                  * Block for the Slider display to visualize the markers on the Map.
@@ -498,42 +498,41 @@
 
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
-                        for (var i = 0; i < data.length-1 ; i++) {
-                            var date = new Date(data[i]['timestamp']);
-                            var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
-
-                            if (timestmp === value) {
-                                var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {
-                                    color:'red',
-                                    weight: 3,
-                                    opacity: 1,
-                                    smoothFactor: 1
-                                });
-                                markersHolder.addMarker(line);
-
-                                $("#ex2SliderVal").text(data[i]['timestamp']);
-                                return 'Current Marker Timestamp is : ' + data[i]['timestamp'];
-                            }
-                        }
-
-                        L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(mymap);
-                        L.marker(extractPts(data)[data.length - 1]).addTo(mymap);
-
-
-                        {#for (var itm in data) {#}
-                        {#    var date = new Date(data[itm]['timestamp']);#}
+                        {#for (var i = 0; i < data.length-1 ; i++) {#}
+                        {#    var date = new Date(data[i]['timestamp']);#}
                         {#    var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());#}
                         {##}
                         {#    if (timestmp === value) {#}
-                        {#        let user_icon = getColor(data[itm]['user_id']);#}
-                        {#        markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {#}
-                        {#            time: data[itm]['timestamp'],#}
-                        {#            icon: user_icon#}
-                        {#        }));#}
+                        {#        var line = new L.polyline([[data[i]['lat'], data[i]['lan']],[data[i+1]['lat'], data[i+1]['lan']]], {#}
+                        {#            color:'red',#}
+                        {#            weight: 3,#}
+                        {#            opacity: 1,#}
+                        {#            smoothFactor: 1#}
+                        {#        });#}
+                        {#        markersHolder.addMarker(line);#}
                         {##}
-                        {#        $("#ex2SliderVal").text(data[itm]['timestamp']);#}
-                        {#        return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];#}
+                        {#        $("#ex2SliderVal").text(data[i]['timestamp']);#}
+                        {#        return 'Current Marker Timestamp is : ' + data[i]['timestamp'];#}
+                        {#    #}
 
+                        {#L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(mymap);#}
+                        {#L.marker(extractPts(data)[data.length - 1]).addTo(mymap);#}
+
+                        for (var itm in data) {
+                            var date = new Date(data[itm]['timestamp']);
+                            var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
+
+                            if (timestmp === value) {
+                                let user_icon = getColor(data[itm]['user_id']);
+                                markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
+                                    time: data[itm]['timestamp'],
+                                    icon: user_icon
+                                }));
+
+                                $("#ex2SliderVal").text(data[itm]['timestamp']);
+                                return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];
+                            }
+                        }
 
                         let tmp = markersHolder.getMarkers();
 
@@ -570,24 +569,37 @@
                 mySlider.on("slideStop", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
-                    {#console.log("time is ", con_time);#}
+                    console.log("time is ", con_time);
                     newMarkers.clearLayers();
 
-                     for (var itm = 0; itm < data.length-1 ; itm++) {
-                         if (con_time >= data[itm]['dtt']) {
-                             {#console.log(data[itm]['dtt']);#}
+                    {#for (var itm = 0; itm < data.length-1 ; itm++) {#}
+                    {#     if (con_time >= data[itm]['dtt']) {#}
+                    {#         console.log(data[itm]['dtt']);#}
+                    {##}
+                    {#         new L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {#}
+                    {#             color: 'red',#}
+                    {#             weight: 3,#}
+                    {#             opacity: 1,#}
+                    {#             smoothFactor: 1#}
+                    {#         }).addTo(newMarkers);#}
+                    {##}
+                    {#         counter = tmp;#}
+                    {#         start();#}
+                    {##}
+                    {#         $("#ex2SliderVal").text(data[itm]['timestamp']);#}
+                    {#     }#}
+                    {# }#}
 
-                             new L.polyline([[data[itm]['lat'], data[itm]['lan']], [data[itm + 1]['lat'], data[itm + 1]['lan']]], {
-                                 color: 'red',
-                                 weight: 3,
-                                 opacity: 1,
-                                 smoothFactor: 1
-                             }).addTo(newMarkers);
+                    for (var itm in data) {
+                        if (con_time >= data[itm]['dtt']) {
+                            console.log(data[itm]['dtt']);
 
-                             counter = tmp;
-                             start();
+                            L.marker([data[itm]['lat'], data[itm]['lan']]).addTo(newMarkers);
 
-                             $("#ex2SliderVal").text(data[itm]['timestamp']);
+                            counter = tmp;
+                            start();
+
+                            $("#ex2SliderVal").text(data[itm]['timestamp']);
                          }
                      }
                  });
@@ -604,32 +616,32 @@
                  * Block call for the Polyline display
                  */
 
-                $("#show2").click(function () {
-                   console.log("button that shows Polyline is pressed");
-                   var path = new L.polyline(extractPts(data), {
-                       snakingSpeed: 20,
-                       color: 'red',
-                       weight: 3,
-                       opacity: 1,
-                       smoothFactor: 1
-                   });
-
-                   pathLayer.addLayer((path).addTo(markersLayer));
-                   pathLayer.addLayer( new L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(markersLayer));
-                   pathLayer.addLayer( new L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));
-
-                   path.snakeIn();
-
-                   path.on('snake', function(ev) {
-                       console.log(ev.type);
-                       mySlider.slider('setValue', ++counter);
-                   });
-                });
-
-                $("#hide2").click(function () {
-                    console.log("button that hide Polyline is pressed");
-                    mymap.removeLayer(markersLayer);
-                });
+                {#$("#show2").click(function () {#}
+                {#   console.log("button that shows Polyline is pressed");#}
+                {#   var path = new L.polyline(extractPts(data), {#}
+                {#       snakingSpeed: 20,#}
+                {#       color: 'red',#}
+                {#       weight: 3,#}
+                {#       opacity: 1,#}
+                {#       smoothFactor: 1#}
+                {#   );#}
+                {##}
+                {#   pathLayer.addLayer((path).addTo(markersLayer));#}
+                {#   pathLayer.addLayer( new L.marker(extractPts(data)[0], {icon: getColor(3)}).addTo(markersLayer));#}
+                {#   pathLayer.addLayer( new L.marker(extractPts(data)[data.length - 1]).addTo(markersLayer));#}
+                {##}
+                {#   path.snakeIn();#}
+                {##}
+                {#   path.on('snake', function(ev) {#}
+                {#       console.log(ev.type);#}
+                {#       mySlider.slider('setValue', ++counter);#}
+                {#   });#}
+                {#);#}
+                {##}
+                {#$("#hide2").click(function () {#}
+                {#    console.log("button that hide Polyline is pressed");#}
+                {#    mymap.removeLayer(markersLayer);#}
+                {#);#}
 
                 $("#data-holder1").text(JSON.stringify(data[0]['timestamp']));
                 $("#data-holder2").text(JSON.stringify(data[data.length - 1]['timestamp']));
@@ -653,7 +665,7 @@
                       start();
                   }
 
-                  $("#ex4SliderVal").text(speed);
+                  $("#ex4SliderVal").text(slideEvt.value);
               });
 
             {% endif %}
