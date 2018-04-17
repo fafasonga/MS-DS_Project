@@ -82,6 +82,7 @@
             <div align="left">
                 {% if data %}
                 <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold"> Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+{#                <input hidden type="number" value="7" id="limit">#}
                 {% endif %}
             </div>
         </div>
@@ -182,6 +183,7 @@
             }
         }
 
+
         /**
          * Class initialization for limiting the number of markers on the Map
          */
@@ -200,11 +202,11 @@
 
                 if (this.markers.length >= this.limit) {
                     var removedElem = this.markers.shift();
-                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
+                    {#console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);#}
                 }
 
                 this.markers.push(value);
-                console.log("This.markers is : ", this.markers);
+                {#console.log("This.markers is : ", this.markers);#}
 
                 return this.markers;
             }
@@ -369,11 +371,11 @@
 
 
         /**
-         * Function to extracting Latitude and Longitude to be used in Polyline
+         * Function to extracting Latitude and Longitude to be used in in markers
          */
 
         function extractPts(obj) {
-            let pts = [];
+            let pts = [];                              //pts is the array of latitudes and longitudes points
             for (let i = 0; i < obj.length; i++) {
                 pts.push(new L.LatLng(obj[i]['lat'], obj[i]['lan']));
             }
@@ -494,7 +496,7 @@
                 mySlider.on("slideStop", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
-                    console.log("time is ", con_time);
+                    {#console.log("time is ", con_time);#}
                     newMarkers.clearLayers();
 
                     for (var itm in data) {
@@ -550,7 +552,7 @@
                 });
 
                 timeSlider.on("slideStop", function(slideEvt) {
-                    alert("In case the drag of Slider don't respond, drag from the tooltip represented by the Speed change");
+                    alert("In case the drag don't respond, drag from the tooltip represented by the Speed change");
                     clearInterval(timer);
                     if(speed > maxSpeed )
                       {
