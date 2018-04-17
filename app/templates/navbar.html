@@ -73,7 +73,7 @@
             <li class="dropdown-submenu">
                     <li><a style="color:gray" href="/"> Click checkbox <span class="sr-only">(current)</span></a></li>
             {% if users %}
-                <form method="post">
+                <form method="post" id="theForm">
                     <select id='run' name="username" multiple="multiple">
                         {% if users %}
                             {% for user in users %}
@@ -83,9 +83,9 @@
                     </select>
                         <br>
                         <br>
-                    <div align="center">
-                        <input type="submit"  id="submit" value="Get data" class="btn btn-success">
-                    </div>
+{#                    <div align="center">#}
+{#                        <input type="submit"  id="submit" value="Get data" class="btn btn-success">#}
+{#                    </div>#}
                 </form>
             {% endif %}
         </ul>

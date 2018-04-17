@@ -12,19 +12,19 @@
                                 {% if data %}
             <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold">Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
-                    <input
-                            id="ex1"
-                            data-slider-id='ex1Slider'
-                            type="text"
-                            data-slider-min="0"
-                            data-slider-max="86400"
-                            data-slider-step="1"
-                            data-slider-value="0"
-                            data-provide="slider" />
-                        </div>
-                    <br />
+                <input
+                        id="ex1"
+                        data-slider-id='ex1Slider'
+                        type="text"
+                        data-slider-min="0"
+                        data-slider-max="86400"
+                        data-slider-step="1"
+                        data-slider-value="0"
+                        data-provide="slider" />
+                    </div>
+                <br />
 
-            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold" ></span></span><br>
             <div class="btn-group" role="group" aria-label="...">
                 <input
                         id="ex4"
@@ -34,27 +34,15 @@
                         data-slider-max="86400"
                         data-slider-step="1"
                         data-slider-value="0"
-                        data-provide="slider" />
+                        data-slider-scale="logarithmic"
+                        data-slider-tooltip="always"
+                        data-provide="slider"
+                        data-slider-rangeHighlights='[{ "start": 0, "end": 7200, "class": "category1" },
+                                   { "start": 7202, "end": 18000, "class": "category2" },
+                                   { "start": 18002, "end": 28800, "class": "category3" },
+                                   { "start": 28802, "end": 64800, "class": "category4" },
+                                   { "start": 64802, "end": 86400 }]' />
                 </div>
-
-{#            <div class="dropup">#}
-{#                <button type="button" class="btn btn-primary dropdown" data-toggle="dropdown"><font size="2"> Speed <span class="glyphicon glyphicon-fast-forward"></span></font> </button>#}
-{#                <div class="dropdown-menu">#}
-{#                    <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Timestamp Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span></span><br>#}
-{#                    <div class="btn-group" role="group" aria-label="...">#}
-{#                        <input#}
-{#                                id="ex4"#}
-{#                                data-slider-id='ex4Slider'#}
-{#                                type="range"#}
-{#                                data-slider-name="slider-1"#}
-{#                                data-slider-min="1"#}
-{#                                data-slider-max="86400"#}
-{#                                data-slider-step="1"#}
-{#                                data-slider-value="0"#}
-{#                                data-provide="slider" />#}
-{#                        </div>#}
-{#                    </div>#}
-{#              </div>#}
 
             <form method="post" id="fetch_data">
                 <br>
@@ -133,7 +121,14 @@
                  width: 260,
                  multiple: true,
                  multipleWidth: 80,
-                 placeholder:" --- Select User --- "
+                 placeholder:" --- Select User --- ",
+                 onOpen: () => {
+                     alert("Select the Users and Click Placeholder! ")
+                 },
+                 onClose: () => {
+                     document.getElementById('theForm').submit();
+                     alert("The Data have been Selected! ")
+                 }
              });
 
              $('option:checkbox').not(this).prop('checked', this.checked);
@@ -172,10 +167,6 @@
         var timeSlider;
 
         var isAddingLayerAllowed = true;
-
-        var coord = [];
-
-
 
         /**
          * Block function for displaying the slider in infinite loops
@@ -431,11 +422,7 @@
              * Creating a Map
              */
 
-            {#mymap = new L.map('map').setView([46.71774876409919, 11.653304697298898], 10);#}
-            mymap = new L.map('map', {
-                preferCanvas: true
-                {#renderer: L.canvas()#}
-            }).setView([39.92553946, 116.45336151], 12);
+            mymap = new L.map('map').setView([39.92553946, 116.45336151], 12);
             addLayerToMap(markersLayer);
             addLayerToMap(newMarkers);
 
@@ -460,6 +447,7 @@
                 e.stopPropagation();
                 e.preventDefault();
             });
+
                     {% if data %}
 
                 /**
@@ -470,7 +458,7 @@
                 data = replaceByValue(data, 'timestamp', 'dtt');
                 data.sort(GetSortOrder('dtt'));
 
-                coord.push(data[0]['lan']);
+                mymap.setView([data[0]['lat'], data[0]['lan']], 11);
 
                 /**
                  * JQUERY to show / hide all markers on the Map
@@ -690,7 +678,7 @@
             {% endif %}
 
               $('form input').change(function () {
-                  $('form p').text(this.files.length + " file(s) selected");
+                  $('form p').text(this.files.length + "file(s) selected");
               });
               console.log("ready!");
         });
