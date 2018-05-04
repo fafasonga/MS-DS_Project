@@ -114,11 +114,12 @@ def remove_user():
 @app.route("/upload_csv", methods=["POST", "GET"])
 def upload_data():
     if request.method == 'POST':
-        session.begin()
-        session.query(Location).delete()
-        session.query(User).delete()
-        session.commit()
-        file = request.files['file']
+        # session.begin()
+        # session.query(Location).delete()
+        # session.query(User).delete()
+        # session.commit()
+        file = request.files.getlist('file[]')
+        print(file)
         result = upload_csv(file)
         if result != "OK":
             flash(result)
