@@ -40,22 +40,23 @@ def upload_csv(files):
             if data[0].strip().lower() == 'name':
                 continue
 
+            print("Username: {}, users: {}, is present: {}".format(data[0].strip(), users, data[0] in users))
+
             if data[0].strip() not in users:
                 ctr += 1
                 users[data[0]] = ctr
                 user = User(data[0])
                 session.add(user)
             try:
-                # print(data)
-                # print("date: {}, time: {}".format(data[3], data[4]))
+                print(data)
+                print("date: {}, time: {}".format(data[3], data[4]))
                 ts = datetime.strptime(data[3] + " " + data[4], "%d/%m/%Y %H:%M:%S")
-                # print("Timestamp is :", ts)
+                print("Timestamp is :", ts)
             except ValueError:
                 continue
             user_id = users[data[0]]
-            # print(data[0], users[data[0]])
             location = Location(data[1], data[2], ts, user_id)
-            # print(location)
+            print(location)
             session.add(location)
             session.flush()
 

@@ -1,4 +1,4 @@
 DATABASE = "sqlite:///test.db"
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "123"
 DATETIME_FORMAT = "%d/%m/%Y %H:%M:%S"
