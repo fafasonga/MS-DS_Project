@@ -58,7 +58,7 @@
                     <p
                         style="font-size:14px;
                             color: mediumblue;
-                            font-weight:bold"> Total Number of Available Dataset: {{ count }}
+                            font-weight:bold"> Number of Available Dataset: {{ count }}
                     </p>
 
                     <br/>
@@ -202,11 +202,11 @@
 
                 if (this.markers.length >= this.limit) {
                     var removedElem = this.markers.shift();
-                    {#console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);#}
+                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
                 }
 
                 this.markers.push(value);
-                {#console.log("This.markers is : ", this.markers);#}
+                console.log("This.markers is : ", this.markers);
 
                 return this.markers;
             }
