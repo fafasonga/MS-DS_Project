@@ -24,7 +24,7 @@
                     </div>
                 <br />
 
-            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold" ></span></span><br>
+            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold" ></span>  %</span><br>
             <div class="btn-group" role="group" aria-label="...">
                 <input
                         id="ex4"
@@ -542,28 +542,29 @@
 
                 timeSlider = $("#ex4").on("slide", function(slideEvt) {
                   clearInterval(timer);
-                  if(speed > maxSpeed )
-                  {
-                      speed = 1000 * (1 / slideEvt.value);
-                      stop();
-                      start();
-                  }
+                    var range_value = 1;
+                    if (speed > maxSpeed) {
+                        speed = 1000 * (1 / slideEvt.value);
+                        range_value = Math.ceil(100 * slideEvt.value / 86400);
+                        stop();
+                        start();
+                    }
 
-                  $("#ex4SliderVal").text(slideEvt.value);
+                  $("#ex4SliderVal").text(range_value);
                 });
 
                 timeSlider.on("slideStop", function(slideEvt) {
                     alert("In case the drag don't respond, drag from the tooltip represented by the Speed change in Black and White");
                     clearInterval(timer);
-                    if(speed > maxSpeed )
-                      {
-                          speed = 1000 * (1 / slideEvt.value);
-                          console.log("Speed is : ", slideEvt.value);
-                          stop();
-                          start();
-                      }
+                    var range_value = 1;
+                    if (speed > maxSpeed) {
+                        speed = 1000 * (1 / slideEvt.value);
+                        range_value = Math.ceil(100 * slideEvt.value / 86400);
+                        stop();
+                        start();
+                    }
 
-                      $("#ex4SliderVal").text(slideEvt.value);
+                  $("#ex4SliderVal").text(range_value);
                 });
 
             {% endif %}
