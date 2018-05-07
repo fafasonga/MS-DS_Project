@@ -82,7 +82,6 @@
             <div align="left">
                 {% if data %}
                 <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold"> Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-{#                <input hidden type="number" value="7" id="limit">#}
                 {% endif %}
             </div>
         </div>
@@ -155,12 +154,10 @@
 
         var mymap;
         var markersLayer = new L.LayerGroup();
-        var pathLayer = new L.LayerGroup();
         var counter = 0;
         var speed = 1000;
         var minSpeed = 1000;
         var maxSpeed = 0;
-        var allMarkers = new L.LayerGroup();
         var newMarkers = new L.LayerGroup();
 
         var timer;
@@ -191,7 +188,7 @@
         class ArrayHolder {
             constructor() {
                 this.markers = [];
-                this.limit = 1;
+                this.limit = 18;
             }
 
             getMarkers() {
@@ -200,15 +197,19 @@
 
             addMarker(value) {
 
-                if (this.markers.length >= this.limit) {
+                if (this.markers.length > this.limit) {
                     var removedElem = this.markers.shift();
-                    console.log("Limit is: " + this.limit + ". Removing element: " + removedElem);
+                    mymap.removeLayer(removedElem);
                 }
 
                 this.markers.push(value);
-                console.log("This.markers is : ", this.markers);
 
                 return this.markers;
+            }
+
+            cleanAll(){
+                this.markers.forEach(mymap.removeLayer.bind(mymap));
+                this.markers = []
             }
 
             changeLimit(value) {
@@ -465,15 +466,16 @@
                 /**
                  * Block for the Slider display to visualize the markers on the Map.
                  */
-
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
+                        {#markersHolder.cleanAll()#}
                         for (var itm in data) {
                             var date = new Date(data[itm]['timestamp']);
                             var timestmp = (date.getHours() * 3600) + (date.getMinutes() * 60) + (date.getSeconds());
 
                             if (timestmp === value) {
                                 let user_icon = getColor(data[itm]['user_id']);
+
                                 markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
                                     time: data[itm]['timestamp'],
                                     icon: user_icon
@@ -496,7 +498,6 @@
                 mySlider.on("slideStop", function(slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
-                    {#console.log("time is ", con_time);#}
                     newMarkers.clearLayers();
 
                     for (var itm in data) {
