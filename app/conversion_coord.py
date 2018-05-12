@@ -21,8 +21,8 @@ def load_trajectory_df(full_filename):
         df['timestamp'][itm] = timestamp
 
         # Calculating the Latitude and Longitude
-        lat = 46.716524
-        lon = 11.652545
+        lat = 46
+        lon = 11
 
         a = df['longitude'][itm] / 6076 / 60
         b = df['latitude'][itm] / 4145 / 60

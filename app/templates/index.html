@@ -1,87 +1,103 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br />
-    <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px"
-         xmlns="http://www.w3.org/1999/html"></div>
+    <br/>
+    <div style="position:relative">
+        <div id="map" class="map map-home" style="height: 600px; width: 100%; margin-top: 14px; z-index: 1;"
+             xmlns="http://www.w3.org/1999/html"></div>
+        <div id="map_disabled" style="position:absolute; top:0px; bottom: 0px; left: 0px; right: 0px; background: rgba(255,255,255,0.8); z-index: 2;"
+        onclick="alert('Please, Click Run and select Data to Visualize')"></div>
+    </div>
     <title> Positioning System </title>
 
 
     <div class="row">
         <div class="col-md-4">
-                                {% if data %}
-            <span id="ex1CurrentSliderValLabel" style="font-size:16px;color:#2b56f4; font-weight:bold"> Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
-            <div class="btn-group" role="group" aria-label="...">
-                <input
-                        id="ex1"
-                        data-slider-id='ex1Slider'
-                        type="text"
-                        data-slider-min="0"
-                        data-slider-max="86400"
-                        data-slider-step="1"
-                        data-slider-value="0"
-                        data-provide="slider" />
-                    </div>
-                <br />
+            {% if data %}
+                <span id="ex1CurrentSliderValLabel"
+                      style="font-size:16px;color:#2b56f4; font-weight:bold"> Time :  <span id="ex1SliderVal" style="color:darkred; font-weight:bold"></span></span>
+                <br>
+                <div class="btn-group" role="group" aria-label="...">
+                    <input
+                            id="ex1"
+                            data-slider-id='ex1Slider'
+                            type="text"
+                            data-slider-min="0"
+                            data-slider-max="86400"
+                            data-slider-step="1"
+                            data-slider-value="0"
+                            data-provide="slider"/>
+                </div>
+                <br/>
 
-            <span id="ex4CurrentSliderValLabel" style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold" ></span>  %</span><br>
-            <div class="btn-group" role="group" aria-label="...">
-                <input
-                        id="ex4"
-                        data-slider-id='ex4Slider'
-                        type="text"
-                        data-slider-min="1"
-                        data-slider-max="86400"
-                        data-slider-step="1"
-                        data-slider-value="0"
-                        data-slider-scale="logarithmic"
-                        data-slider-tooltip="always"
-                        data-provide="slider"
-                        data-slider-rangeHighlights='[{ "start": 0, "end": 7200, "class": "category1" },
+                <span id="ex4CurrentSliderValLabel"
+                      style="font-size:16px;color: black; font-weight:bold"> Speed :  <span id="ex4SliderVal" style="color:darkred; font-weight:bold"></span>  %</span>
+                <br>
+                <div class="btn-group" role="group" aria-label="...">
+                    <input
+                            id="ex4"
+                            data-slider-id='ex4Slider'
+                            type="text"
+                            data-slider-min="1"
+                            data-slider-max="86400"
+                            data-slider-step="1"
+                            data-slider-value="0"
+                            data-slider-scale="logarithmic"
+                            data-slider-tooltip="always"
+                            data-provide="slider"
+                            data-slider-rangeHighlights='[{ "start": 0, "end": 7200, "class": "category1" },
                                    { "start": 7202, "end": 18000, "class": "category2" },
                                    { "start": 18002, "end": 28800, "class": "category3" },
                                    { "start": 28802, "end": 64800, "class": "category4" },
-                                   { "start": 64802, "end": 86400 }]' />
+                                   { "start": 64802, "end": 86400 }]'/>
                 </div>
 
-            <form method="post" id="fetch_data">
-                <br>
-                <input type="hidden" id="username" name="username">
-            </form>
-                                {% endif %}
+                <form method="post" id="fetch_data">
+                    <br>
+                    <input type="hidden" id="username" name="username">
+                </form>
+            {% endif %}
         </div>
 
 
         <div class="col-md-4">
             <div align="left">
-                                {% if data %}
+                {% if data %}
                     <p
-                        style="font-size:14px;
+                            style="font-size:14px;
                             color: mediumblue;
                             font-weight:bold"> Number of Available Dataset: {{ count }}
+                            <script>
+                                if ( {{ count }} ) {
+                                    document.getElementById("map_disabled").style.zIndex = 0;
+                                }
+                            </script>
                     </p>
 
                     <br/>
                     <div class="col-md-12">
                         <div class="row">
-                        <span>Initial Timestamp is : <span id="data-holder1" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
+                            <span>Initial Timestamp is : <span id="data-holder1"
+                                                               style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
-                        <br />
+                    <br/>
 
                     <div class="col-md-12">
                         <div class="row">
-                            <span>Final Timestamp is : <span id="data-holder2" style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
+                            <span>Final Timestamp is : <span id="data-holder2"
+                                                             style="font-size:10px;color:darkred; font-weight:bold"></span></span><br>
                         </div>
                     </div>
-                                    {% endif %}
+                {% endif %}
             </div>
         </div>
 
         <div class="col-md-4">
             <div align="left">
                 {% if data %}
-                <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold"> Current Marker time: <span id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
+                    <span id="ex1CurrentSliderValLabel" style="font-size:14px;color: black; font-weight:bold"> Current Marker time: <span
+                            id="ex2SliderVal" style="color:darkred; font-weight:bold"></span></span><br>
                 {% endif %}
             </div>
         </div>
@@ -116,25 +132,25 @@
          * Jquery for Selecting Multiple Users
          */
 
-         $(function() {
-             $('#run').multipleSelect({
-                 width: 260,
-                 multiple: true,
-                 multipleWidth: 120,
-                 placeholder:" --- Select User --- ",
-                 onOpen: () => {
-                     alert("Please, Select the Users from Checkbox, then Click on the Placeholder area covered in Blue to Continue! ")
-                 },
-                 onClose: () => {
-                     document.getElementById('theForm').submit();
-                     alert("The Data have been Selected, Click OK to continue! ")
-                 }
-             });
+        $(function () {
+            $('#run').multipleSelect({
+                width: 260,
+                multiple: true,
+                multipleWidth: 120,
+                placeholder: " --- Select User --- ",
+                onOpen: () => {
+                    alert("Please, Select the Users from Checkbox, then Click on the Placeholder area covered in Blue to Continue! ")
+                },
+                onClose: () => {
+                    document.getElementById('theForm').submit();
+                    alert("The Data have been Selected, Click OK to continue! ")
+                }
+            });
 
-             $('option:checkbox').not(this).prop('checked', this.checked);
-         });
+            $('option:checkbox').not(this).prop('checked', this.checked);
+        });
 
-         /**
+        /**
          * Jquery for Auto hide/show the Start/Stop Buttons
          */
 
@@ -207,7 +223,7 @@
                 return this.markers;
             }
 
-            cleanAll(){
+            cleanAll() {
                 this.markers.forEach(mymap.removeLayer.bind(mymap));
                 this.markers = []
             }
@@ -226,14 +242,20 @@
             var minutes = Math.floor((num - (hours * 3600)) / 60);
             var seconds = num - (hours * 3600) - (minutes * 60);
 
-            if (hours   < 10) {hours   = "0" + hours;}
-            if (minutes < 10) {minutes = "0" + minutes;}
-            if (seconds < 10) {seconds = "0" + seconds;}
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
 
-            return "\t" + hours + "\th" + ":" + "\t" + minutes  + "\tmin" + ":" + "\t" + seconds + "\tsec";
+            return "\t" + hours + "\th" + ":" + "\t" + minutes + "\tmin" + ":" + "\t" + seconds + "\tsec";
         }
 
-         /**
+        /**
          * Function to convert integer values into Hours and Minutes and Seconds format for more analysis
          */
 
@@ -242,9 +264,15 @@
             var minutes = Math.floor((num - (hours * 3600)) / 60);
             var seconds = num - (hours * 3600) - (minutes * 60);
 
-            if (hours   < 10) {hours   = "0" + hours;}
-            if (minutes < 10) {minutes = "0" + minutes;}
-            if (seconds < 10) {seconds = "0" + seconds;}
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
 
             return hours + ":" + minutes + ":" + seconds;
         }
@@ -264,18 +292,18 @@
 
         function decrease() {
             clearInterval(timer);
-            if(speed +100 <= minSpeed)
+            if (speed + 100 <= minSpeed)
                 speed += 100;
-                stop();
-                start();
+            stop();
+            start();
         }
 
         function singleSPeed() {
             clearInterval(timer);
-            if(speed > maxSpeed )
+            if (speed > maxSpeed)
                 speed = (speed / 2);
-                stop();
-                start();
+            stop();
+            start();
         }
 
         /**
@@ -451,7 +479,7 @@
                 e.preventDefault();
             });
 
-                    {% if data %}
+            {% if data %}
 
                 /**
                  * Spliting the Timestamp in a format that contain the date and time and another contain only the time
@@ -495,7 +523,7 @@
                     }
                 });
 
-                mySlider.on("slideStop", function(slideEvt) {
+                mySlider.on("slideStop", function (slideEvt) {
                     tmp = slideEvt.target.value;
                     con_time = tmp_convert(tmp);
                     newMarkers.clearLayers();
@@ -504,17 +532,17 @@
                         if (con_time >= data[itm]['dtt']) {
                             let user_icon = getColor(data[itm]['user_id']);
                             markersHolder.addMarker(L.marker([data[itm]['lat'], data[itm]['lan']], {
-                                    time: data[itm]['timestamp'],
-                                    icon: user_icon
-                                }));
+                                time: data[itm]['timestamp'],
+                                icon: user_icon
+                            }));
 
                             counter = tmp;
                             start();
 
                             $("#ex2SliderVal").text(data[itm]['timestamp']);
-                         }
-                     }
-                 });
+                        }
+                    }
+                });
 
                 mySlider.on("slideStart", function () {
                     clearInterval(timer);
@@ -540,8 +568,8 @@
                     clearInterval(timer);
                 });
 
-                timeSlider = $("#ex4").on("slide", function(slideEvt) {
-                  clearInterval(timer);
+                timeSlider = $("#ex4").on("slide", function (slideEvt) {
+                    clearInterval(timer);
                     var range_value = 1;
                     if (speed > maxSpeed) {
                         range_value = Math.ceil(100 * slideEvt.value / 86400);
@@ -550,10 +578,10 @@
                         start();
                     }
 
-                  $("#ex4SliderVal").text(range_value);
+                    $("#ex4SliderVal").text(range_value);
                 });
 
-                timeSlider.on("slideStop", function(slideEvt) {
+                timeSlider.on("slideStop", function (slideEvt) {
                     alert("In case the drag don't respond, drag from the tooltip represented by the Speed change in Black and White");
                     clearInterval(timer);
                     var range_value = 1;
@@ -564,15 +592,15 @@
                         start();
                     }
 
-                  $("#ex4SliderVal").text(range_value);
+                    $("#ex4SliderVal").text(range_value);
                 });
 
             {% endif %}
 
-              $('form input').change(function () {
-                  $('form p').text(this.files.length + "file(s) selected");
-              });
-              console.log("ready!");
+            $('form input').change(function () {
+                $('form p').text(this.files.length + "file(s) selected");
+            });
+            console.log("ready!");
         });
 
     </script>
