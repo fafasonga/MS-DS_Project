@@ -68,8 +68,13 @@
                             color: mediumblue;
                             font-weight:bold"> Number of Available Dataset: {{ count }}
                             <script>
-                                if ( {{ count }} ) {
+                                count_value ={{ count }}
+                                if ( count_value > 0) {
                                     document.getElementById("map_disabled").style.zIndex = 0;
+                                }
+                                else {
+                                    alert("No Data Selected, Please Select Data, and Continue!");
+                                    document.getElementById("map_disabled").style.zIndex = 2;
                                 }
                             </script>
                     </p>
