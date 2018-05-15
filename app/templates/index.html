@@ -499,6 +499,7 @@
                 /**
                  * Block for the Slider display to visualize the markers on the Map.
                  */
+
                 mySlider = $('#ex1').slider({
                     formatter: function (value) {
                         {#markersHolder.cleanAll()#}
@@ -513,6 +514,15 @@
                                     time: data[itm]['timestamp'],
                                     icon: user_icon
                                 }));
+
+                                {#var legend = L.control({position:'topright'});#}
+                                {#legend.onAdd = function (mymap) {#}
+                                {#    var div = L.DomUtil.create('div', 'info legend'),#}
+                                {#        grades = [user_icon],#}
+                                {#        labels = [data[itm]['user']];#}
+
+
+
 
                                 $("#ex2SliderVal").text(data[itm]['timestamp']);
                                 return 'Current Marker Timestamp is : ' + data[itm]['timestamp'];

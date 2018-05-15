@@ -67,7 +67,7 @@ if __name__ == '__main__':
         if LABELS_FILE in os.listdir(subfolder_):
             filename = subfolder_ + LABELS_FILE
 
-        output_filename = OUTPUT_FOLDER + subfolder + '.csv'
+        output_filename = OUTPUT_FOLDER + "/" + subfolder + '.csv'
         # if True:
         #     print(df_traj_all)
         #     sys.exit(0)
