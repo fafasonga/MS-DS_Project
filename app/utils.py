@@ -5,7 +5,8 @@ from werkzeug.datastructures import FileStorage
 from app import session
 from app.models import Location, User
 
-# Loading dataset to the Database from an external source
+# This Block is used to Load the dataset to the Database from an external source (Computer directories)
+
 
 users = {"name": 0}
 

@@ -4,6 +4,10 @@ from datetime import datetime
 import pandas as pd
 import pyproj
 
+# This block is used to convert files with other types of format to the csv format.
+# In our case it was used to convert directories containing files in the format of ".plt"
+# # For the files collected during the Microsoft research
+
 geod = pyproj.Geod(ellps='WGS84')
 
 headers_trajectory = ['latitude', 'longitude', 'null', 'altitude', 'timestamp_float', 'date', 'time']

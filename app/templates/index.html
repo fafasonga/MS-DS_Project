@@ -113,7 +113,7 @@
     <script>
 
         /**
-         * Block Initialization code to Show and Hide the Marker and Polyline buttons JQUERY
+         * Block Initialization code to Auto Show / Hide the Markers and buttons JQUERY
          */
 
         $('#show1').click(function () {
@@ -173,7 +173,7 @@
         });
 
         /**
-         * Variables declaration Globally
+         * Global Variables declaration
          */
 
         var mymap;
@@ -206,7 +206,7 @@
 
 
         /**
-         * Class initialization for limiting the number of markers on the Map to display the markers with slicing
+         * Class initialization for limiting the number of markers on the Map and slicing them
          */
 
         class ArrayHolder {
@@ -286,7 +286,7 @@
         }
 
         /**
-         * Functions declaration for the buttons in the footer
+         * Functions declaration to display the buttons in the footer
          */
 
         function start() {
@@ -315,7 +315,7 @@
         }
 
         /**
-         * Fetching the User Names to be selected from the Slider.
+         * Fetching the Username to be selected from the Slider.
          */
 
         function fetch_data(e) {
@@ -370,7 +370,7 @@
 
 
         /**
-         * Function to convert Json format to Markers Array
+         * Function to convert Json file format to Markers Array
          */
 
         function transformFromJsonToMarker(obj) {
@@ -388,7 +388,7 @@
 
 
         /**
-         * Function to sort the dataset
+         * Function sorting the dataset
          */
 
         function n(n) {
@@ -425,9 +425,9 @@
          */
 
         function replaceByValue(obj, old_field, new_field) {
-            for (var k = 0; k < obj.length; ++k) {
-                var d = new Date(obj[k][old_field]);
-                var s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
+            for (let k = 0; k < obj.length; ++k) {
+                let d = new Date(obj[k][old_field]);
+                let s = "" + n(d.getHours()) + ":" + n(d.getMinutes()) + ":" + n(d.getSeconds());
                 obj[k][new_field] = s;
             }
             return obj;
@@ -501,7 +501,12 @@
                 data = replaceByValue(data, 'timestamp', 'dtt');
                 data.sort(GetSortOrder('dtt'));
 
+                /**
+                 *  Auto Initialize the Homepage Map to the updated coordinates
+                 */
+
                 mymap.setView([data[0]['lat'], data[0]['lan']], 11);
+
 
                 /**
                  * Block for the Slider display to visualize the markers on the Map.
@@ -540,19 +545,19 @@
                 /**
                  * Adding the Legend to the Map
                  */
-                var legend = L.control({position: 'topright'});
+                let legend = L.control({position: 'topright'});
                 legend.onAdd = function (mymap) {
-                    var div = L.DomUtil.create('div', 'info legend');
-                    labels = ['<strong>List of Users</strong>'];
+                    let div = L.DomUtil.create('div', 'info legend');
+                    let labels = ['<strong>List of Users</strong>'];
 
-                    user_names = [];
+                    let user_names = [];
                     {% if users %}
                             {% for user in users %}
                                 user_names.push('{{ user.username }}');
                             {% endfor %}
                         {% endif %}
 
-                    for (var i = 0; i < user_names.length; i++) {
+                    for (let i = 0; i < user_names.length; i++) {
                         div.innerHTML +=
                             labels.push(
                                 '<i class="circle" style="background:' + color_change(i) + '"></i> ' + user_names[i]);
@@ -561,6 +566,7 @@
                     return div;
                 };
                 legend.addTo(mymap);
+
 
                 mySlider.on("slideStop", function (slideEvt) {
                     tmp = slideEvt.target.value;
@@ -609,7 +615,7 @@
 
                 timeSlider = $("#ex4").on("slide", function (slideEvt) {
                     clearInterval(timer);
-                    var range_value = 1;
+                    let range_value = 1;
                     if (speed > maxSpeed) {
                         range_value = Math.ceil(100 * slideEvt.value / 86400);
                         speed = 1000 * (1 / range_value);
@@ -623,7 +629,7 @@
                 timeSlider.on("slideStop", function (slideEvt) {
                     alert("In case the drag don't respond, drag from the tooltip represented by the Speed change in Black and White");
                     clearInterval(timer);
-                    var range_value = 1;
+                    let range_value = 1;
                     if (speed > maxSpeed) {
                         range_value = Math.ceil(100 * slideEvt.value / 86400);
                         speed = 1000 * (1 / range_value);

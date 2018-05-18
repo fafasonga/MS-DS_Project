@@ -4,6 +4,10 @@ from math import cos
 
 import pandas as pd
 
+# This block is used to convert geodesic coordinates to geographic coordinates and the timestamp
+# Then convert them to the csv format.
+
+
 headers_trajectory = ['latitude', 'longitude', 'timestamp', 'date', 'time', 'name']
 
 
@@ -28,9 +32,9 @@ def load_trajectory_df(full_filename):
         b = df['latitude'][itm] / 4145 / 60
         c = lon + b
         latitude = lat + a
-        latitude = round(latitude, 5)
+        latitude = round(latitude, 7)
         longitude = c - (df['latitude'][itm] / (6076 * cos(itm)) / 60)
-        longitude = round(longitude, 5)
+        longitude = round(longitude, 7)
 
         df['latitude'][itm] = latitude
         df['longitude'][itm] = longitude
@@ -44,8 +48,8 @@ OUTPUT_FOLDER = 'processed_data/'
 
 if __name__ == '__main__':
 
-    # dir_target = input("Please, give a path to data: ").strip()
-    dir_target = "/Users/admin/Documents/Data Trajectory/"
+    # dir_target = "/Users/admin/Documents/Data Trajectory/"
+    dir_target = input("Please, Enter thr path to data: ").strip()
     os.chdir(dir_target)
 
     if not os.path.exists(OUTPUT_FOLDER):
@@ -58,7 +62,7 @@ if __name__ == '__main__':
 
         list_df_traj = [conversion]
 
-        # print(len(list_df_traj))
+        print(len(list_df_traj))
 
         # sys.exit(0)
 
