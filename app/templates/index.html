@@ -569,8 +569,8 @@
 
 
                 mySlider.on("slideStop", function (slideEvt) {
-                    tmp = slideEvt.target.value;
-                    con_time = tmp_convert(tmp);
+                    tmp = slideEvt.target.value;  //tmp is the slider timestamp
+                    con_time = tmp_convert(tmp);  //con_time is the converted time convert for the tmp
                     newMarkers.clearLayers();
 
                     for (var itm in data) {
