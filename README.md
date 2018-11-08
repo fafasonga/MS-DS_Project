@@ -32,6 +32,12 @@ You can as well see all the path taken by the person from a botton click.
 
 Clone this Repository.
 
+Saving all the packages in the file " requirements"
+
+```
+pip freeze > requirements.txt
+```
+
 Open Terminal and go through the directories you just cloned and run:
 
 ```
